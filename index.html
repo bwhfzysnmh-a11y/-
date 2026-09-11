@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>문피아 투데이베스트 200 기록</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:#f5f6f8;color:#17181a}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e6e8;padding:14px 14px 10px;z-index:2}
+h1{font-size:19px;margin:0 0 10px}.sub{font-size:12px;color:#777}
+.controls{display:flex;gap:7px;margin-top:10px}.controls input,.controls select{height:38px;border:1px solid #ddd;border-radius:9px;background:#fff;padding:0 10px;font-size:14px}
+.controls input{flex:1}
+main{padding:12px}.card{background:#fff;border-radius:12px;margin-bottom:10px;padding:12px;box-shadow:0 1px 3px #0000000a}
+.time{font-weight:700;font-size:14px}.meta{font-size:12px;color:#777;margin-top:3px}
+.row{display:grid;grid-template-columns:42px 1fr 58px;gap:8px;align-items:center;padding:10px 0;border-top:1px solid #eee}
+.rank{font-weight:800;font-size:17px;text-align:center}.title{font-size:14px;font-weight:650;line-height:1.35}.author{font-size:11px;color:#888;margin-top:3px}.score{text-align:right;font-size:12px;color:#555}.change{font-size:11px;margin-top:3px}.up{color:#e33}.down{color:#2877d7}.new{color:#e67b00}
+.empty{text-align:center;color:#888;padding:40px 10px}
+footer{text-align:center;color:#999;font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <h1>문피아 투데이베스트 200</h1>
+  <div class="sub" id="updated">데이터 불러오는 중…</div>
+  <div class="controls">
+    <input id="search" placeholder="작품명 검색">
+    <select id="time"><option value="">전체 시간</option></select>
+  </div>
+</header>
+<main id="app"></main>
+<footer>매시 15분 기준 자동 기록 · 데이터는 GitHub Actions로 수집</footer>
+<script>
+let DATA=[];
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function render(){
+ const q=document.querySelector("#search").value.trim().toLowerCase();
+ const t=document.querySelector("#time").value;
+ const filtered=DATA.filter(x=>(!q||x.title.toLowerCase().includes(q)||x.author.toLowerCase().includes(q))&&(!t||x.captured_at_kst===t));
+ const groups={};
+ filtered.forEach(x=>(groups[x.captured_at_kst]??=[]).push(x));
+ const times=Object.keys(groups).sort().reverse();
+ document.querySelector("#app").innerHTML=times.length?times.map(tm=>{
+   const rows=groups[tm].sort((a,b)=>a.rank-b.rank);
+   return `<section class="card"><div class="time">${esc(tm)}</div><div class="meta">${rows.length}개 순위 기록</div>${
+     rows.map(x=>{
+       let c=esc(x.change);
+       let cls=/NEW/i.test(x.change)?"new":/[↑▲+]/.test(x.change)?"up":/[↓▼-]/.test(x.change)?"down":"";
+       return `<div class="row"><div class="rank">${x.rank}</div><div><div class="title">${esc(x.title)}</div><div class="author">${esc(x.author)}${x.genre?" · "+esc(x.genre):""}</div></div><div class="score">${esc(x.score)}<div class="change ${cls}">${c}</div></div></div>`;
+     }).join("")
+   }</section>`;
+ }).join(""):`<div class="empty">조건에 맞는 기록이 없습니다.</div>`;
+}
+fetch("./data/data.json?"+Date.now()).then(r=>r.json()).then(d=>{
+ DATA=d;
+ const times=[...new Set(DATA.map(x=>x.captured_at_kst))].sort().reverse();
+ document.querySelector("#time").innerHTML='<option value="">전체 시간</option>'+times.map(x=>`<option>${esc(x)}</option>`).join("");
+ document.querySelector("#updated").textContent=times[0]?`마지막 기록: ${times[0]}`:"아직 기록 없음";
+ render();
+}).catch(()=>document.querySelector("#app").innerHTML='<div class="empty">데이터를 불러오지 못했습니다.</div>');
+document.querySelector("#search").addEventListener("input",render);
+document.querySelector("#time").addEventListener("change",render);
+</script>
+</body>
+</html>

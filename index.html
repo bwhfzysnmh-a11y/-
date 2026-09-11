@@ -2,63 +2,113 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>문피아 투데이베스트 200 기록</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>문피아 투베 커트라인</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:#f5f6f8;color:#17181a}
-header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e6e8;padding:14px 14px 10px;z-index:2}
-h1{font-size:19px;margin:0 0 10px}.sub{font-size:12px;color:#777}
-.controls{display:flex;gap:7px;margin-top:10px}.controls input,.controls select{height:38px;border:1px solid #ddd;border-radius:9px;background:#fff;padding:0 10px;font-size:14px}
-.controls input{flex:1}
-main{padding:12px}.card{background:#fff;border-radius:12px;margin-bottom:10px;padding:12px;box-shadow:0 1px 3px #0000000a}
-.time{font-weight:700;font-size:14px}.meta{font-size:12px;color:#777;margin-top:3px}
-.row{display:grid;grid-template-columns:42px 1fr 58px;gap:8px;align-items:center;padding:10px 0;border-top:1px solid #eee}
-.rank{font-weight:800;font-size:17px;text-align:center}.title{font-size:14px;font-weight:650;line-height:1.35}.author{font-size:11px;color:#888;margin-top:3px}.score{text-align:right;font-size:12px;color:#555}.change{font-size:11px;margin-top:3px}.up{color:#e33}.down{color:#2877d7}.new{color:#e67b00}
-.empty{text-align:center;color:#888;padding:40px 10px}
-footer{text-align:center;color:#999;font-size:11px;padding:20px}
+  :root{--bg:#0f1115;--card:#181b22;--line:#2a303b;--text:#f4f6fa;--muted:#9ba4b3;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+  .wrap{max-width:760px;margin:auto;padding:18px 12px 40px}
+  h1{font-size:23px;margin:4px 0}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+  .time{font-size:13px;color:var(--muted);margin:12px 2px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px}
+  .rank{font-size:14px;color:var(--muted);font-weight:700}
+  .score{font-size:23px;font-weight:850;margin-top:5px;letter-spacing:-.5px}
+  .hours{font-size:12px;color:var(--muted);margin-top:5px}
+  h2{font-size:18px;margin:25px 2px 10px}
+  select{width:100%;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:15px}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  th,td{padding:11px 7px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:12px;color:var(--muted)}
+  .empty{padding:24px;text-align:center;color:var(--muted)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .alltable{min-width:1050px}
+  .alltable th,.alltable td{white-space:nowrap;text-align:center}
+  @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
-<header>
-  <h1>문피아 투데이베스트 200</h1>
-  <div class="sub" id="updated">데이터 불러오는 중…</div>
-  <div class="controls">
-    <input id="search" placeholder="작품명 검색">
-    <select id="time"><option value="">전체 시간</option></select>
+<main class="wrap">
+  <h1>문피아 투베 커트라인</h1>
+  <div class="sub">4·8·10·20위부터 200위까지 매시간 기록</div>
+
+  <div id="latestTime" class="time">불러오는 중…</div>
+  <div id="latest" class="grid"></div>
+
+  <h2>순위별 시간 기록</h2>
+  <select id="rankSelect"></select>
+  <div id="history"></div>
+
+  <h2>전체 커트라인 기록</h2>
+  <div class="scroll">
+    <table class="alltable" id="allHistory"></table>
   </div>
-</header>
-<main id="app"></main>
-<footer>매시 15분 기준 자동 기록 · 데이터는 GitHub Actions로 수집</footer>
+</main>
+
 <script>
-let DATA=[];
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-function render(){
- const q=document.querySelector("#search").value.trim().toLowerCase();
- const t=document.querySelector("#time").value;
- const filtered=DATA.filter(x=>(!q||x.title.toLowerCase().includes(q)||x.author.toLowerCase().includes(q))&&(!t||x.captured_at_kst===t));
- const groups={};
- filtered.forEach(x=>(groups[x.captured_at_kst]??=[]).push(x));
- const times=Object.keys(groups).sort().reverse();
- document.querySelector("#app").innerHTML=times.length?times.map(tm=>{
-   const rows=groups[tm].sort((a,b)=>a.rank-b.rank);
-   return `<section class="card"><div class="time">${esc(tm)}</div><div class="meta">${rows.length}개 순위 기록</div>${
-     rows.map(x=>{
-       let c=esc(x.change);
-       let cls=/NEW/i.test(x.change)?"new":/[↑▲+]/.test(x.change)?"up":/[↓▼-]/.test(x.change)?"down":"";
-       return `<div class="row"><div class="rank">${x.rank}</div><div><div class="title">${esc(x.title)}</div><div class="author">${esc(x.author)}${x.genre?" · "+esc(x.genre):""}</div></div><div class="score">${esc(x.score)}<div class="change ${cls}">${c}</div></div></div>`;
-     }).join("")
-   }</section>`;
- }).join(""):`<div class="empty">조건에 맞는 기록이 없습니다.</div>`;
+const CUTS=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+let snaps=[];
+
+const fmt=n => (n==null || n==="") ? "-" : Number(n).toLocaleString("ko-KR");
+const itemAt=(s,r)=>(s?.items||[]).find(x=>Number(x.rank)===r);
+
+function renderLatest(){
+  const s=snaps[snaps.length-1];
+  if(!s){document.getElementById("latest").innerHTML='<div class="empty">데이터 없음</div>';return;}
+  document.getElementById("latestTime").textContent="최근 수집: "+s.captured_at_kst+" KST";
+  document.getElementById("latest").innerHTML=CUTS.map(r=>{
+    const x=itemAt(s,r);
+    return `<div class="card">
+      <div class="rank">${r}위 커트</div>
+      <div class="score">${fmt(x?.score)}</div>
+      <div class="hours">${x?.hours_after_upload!=null ? "업로드 후 "+x.hours_after_upload+"시간" : "업로드 시간 -"}</div>
+    </div>`;
+  }).join("");
 }
-fetch("./data/data.json?"+Date.now()).then(r=>r.json()).then(d=>{
- DATA=d;
- const times=[...new Set(DATA.map(x=>x.captured_at_kst))].sort().reverse();
- document.querySelector("#time").innerHTML='<option value="">전체 시간</option>'+times.map(x=>`<option>${esc(x)}</option>`).join("");
- document.querySelector("#updated").textContent=times[0]?`마지막 기록: ${times[0]}`:"아직 기록 없음";
- render();
-}).catch(()=>document.querySelector("#app").innerHTML='<div class="empty">데이터를 불러오지 못했습니다.</div>');
-document.querySelector("#search").addEventListener("input",render);
-document.querySelector("#time").addEventListener("change",render);
+
+function renderHistory(){
+  const r=Number(document.getElementById("rankSelect").value);
+  const rows=[...snaps].reverse().map(s=>{
+    const x=itemAt(s,r);
+    return `<tr>
+      <td>${(s.captured_at_kst||"").slice(5,16)}</td>
+      <td>${fmt(x?.score)}</td>
+      <td>${x?.hours_after_upload!=null ? x.hours_after_upload+"시간" : "-"}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("history").innerHTML=
+    `<table><thead><tr><th>수집 시간</th><th>${r}위 지수</th><th>업로드 후</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function renderAll(){
+  const head=CUTS.map(r=>`<th>${r}위</th>`).join("");
+  const rows=[...snaps].reverse().map(s=>{
+    const vals=CUTS.map(r=>{
+      const x=itemAt(s,r);
+      return `<td>${fmt(x?.score)}${x?.hours_after_upload!=null?`<br><small>${x.hours_after_upload}h</small>`:""}</td>`;
+    }).join("");
+    return `<tr><td>${(s.captured_at_kst||"").slice(5,16)}</td>${vals}</tr>`;
+  }).join("");
+  document.getElementById("allHistory").innerHTML=
+    `<thead><tr><th>시간</th>${head}</tr></thead><tbody>${rows}</tbody>`;
+}
+
+fetch("./data/data.json?ts="+Date.now())
+  .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()})
+  .then(data=>{
+    snaps=Array.isArray(data)?data:[];
+    document.getElementById("rankSelect").innerHTML=
+      CUTS.map(r=>`<option value="${r}" ${r===200?"selected":""}>${r}위 커트라인</option>`).join("");
+    renderLatest(); renderHistory(); renderAll();
+  })
+  .catch(e=>{
+    document.getElementById("latest").innerHTML=`<div class="empty">데이터를 불러오지 못했습니다.<br>${e.message}</div>`;
+  });
+
+document.getElementById("rankSelect").addEventListener("change",renderHistory);
 </script>
 </body>
 </html>

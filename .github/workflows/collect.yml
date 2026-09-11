@@ -1,0 +1,35 @@
+name: Collect Munpia Today Best
+
+on:
+  schedule:
+    - cron: "15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python setup
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install requests beautifulsoup4
+
+      - name: Collect top 200
+        run: python collect.py
+
+      - name: Commit data
+        run: |
+          git config user.name "munpia-tracker"
+          git config user.email "actions@github.com"
+          git add data/data.json
+          git diff --cached --quiet || git commit -m "Update Munpia Today Best"
+          git push

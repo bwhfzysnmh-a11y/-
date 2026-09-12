@@ -111,6 +111,15 @@ th:first-child,td:first-child{text-align:left}
   position:sticky;left:0;z-index:2;background:#0c1827;text-align:left
 }
 .hourlyNote{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
+.weekdayControls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.weekdayBtn{padding:9px 13px;font-size:12px}
+.weekdayBtn.active{background:linear-gradient(135deg,var(--accent),#4d60ff);border-color:#4a78ff}
+.weekdayTable{min-width:980px}
+.weekdayTable th,.weekdayTable td{white-space:nowrap;text-align:right}
+.weekdayTable th:first-child,.weekdayTable td:first-child{
+  position:sticky;left:0;z-index:2;background:#0c1827;text-align:left
+}
+.fullPanel{margin-top:14px}
 .footer{color:#61758d;font-size:11px;text-align:center;margin-top:22px}
 
 @media(max-width:780px){
@@ -205,8 +214,8 @@ th:first-child,td:first-child{text-align:left}
     </div>
   </section>
 
-  <!-- 2. 현재 순위별 커트라인을 아래로 -->
-  <section class="midGrid">
+  <!-- 2. 현재 순위별 커트라인 -->
+  <section class="fullPanel">
     <div class="panel">
       <div class="panelTitle">
         <h2>주요 순위 현재 커트라인</h2>
@@ -214,37 +223,9 @@ th:first-child,td:first-child{text-align:left}
       </div>
       <div id="cutGrid" class="cutGrid"></div>
     </div>
-
-    <!-- 3. 월별 평균 -->
-    <div class="panel">
-      <div class="panelTitle">
-        <h2>월별 평균 커트라인</h2>
-        <span class="small">선택 순위 기준</span>
-      </div>
-      <div class="monthControls">
-        <select id="yearSelect"></select>
-      </div>
-      <div class="monthChart">
-        <svg id="monthChart" viewBox="0 0 760 190" preserveAspectRatio="none"></svg>
-      </div>
-      <div class="scroll">
-        <table id="monthTable"></table>
-      </div>
-    </div>
   </section>
 
-  <section class="bottomGrid">
-    <!-- 4. 전체 커트라인 기록 -> 총 조회수 -->
-    <div class="panel">
-      <div class="panelTitle">
-        <h2>총 조회수</h2>
-        <span class="small">선택 순위의 시간별 기록</span>
-      </div>
-      <div class="scroll">
-        <table id="historyTable"></table>
-      </div>
-    </div>
-
+  <section class="fullPanel">
     <div class="panel">
       <div class="panelTitle">
         <h2>순위별 커트라인 상세 보기</h2>
@@ -260,7 +241,7 @@ th:first-child,td:first-child{text-align:left}
 
   <section class="panel hourlyPanel">
     <div class="panelTitle">
-      <h2>기간별 시간대 커트라인</h2>
+      <h2>일주일 시간별 커트라인 평균</h2>
       <span class="small">각 순위 · 시간대별 평균</span>
     </div>
     <div class="hourlyControls">
@@ -276,6 +257,44 @@ th:first-child,td:first-child{text-align:left}
     </div>
   </section>
 
+  <section class="panel hourlyPanel">
+    <div class="panelTitle">
+      <h2>요일별 시간대 투베 커트라인</h2>
+      <span class="small">요일 선택 · 시간대별 평균</span>
+    </div>
+    <div class="weekdayControls">
+      <button class="weekdayBtn active" data-day="1">월</button>
+      <button class="weekdayBtn" data-day="2">화</button>
+      <button class="weekdayBtn" data-day="3">수</button>
+      <button class="weekdayBtn" data-day="4">목</button>
+      <button class="weekdayBtn" data-day="5">금</button>
+      <button class="weekdayBtn" data-day="6">토</button>
+      <button class="weekdayBtn" data-day="0">일</button>
+    </div>
+    <div class="scroll">
+      <table id="weekdayTable" class="weekdayTable"></table>
+    </div>
+    <div class="hourlyNote">
+      선택한 요일의 각 시간대 기록을 평균낸 값입니다. 데이터가 없는 시간대는 - 로 표시됩니다.
+    </div>
+  </section>
+
+  <section class="panel fullPanel">
+    <div class="panelTitle">
+      <h2>월별 평균 커트라인</h2>
+      <span class="small">선택 순위 기준</span>
+    </div>
+    <div class="monthControls">
+      <select id="yearSelect"></select>
+    </div>
+    <div class="monthChart">
+      <svg id="monthChart" viewBox="0 0 760 190" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="scroll">
+      <table id="monthTable"></table>
+    </div>
+  </section>
+
   <div class="footer">문피아 무료 투데이베스트 24시간 인증조회수 기준</div>
 </main>
 
@@ -285,6 +304,7 @@ let snaps=[];
 let selectedRank=200;
 let selectedRange="today";
 let hourlyDays=7;
+let selectedWeekday=1;
 
 const $=id=>document.getElementById(id);
 const fmt=n=>n==null||Number.isNaN(Number(n))?"-":Number(n).toLocaleString("ko-KR");
@@ -508,19 +528,6 @@ function renderMonthly(){
     `</tbody>`;
 }
 
-function renderHistory(){
-  const rows=snaps.slice().reverse().map(s=>{
-    const x=itemAt(s,selectedRank);
-    return `<tr>
-      <td>${s.captured_at_kst}</td>
-      <td>${fmt(valAt(s,selectedRank))}</td>
-      <td>${x?.hours_after_upload!=null?x.hours_after_upload+"시간":"-"}</td>
-    </tr>`;
-  }).join("");
-  $("historyTable").innerHTML=
-    `<thead><tr><th>수집 시간</th><th>총 조회수</th><th>업로드 후</th></tr></thead><tbody>${rows}</tbody>`;
-}
-
 function renderRankButtons(){
   $("rankButtons").innerHTML=CUTS.map(r=>
     `<button class="rankBtn ${r===selectedRank?"active":""}" data-rank="${r}">${r}위</button>`
@@ -570,15 +577,61 @@ function renderHourlyTable(){
   });
 }
 
+function renderWeekdayTable(){
+  if(!snaps.length)return;
+
+  const buckets=Array.from({length:24},()=>Object.fromEntries(CUTS.map(r=>[r,[]])));
+
+  for(const s of snaps){
+    const d=dt(s.captured_at_kst);
+
+    // KST 기준 요일
+    const parts=new Intl.DateTimeFormat("en-US",{
+      timeZone:"Asia/Seoul",
+      weekday:"short",
+      hour:"2-digit",
+      hour12:false
+    }).formatToParts(d);
+
+    const wd=parts.find(p=>p.type==="weekday")?.value;
+    const map={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+    if(map[wd]!==selectedWeekday) continue;
+
+    const hour=Number(new Intl.DateTimeFormat("en-US",{
+      timeZone:"Asia/Seoul",hour:"2-digit",hour12:false
+    }).format(d))%24;
+
+    for(const r of CUTS){
+      const v=valAt(s,r);
+      if(v!=null) buckets[hour][r].push(Number(v));
+    }
+  }
+
+  const avg=arr=>arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):null;
+
+  $("weekdayTable").innerHTML=
+    `<thead><tr><th>시간대</th>${CUTS.map(r=>`<th>${r}위</th>`).join("")}</tr></thead>`+
+    `<tbody>`+
+    buckets.map((row,h)=>{
+      const label=String(h).padStart(2,"0")+":15";
+      return `<tr><td>${label}</td>${CUTS.map(r=>`<td>${fmt(avg(row[r]))}</td>`).join("")}</tr>`;
+    }).join("")+
+    `</tbody>`;
+
+  document.querySelectorAll(".weekdayBtn").forEach(b=>{
+    b.classList.toggle("active",Number(b.dataset.day)===selectedWeekday);
+  });
+}
+
 function renderAll(){
   renderHeader();
   renderCutGrid();
   drawLineChart();
   renderSideStats();
-  renderMonthly();
-  renderHistory();
   renderRankButtons();
   renderHourlyTable();
+  renderWeekdayTable();
+  renderMonthly();
 }
 
 fetch("./data/data.json?ts="+Date.now(),{cache:"no-store"})
@@ -601,6 +654,11 @@ $("rankSelect").addEventListener("change",e=>{selectedRank=Number(e.target.value
 document.querySelectorAll(".hourlyBtn").forEach(b=>b.addEventListener("click",()=>{
   hourlyDays=Number(b.dataset.days);
   renderHourlyTable();
+}));
+
+document.querySelectorAll(".weekdayBtn").forEach(b=>b.addEventListener("click",()=>{
+  selectedWeekday=Number(b.dataset.day);
+  renderWeekdayTable();
 }));
 $("yearSelect").addEventListener("change",renderMonthly);
 document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click",()=>{

@@ -1,8 +1,6 @@
 name: Collect Munpia Today Best
 
 on:
-  schedule:
-    - cron: "15 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -29,7 +27,7 @@ jobs:
       - name: Commit data
         run: |
           git config user.name "munpia-tracker"
-          git config user.email "actions@github.com"
+          git config user.email "actions@users.noreply.github.com"
           git add data/data.json
-          git diff --cached --quiet || git commit -m "Update Munpia Today Best"
+          git diff --cached --quiet || git commit -m "update ranking data"
           git push

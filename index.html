@@ -261,7 +261,23 @@ const $=id=>document.getElementById(id);
 const fmt=n=>n==null||Number.isNaN(Number(n))?"-":Number(n).toLocaleString("ko-KR");
 
 function dt(s){return new Date((s||"").replace(" ","T")+"+09:00")}
-function itemAt(s,r){return (s?.items||[]).find(x=>Number(x.rank)===Number(r))}
+function itemAt(s,r){
+  const items=s?.items||[];
+  const exact=items.find(x=>Number(x.rank)===Number(r));
+  if(exact) return exact;
+
+  // 동률 때문에 특정 순위가 건너뛰어진 경우 가장 가까운 실제 순위를 사용.
+  // 거리가 같으면 더 높은 순위(숫자가 작은 쪽)를 우선한다.
+  const nearby=items
+    .filter(x=>Number.isFinite(Number(x.rank)))
+    .sort((a,b)=>{
+      const da=Math.abs(Number(a.rank)-Number(r));
+      const db=Math.abs(Number(b.rank)-Number(r));
+      return da-db || Number(a.rank)-Number(b.rank);
+    })[0];
+
+  return nearby || null;
+}
 function valAt(s,r){const x=itemAt(s,r);return x?.views_24h_verified ?? x?.score ?? null}
 function dayKey(d){return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).format(d)}
 function hm(d){return new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",hour:"2-digit",minute:"2-digit",hour12:false}).format(d)}

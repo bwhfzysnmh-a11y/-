@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -125,13 +126,8 @@ if parsed < 190:
         f"Found {len(items)} ranked novels, but parsed verified views for only {parsed}."
     )
 
-stamp = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S")
-snapshot = {
-    "captured_at_kst": stamp,
-    "count": len(items),
-    "metric": "free_today_verified_views_24h",
-    "items": items,
-}
+now_kst = datetime.now(KST)
+stamp = now_kst.strftime("%Y-%m-%d %H:%M:%S")
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
@@ -147,6 +143,50 @@ old = [
     if isinstance(s, dict)
     and s.get("metric") == "free_today_verified_views_24h"
 ]
+
+def parse_kst(value):
+    try:
+        return datetime.strptime(value, "%Y-%m-%d %H:%M:%S").replace(tzinfo=KST)
+    except Exception:
+        return None
+
+def scheduled_slot(t):
+    # 매시간 :15를 해당 시간대 슬롯으로 사용.
+    # 00:15부터는 새 날짜/새 요일.
+    base = t.replace(minute=15, second=0, microsecond=0)
+    if t.minute < 15:
+        base -= timedelta(hours=1)
+    return base
+
+current_slot = scheduled_slot(now_kst)
+slot = current_slot
+
+# 실패한 GitHub Action을 Re-run한 경우 최근 누락 시간대를 자동 복구.
+# 예: 22:15 실패 -> 재실행 시 slot_at_kst = 22:15
+run_attempt = int(os.getenv("GITHUB_RUN_ATTEMPT", "1") or "1")
+if run_attempt > 1 and old:
+    existing_slots = set()
+    for s in old:
+        raw = s.get("slot_at_kst") or s.get("captured_at_kst")
+        d = parse_kst(raw)
+        if d:
+            existing_slots.add(scheduled_slot(d).strftime("%Y-%m-%d %H:%M:%S"))
+
+    probe = current_slot - timedelta(hours=1)
+    for _ in range(48):
+        key = probe.strftime("%Y-%m-%d %H:%M:%S")
+        if key not in existing_slots:
+            slot = probe
+            break
+        probe -= timedelta(hours=1)
+
+snapshot = {
+    "captured_at_kst": stamp,
+    "slot_at_kst": slot.strftime("%Y-%m-%d %H:%M:%S"),
+    "count": len(items),
+    "metric": "free_today_verified_views_24h",
+    "items": items,
+}
 
 old.append(snapshot)
 old = old[-720:]
@@ -165,5 +205,5 @@ rank200_text = (
 
 print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
-    f"(rank 200={rank200_text}) at {stamp}"
+    f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']}"
 )

@@ -72,6 +72,7 @@ svg{width:100%;height:100%;display:block}
 .sideRow:last-child{border-bottom:0}
 .sideRow .k{font-size:12px;color:var(--muted)}
 .sideRow .v{font-size:18px;font-weight:850;margin-top:5px}
+.recordTime{font-size:11px;color:var(--muted);margin-top:4px}
 .up{color:var(--good)} .down{color:var(--bad)} .same{color:var(--muted)}
 
 .midGrid{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px}
@@ -187,8 +188,8 @@ th:first-child,td:first-child{text-align:left}
       <div class="sideStats">
         <div class="sideRow"><div class="k">어제 같은 시간 대비</div><div class="v" id="ydayDiff">데이터 부족</div></div>
         <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="avg7">데이터 부족</div></div>
-        <div class="sideRow"><div class="k">최고 기록</div><div class="v" id="maxVal">-</div></div>
-        <div class="sideRow"><div class="k">최저 기록</div><div class="v" id="minVal">-</div></div>
+        <div class="sideRow"><div class="k">최고 기록</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
+        <div class="sideRow"><div class="k">최저 기록</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
       </div>
     </div>
   </section>
@@ -373,9 +374,29 @@ function renderSideStats(){
   for(let i=1;i<=7;i++){const v=sameTimeValue(latest,selectedRank,i);if(v!=null)vals7.push(Number(v))}
   $("avg7").textContent=vals7.length?fmt(Math.round(vals7.reduce((a,b)=>a+b,0)/vals7.length)):"데이터 부족";
 
-  const all=snaps.map(s=>valAt(s,selectedRank)).filter(v=>v!=null).map(Number);
-  $("maxVal").textContent=all.length?fmt(Math.max(...all)):"-";
-  $("minVal").textContent=all.length?fmt(Math.min(...all)):"-";
+  const records=snaps
+    .map(s=>({v:valAt(s,selectedRank), d:dt(s.captured_at_kst)}))
+    .filter(x=>x.v!=null)
+    .map(x=>({v:Number(x.v),d:x.d}));
+
+  if(records.length){
+    const maxV=Math.max(...records.map(x=>x.v));
+    const minV=Math.min(...records.map(x=>x.v));
+
+    // 같은 최고/최저값이 여러 번 있으면 가장 최근 기록 시각을 표시
+    const maxRec=[...records].reverse().find(x=>x.v===maxV);
+    const minRec=[...records].reverse().find(x=>x.v===minV);
+
+    $("maxVal").textContent=fmt(maxV);
+    $("minVal").textContent=fmt(minV);
+    $("maxTime").textContent=maxRec?hm(maxRec.d):"-";
+    $("minTime").textContent=minRec?hm(minRec.d):"-";
+  }else{
+    $("maxVal").textContent="-";
+    $("minVal").textContent="-";
+    $("maxTime").textContent="-";
+    $("minTime").textContent="-";
+  }
 }
 
 function monthlyStats(year){

@@ -101,6 +101,16 @@ th:first-child,td:first-child{text-align:left}
   margin-top:12px;border:1px solid #31598d;background:#0d1b2e;
   color:#b9c9de;border-radius:12px;padding:12px;font-size:12px;line-height:1.6
 }
+.hourlyPanel{margin-top:14px}
+.hourlyControls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.hourlyBtn{padding:9px 13px;font-size:12px}
+.hourlyBtn.active{background:linear-gradient(135deg,var(--accent),#4d60ff);border-color:#4a78ff}
+.hourlyTable{min-width:980px}
+.hourlyTable th,.hourlyTable td{white-space:nowrap;text-align:right}
+.hourlyTable th:first-child,.hourlyTable td:first-child{
+  position:sticky;left:0;z-index:2;background:#0c1827;text-align:left
+}
+.hourlyNote{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
 .footer{color:#61758d;font-size:11px;text-align:center;margin-top:22px}
 
 @media(max-width:780px){
@@ -248,6 +258,24 @@ th:first-child,td:first-child{text-align:left}
     </div>
   </section>
 
+  <section class="panel hourlyPanel">
+    <div class="panelTitle">
+      <h2>기간별 시간대 커트라인</h2>
+      <span class="small">각 순위 · 시간대별 평균</span>
+    </div>
+    <div class="hourlyControls">
+      <button class="hourlyBtn active" data-days="7">최근 7일</button>
+      <button class="hourlyBtn" data-days="14">최근 14일</button>
+      <button class="hourlyBtn" data-days="30">최근 1달</button>
+    </div>
+    <div class="scroll">
+      <table id="hourlyTable" class="hourlyTable"></table>
+    </div>
+    <div class="hourlyNote">
+      각 시간대에 수집된 기록을 기간별로 평균낸 값입니다. 데이터가 없는 시간대는 - 로 표시됩니다.
+    </div>
+  </section>
+
   <div class="footer">문피아 무료 투데이베스트 24시간 인증조회수 기준</div>
 </main>
 
@@ -256,6 +284,7 @@ const CUTS=[4,8,10,20,40,60,80,100,120,140,160,180,200];
 let snaps=[];
 let selectedRank=200;
 let selectedRange="today";
+let hourlyDays=7;
 
 const $=id=>document.getElementById(id);
 const fmt=n=>n==null||Number.isNaN(Number(n))?"-":Number(n).toLocaleString("ko-KR");
@@ -503,6 +532,44 @@ function renderRankButtons(){
   });
 }
 
+function renderHourlyTable(){
+  if(!snaps.length)return;
+
+  const latest=dt(snaps[snaps.length-1].captured_at_kst);
+  const start=new Date(latest.getTime()-(hourlyDays*86400000));
+
+  // 0~23시 × 각 순위의 값을 모아 평균
+  const buckets=Array.from({length:24},()=>Object.fromEntries(CUTS.map(r=>[r,[]])));
+
+  for(const s of snaps){
+    const d=dt(s.captured_at_kst);
+    if(d<start || d>latest) continue;
+    const hour=Number(new Intl.DateTimeFormat("en-US",{
+      timeZone:"Asia/Seoul",hour:"2-digit",hour12:false
+    }).format(d))%24;
+
+    for(const r of CUTS){
+      const v=valAt(s,r);
+      if(v!=null) buckets[hour][r].push(Number(v));
+    }
+  }
+
+  const avg=arr=>arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):null;
+
+  $("hourlyTable").innerHTML=
+    `<thead><tr><th>시간대</th>${CUTS.map(r=>`<th>${r}위</th>`).join("")}</tr></thead>`+
+    `<tbody>`+
+    buckets.map((row,h)=>{
+      const label=String(h).padStart(2,"0")+":15";
+      return `<tr><td>${label}</td>${CUTS.map(r=>`<td>${fmt(avg(row[r]))}</td>`).join("")}</tr>`;
+    }).join("")+
+    `</tbody>`;
+
+  document.querySelectorAll(".hourlyBtn").forEach(b=>{
+    b.classList.toggle("active",Number(b.dataset.days)===hourlyDays);
+  });
+}
+
 function renderAll(){
   renderHeader();
   renderCutGrid();
@@ -511,6 +578,7 @@ function renderAll(){
   renderMonthly();
   renderHistory();
   renderRankButtons();
+  renderHourlyTable();
 }
 
 fetch("./data/data.json?ts="+Date.now(),{cache:"no-store"})
@@ -529,6 +597,11 @@ fetch("./data/data.json?ts="+Date.now(),{cache:"no-store"})
 });
 
 $("rankSelect").addEventListener("change",e=>{selectedRank=Number(e.target.value);renderAll()});
+
+document.querySelectorAll(".hourlyBtn").forEach(b=>b.addEventListener("click",()=>{
+  hourlyDays=Number(b.dataset.days);
+  renderHourlyTable();
+}));
 $("yearSelect").addEventListener("change",renderMonthly);
 document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click",()=>{
   document.querySelectorAll(".rangeBtn").forEach(b=>b.classList.remove("active"));

@@ -24,34 +24,24 @@ def clean(s):
 
 def parse_metrics(text):
     text = clean(text)
-
-    # 상단 1~5위 카드
     m = re.search(r"시간\s*(\d{1,2})\s*조회\s*([\d,]+)", text)
     if m:
         return int(m.group(1)), int(m.group(2).replace(",", ""))
-
-    # 6~200위 표
     m = re.search(r"\s(\d{1,2})\s+([\d,]+)(?:\s+(?:NEW|[-+]?\d+))?\s*$", text)
     if m:
         return int(m.group(1)), int(m.group(2).replace(",", ""))
-
     return None, None
 
 def parse_rank(text):
     text = clean(text)
-
-    # 상단 카드: '1위', '2위' ...
     m = re.search(r"\b([1-5])\s*위\b", text)
     if m:
         return int(m.group(1))
-
-    # 표 행: 맨 앞의 순위 숫자
     m = re.match(r"^\s*(\d{1,3})\b", text)
     if m:
         n = int(m.group(1))
         if 1 <= n <= 200:
             return n
-
     return None
 
 r = requests.get(URL, headers=HEADERS, timeout=30)
@@ -65,10 +55,8 @@ for a in soup.find_all("a", href=True):
     href = a.get("href", "")
     if "/novel/detail/" not in href:
         continue
-
     full_url = urljoin(URL, href)
     novel_id = full_url.rstrip("/").split("/")[-1].split("?")[0]
-
     if not novel_id.isdigit() or novel_id in seen_novels:
         continue
 
@@ -85,7 +73,6 @@ for a in soup.find_all("a", href=True):
     rank = hours = views = None
     raw = ""
 
-    # 가장 가까운 컨테이너부터 실제 순위 + 시간/조회가 같이 있는 곳을 찾는다.
     for txt in candidates:
         rr = parse_rank(txt)
         hh, vv = parse_metrics(txt)
@@ -93,7 +80,6 @@ for a in soup.find_all("a", href=True):
             rank, hours, views, raw = rr, hh, vv, txt
             break
 
-    # 일부 상단 카드에서 순위 텍스트와 시간/조회가 서로 다른 부모에 있을 수 있어 보완
     if rank is None:
         for txt in candidates:
             rr = parse_rank(txt)
@@ -113,7 +99,6 @@ for a in soup.find_all("a", href=True):
 
     seen_novels.add(novel_id)
 
-    # 같은 순위가 중복 탐지되면 처음 제대로 잡힌 항목 유지
     if rank not in items_by_rank:
         items_by_rank[rank] = {
             "rank": rank,
@@ -125,16 +110,11 @@ for a in soup.find_all("a", href=True):
             "raw": raw or clean(a.get_text(" ", strip=True)),
         }
 
-# 실제 순위 기준으로 정렬
 items = [items_by_rank[r] for r in sorted(items_by_rank)]
-
 parsed = sum(1 for x in items if x["views_24h_verified"] is not None)
 
-if 200 not in items_by_rank:
-    raise RuntimeError(
-        f"Rank 200 was not found. Parsed actual ranks: {len(items_by_rank)}"
-    )
-
+# 동률 때문에 일부 순위 번호(예: 120위, 200위)가 건너뛰어질 수 있음.
+# 200위가 정확히 없어도 실제 순위가 190개 이상이면 정상 데이터로 저장.
 if len(items_by_rank) < 190:
     raise RuntimeError(
         f"Only {len(items_by_rank)} actual ranks found; Munpia HTML may have changed."
@@ -162,7 +142,6 @@ try:
 except Exception:
     old = []
 
-# 무료 투베 인증조회수 기록만 유지
 old = [
     s for s in old
     if isinstance(s, dict)
@@ -177,7 +156,14 @@ OUT.write_text(
     encoding="utf-8",
 )
 
+rank200 = items_by_rank.get(200)
+rank200_text = (
+    str(rank200["views_24h_verified"])
+    if rank200 and rank200["views_24h_verified"] is not None
+    else "skipped"
+)
+
 print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
-    f"(rank 200={items_by_rank[200]['views_24h_verified']}) at {stamp}"
+    f"(rank 200={rank200_text}) at {stamp}"
 )

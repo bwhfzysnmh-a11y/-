@@ -583,16 +583,6 @@ function renderMonthly(){
     `</tbody>`;
 }
 
-function renderRankButtons(){
-  $("rankButtons").innerHTML=CUTS.map(r=>
-    `<button class="rankBtn ${r===selectedRank?"active":""}" data-rank="${r}">${r}위</button>`
-  ).join("");
-  document.querySelectorAll(".rankBtn").forEach(b=>b.onclick=()=>{
-    selectedRank=Number(b.dataset.rank);
-    $("rankSelect").value=selectedRank;
-    renderAll();
-  });
-}
 
 function renderHourlyTable(){
   if(!snaps.length)return;
@@ -756,7 +746,6 @@ function renderAll(){
   renderCutGrid();
   drawLineChart();
   renderSideStats();
-  renderRankButtons();
   renderHourlyTable();
   renderWeekdayTable();
   renderMonthly();

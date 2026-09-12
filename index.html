@@ -253,7 +253,7 @@ th:first-child,td:first-child{text-align:left}
       <table id="hourlyTable" class="hourlyTable"></table>
     </div>
     <div class="hourlyNote">
-      오늘 데이터는 제외합니다. 매일 KST 00:00에 날짜를 리셋하고, 자정까지 끝난 날짜만 최근 7일/14일/1달 평균에 넣습니다. 예: 9/13 새벽에는 9/13 00:15·01:15가 이 표에 들어가지 않습니다.
+      매일 한국시간(KST) 00:00에 날짜를 리셋합니다. 예: 9/13 00:15·01:15는 9/13 데이터로만 집계됩니다. 같은 날 중복 수집은 먼저 1회 평균 처리합니다.
     </div>
   </section>
 
@@ -275,7 +275,7 @@ th:first-child,td:first-child{text-align:left}
       <table id="weekdayTable" class="weekdayTable"></table>
     </div>
     <div class="hourlyNote">
-      KST 자정 기준으로 요일을 나눕니다. 아직 끝나지 않은 오늘은 제외하고 완료된 날짜만 평균냅니다.
+      한국시간(KST) 00:00에 새 날짜/요일로 즉시 넘어갑니다. 일요일 00:15부터는 바로 일요일 기록에 포함됩니다. 데이터가 없는 시간대는 - 로 표시됩니다.
     </div>
   </section>
 
@@ -328,13 +328,15 @@ function itemAt(s,r){
   return nearby || null;
 }
 function valAt(s,r){const x=itemAt(s,r);return x?.views_24h_verified ?? x?.score ?? null}
-function snapDay(s){return String(s?.captured_at_kst||"").slice(0,10)}
+function snapStamp(s){return String(s?.slot_at_kst || s?.captured_at_kst || "")}
+function snapDate(s){return dt(snapStamp(s))}
+function snapDay(s){return snapStamp(s).slice(0,10)}
 function snapHour(s){
-  const h=Number(String(s?.captured_at_kst||"").slice(11,13));
+  const h=Number(snapStamp(s).slice(11,13));
   return Number.isFinite(h)?h:null;
 }
 function snapMinute(s){
-  const m=Number(String(s?.captured_at_kst||"").slice(14,16));
+  const m=Number(snapStamp(s).slice(14,16));
   return Number.isFinite(m)?m:null;
 }
 function dayKey(d){
@@ -382,7 +384,7 @@ function sameTimeValue(latestDate,rank,daysAgo){
   const targetMin=minuteOfDayKST(target);
   let best=null,gap=1e9;
   for(const s of snaps){
-    const d=dt(s.captured_at_kst);
+    const d=snapDate(s);
     if(dayKey(d)!==targetDay) continue;
     const g=Math.abs(minuteOfDayKST(d)-targetMin);
     if(g<gap){gap=g;best=valAt(s,rank)}
@@ -411,7 +413,7 @@ function renderCutGrid(){
 
 function getSeries(){
   if(!snaps.length)return[];
-  const latest=dt(snaps[snaps.length-1].captured_at_kst);
+  const latest=snapDate(snaps[snaps.length-1]);
   const latestDay=dayKey(latest);
 
   let startDay=null;
@@ -422,7 +424,7 @@ function getSeries(){
   else if(selectedRange==="7d") startDay=addDaysToKey(latestDay,-6);
   else startDay=addDaysToKey(latestDay,-29);
 
-  return snaps.map(s=>({d:dt(s.captured_at_kst),v:valAt(s,selectedRank)}))
+  return snaps.map(s=>({d:snapDate(s),v:valAt(s,selectedRank)}))
     .filter(x=>{
       if(x.v==null)return false;
       if(startTime)return x.d>=startTime;
@@ -476,7 +478,7 @@ function drawLineChart(){
 
 function renderSideStats(){
   const s=snaps[snaps.length-1]; if(!s)return;
-  const latest=dt(s.captured_at_kst),cur=valAt(s,selectedRank);
+  const latest=snapDate(s),cur=valAt(s,selectedRank);
   $("sideRankTitle").textContent=selectedRank+"위";
   $("currentValue").textContent=fmt(cur);
 
@@ -493,7 +495,7 @@ function renderSideStats(){
   $("avg7").textContent=vals7.length?fmt(Math.round(vals7.reduce((a,b)=>a+b,0)/vals7.length)):"데이터 부족";
 
   const records=snaps
-    .map(s=>({v:valAt(s,selectedRank), d:dt(s.captured_at_kst)}))
+    .map(s=>({v:valAt(s,selectedRank), d:snapDate(s)}))
     .filter(x=>x.v!=null)
     .map(x=>({v:Number(x.v),d:x.d}));
 
@@ -528,7 +530,7 @@ function monthlyStats(year){
   const map=new Map();
   for(let m=1;m<=12;m++)map.set(m,[]);
   for(const s of snaps){
-    const d=dt(s.captured_at_kst);
+    const d=snapDate(s);
     const {y,m}=ym(d);
     if(y!==year)continue;
     const v=valAt(s,selectedRank);
@@ -545,7 +547,7 @@ function monthlyStats(year){
 
 function renderMonthly(){
   if(!snaps.length)return;
-  const years=[...new Set(snaps.map(s=>ym(dt(s.captured_at_kst)).y))].sort((a,b)=>b-a);
+  const years=[...new Set(snaps.map(s=>ym(snapDate(s)).y))].sort((a,b)=>b-a);
   if(!$("yearSelect").options.length){
     $("yearSelect").innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join("");
   }
@@ -597,12 +599,7 @@ function renderHourlyTable(){
 
   // 최신 수집일을 "오늘"로 잡고, KST 날짜 문자열 자체로 최근 N일을 계산한다.
   const latestDay=snapDay(snaps[snaps.length-1]);
-
-  // 역사 평균에는 아직 끝나지 않은 "오늘"을 넣지 않는다.
-  // 예: 9/13 01:15라면 9/13 00:15·01:15는 제외하고
-  // 최근 7일은 9/6~9/12처럼 완료된 날짜만 집계한다.
-  const endDay=addDaysToKey(latestDay,-1);
-  const startDay=addDaysToKey(endDay,-(hourlyDays-1));
+  const startDay=addDaysToKey(latestDay,-(hourlyDays-1));
 
   // dateHour[날짜][시간][순위] 형태.
   // 같은 날짜/같은 시간에 수동 실행이 여러 번 있어도 그 날이 과도하게 가중되지 않게
@@ -614,7 +611,7 @@ function renderHourlyTable(){
     const hour=snapHour(s);
 
     if(!dkey || hour==null) continue;
-    if(dkey<startDay || dkey>endDay) continue;
+    if(dkey<startDay || dkey>latestDay) continue;
 
     if(!dateHour[dkey]) dateHour[dkey]={};
     if(!dateHour[dkey][hour]){
@@ -659,16 +656,12 @@ function renderHourlyTable(){
 function renderWeekdayTable(){
   if(!snaps.length)return;
 
-  const latestDay=snapDay(snaps[snaps.length-1]);
   const buckets=Array.from({length:24},()=>Object.fromEntries(CUTS.map(r=>[r,[]])));
 
   for(const s of snaps){
     const dkey=snapDay(s);
     const hour=snapHour(s);
     if(!dkey || hour==null) continue;
-
-    // 오늘은 아직 하루가 끝나지 않았으므로 요일 평균에서도 제외
-    if(dkey>=latestDay) continue;
 
     // captured_at_kst의 YYYY-MM-DD를 그대로 요일 계산에 사용
     const [yy,mm,dd]=dkey.split("-").map(Number);
@@ -714,7 +707,7 @@ fetch("./data/data.json?ts="+Date.now(),{cache:"no-store"})
   snaps=(Array.isArray(data)?data:[])
     .filter(s=>Array.isArray(s.items))
     .filter(s=>s.metric==="free_today_verified_views_24h")
-    .sort((a,b)=>dt(a.captured_at_kst)-dt(b.captured_at_kst));
+    .sort((a,b)=>snapDate(a)-snapDate(b));
 
   $("rankSelect").innerHTML=CUTS.map(r=>`<option value="${r}" ${r===200?"selected":""}>${r}위</option>`).join("");
   renderAll();

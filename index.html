@@ -110,6 +110,18 @@ th:first-child,td:first-child{text-align:left}
 .hourlyTable th:first-child,.hourlyTable td:first-child{
   position:sticky;left:0;z-index:2;background:#0c1827;text-align:left
 }
+
+.lowCutSummary{
+  margin:10px 0 12px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.035);
+  font-size:14px;
+  line-height:1.55;
+}
+.lowCutSummary b{font-size:16px}
+.lowCutSummary .sub{color:var(--muted);font-size:12px;margin-top:2px}
 .hourlyNote{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
 .weekdayControls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .weekdayBtn{padding:9px 13px;font-size:12px}
@@ -225,20 +237,6 @@ th:first-child,td:first-child{text-align:left}
     </div>
   </section>
 
-  <section class="fullPanel">
-    <div class="panel">
-      <div class="panelTitle">
-        <h2>순위별 커트라인 상세 보기</h2>
-        <span class="small">원하는 순위를 선택하세요</span>
-      </div>
-      <div id="rankButtons" class="rankButtons"></div>
-      <div class="notice">
-        데이터는 매시간 15분에 자동 수집됩니다.<br>
-        어제 같은 시간 대비와 7일 평균은 기록이 쌓이면 자동으로 계산됩니다.
-      </div>
-    </div>
-  </section>
-
   <section class="panel hourlyPanel">
     <div class="panelTitle">
       <h2>일주일 시간별 커트라인 평균</h2>
@@ -249,6 +247,7 @@ th:first-child,td:first-child{text-align:left}
       <button class="hourlyBtn" data-days="14">최근 14일</button>
       <button class="hourlyBtn" data-days="30">최근 1달</button>
     </div>
+    <div id="hourlyLowSummary" class="lowCutSummary"></div>
     <div class="scroll">
       <table id="hourlyTable" class="hourlyTable"></table>
     </div>
@@ -271,6 +270,7 @@ th:first-child,td:first-child{text-align:left}
       <button class="weekdayBtn" data-day="6">토</button>
       <button class="weekdayBtn" data-day="0">일</button>
     </div>
+    <div id="weekdayLowSummary" class="lowCutSummary"></div>
     <div class="scroll">
       <table id="weekdayTable" class="weekdayTable"></table>
     </div>
@@ -639,6 +639,21 @@ function renderHourlyTable(){
     }
   }
 
+  // 선택한 순위에서 평균 컷이 가장 낮은 시간대
+  let lowestHour=null, lowestValue=null;
+  for(let h=0; h<24; h++){
+    const v=avg(buckets[h][selectedRank]);
+    if(v!=null && (lowestValue==null || v<lowestValue)){
+      lowestValue=v;
+      lowestHour=h;
+    }
+  }
+  const periodLabel=hourlyDays===30?"최근 1달":`최근 ${hourlyDays}일`;
+  $("hourlyLowSummary").innerHTML = lowestHour==null
+    ? `<b>${selectedRank}위 최저 컷 시간대: 데이터 없음</b>`
+    : `<b>${selectedRank}위 최저 컷 시간대 · ${String(lowestHour).padStart(2,"0")}:15 · ${fmt(lowestValue)}</b>
+       <div class="sub">${periodLabel} 시간대 평균 기준</div>`;
+
   $("hourlyTable").innerHTML=
     `<thead><tr><th>시간대</th>${CUTS.map(r=>`<th>${r}위</th>`).join("")}</tr></thead>`+
     `<tbody>`+
@@ -675,6 +690,52 @@ function renderWeekdayTable(){
   }
 
   const avg=arr=>arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):null;
+
+  // 선택한 요일에서 가장 낮은 시간대
+  let selectedLowHour=null, selectedLowValue=null;
+  for(let h=0; h<24; h++){
+    const v=avg(buckets[h][selectedRank]);
+    if(v!=null && (selectedLowValue==null || v<selectedLowValue)){
+      selectedLowValue=v;
+      selectedLowHour=h;
+    }
+  }
+
+  // 전체 요일 × 시간대 중 가장 낮은 조합
+  const allBuckets=Array.from({length:7},()=>Array.from({length:24},()=>[]));
+  for(const s of snaps){
+    const dkey=snapDay(s);
+    const hour=snapHour(s);
+    if(!dkey || hour==null) continue;
+    const [yy,mm,dd]=dkey.split("-").map(Number);
+    const wd=new Date(Date.UTC(yy,mm-1,dd)).getUTCDay();
+    const v=valAt(s,selectedRank);
+    if(v!=null) allBuckets[wd][hour].push(Number(v));
+  }
+
+  let overallDay=null, overallHour=null, overallValue=null;
+  for(let wd=0; wd<7; wd++){
+    for(let h=0; h<24; h++){
+      const v=avg(allBuckets[wd][h]);
+      if(v!=null && (overallValue==null || v<overallValue)){
+        overallValue=v;
+        overallDay=wd;
+        overallHour=h;
+      }
+    }
+  }
+
+  const dayNames=["일","월","화","수","목","금","토"];
+  const selectedName=dayNames[selectedWeekday];
+
+  $("weekdayLowSummary").innerHTML =
+    `<b>${selectedRank}위 최저 컷</b><br>`+
+    (selectedLowHour==null
+      ? `${selectedName}요일: 데이터 없음`
+      : `${selectedName}요일 · ${String(selectedLowHour).padStart(2,"0")}:15 · ${fmt(selectedLowValue)}`)+
+    (overallHour==null
+      ? ``
+      : `<div class="sub">전체 요일 중 최저: ${dayNames[overallDay]}요일 ${String(overallHour).padStart(2,"0")}:15 · ${fmt(overallValue)}</div>`);
 
   $("weekdayTable").innerHTML=
     `<thead><tr><th>시간대</th>${CUTS.map(r=>`<th>${r}위</th>`).join("")}</tr></thead>`+

@@ -190,6 +190,7 @@ th:first-child,td:first-child{text-align:left}
         <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="avg7">데이터 부족</div></div>
         <div class="sideRow"><div class="k">최고 기록</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
         <div class="sideRow"><div class="k">최저 기록</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
+        <div class="sideRow"><div class="k">24시간 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
       </div>
     </div>
   </section>
@@ -378,6 +379,13 @@ function renderSideStats(){
     .map(s=>({v:valAt(s,selectedRank), d:dt(s.captured_at_kst)}))
     .filter(x=>x.v!=null)
     .map(x=>({v:Number(x.v),d:x.d}));
+
+  // 한국시간 00:00을 하루의 시작으로 잡아, 오늘 들어온 기록들의 평균을 계산
+  const latestDay=dayKey(latest);
+  const todayRecords=records.filter(x=>dayKey(x.d)===latestDay);
+  $("avg24").textContent=todayRecords.length
+    ? fmt(Math.round(todayRecords.reduce((sum,x)=>sum+x.v,0)/todayRecords.length))
+    : "-";
 
   if(records.length){
     const maxV=Math.max(...records.map(x=>x.v));

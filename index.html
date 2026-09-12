@@ -219,9 +219,9 @@ th:first-child,td:first-child{text-align:left}
       <div class="sideStats">
         <div class="sideRow"><div class="k">어제 같은 시간 대비</div><div class="v" id="ydayDiff">데이터 부족</div></div>
         <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="avg7">데이터 부족</div></div>
-        <div class="sideRow"><div class="k">최고 기록</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
-        <div class="sideRow"><div class="k">최저 기록</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
-        <div class="sideRow"><div class="k">24시간 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+        <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
+        <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
+        <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
       </div>
     </div>
   </section>
@@ -261,6 +261,11 @@ th:first-child,td:first-child{text-align:left}
       <h2>요일별 시간대 투베 커트라인</h2>
       <span class="small">요일 선택 · 시간대별 평균</span>
     </div>
+    <div class="hourlyControls">
+      <button class="weekdayRangeBtn active" data-days="7">최근 7일</button>
+      <button class="weekdayRangeBtn" data-days="14">최근 14일</button>
+      <button class="weekdayRangeBtn" data-days="30">최근 1달</button>
+    </div>
     <div class="weekdayControls">
       <button class="weekdayBtn active" data-day="1">월</button>
       <button class="weekdayBtn" data-day="2">화</button>
@@ -275,7 +280,7 @@ th:first-child,td:first-child{text-align:left}
       <table id="weekdayTable" class="weekdayTable"></table>
     </div>
     <div class="hourlyNote">
-      한국시간(KST) 00:00에 새 날짜/요일로 즉시 넘어갑니다. 일요일 00:15부터는 바로 일요일 기록에 포함됩니다. 데이터가 없는 시간대는 - 로 표시됩니다.
+      시간대 표는 KST 00:00부터 새 요일로 즉시 기록됩니다. 최저 요일은 최근 7일/14일/1달의 완료된 날짜만 대상으로, 각 날짜의 00:00~23:59 컷 평균을 비교합니다.
     </div>
   </section>
 
@@ -305,6 +310,7 @@ let selectedRank=200;
 let selectedRange="today";
 let hourlyDays=7;
 let selectedWeekday=1;
+let weekdayDays=7;
 
 const $=id=>document.getElementById(id);
 const fmt=n=>n==null||Number.isNaN(Number(n))?"-":Number(n).toLocaleString("ko-KR");
@@ -506,13 +512,13 @@ function renderSideStats(){
     ? fmt(Math.round(todayRecords.reduce((sum,x)=>sum+x.v,0)/todayRecords.length))
     : "-";
 
-  if(records.length){
-    const maxV=Math.max(...records.map(x=>x.v));
-    const minV=Math.min(...records.map(x=>x.v));
+  if(todayRecords.length){
+    const maxV=Math.max(...todayRecords.map(x=>x.v));
+    const minV=Math.min(...todayRecords.map(x=>x.v));
 
-    // 같은 최고/최저값이 여러 번 있으면 가장 최근 기록 시각을 표시
-    const maxRec=[...records].reverse().find(x=>x.v===maxV);
-    const minRec=[...records].reverse().find(x=>x.v===minV);
+    // 오늘 00:00 이후 기록만 대상으로 최고/최저 계산
+    const maxRec=[...todayRecords].reverse().find(x=>x.v===maxV);
+    const minRec=[...todayRecords].reverse().find(x=>x.v===minV);
 
     $("maxVal").textContent=fmt(maxV);
     $("minVal").textContent=fmt(minV);
@@ -661,27 +667,51 @@ function renderHourlyTable(){
 function renderWeekdayTable(){
   if(!snaps.length)return;
 
+  const latestDay=snapDay(snaps[snaps.length-1]);
+
+  // 요일별 "시간대 표"는 현재 요일의 새벽 기록도 즉시 보이게 오늘 포함
+  const tableStartDay=addDaysToKey(latestDay,-(weekdayDays-1));
   const buckets=Array.from({length:24},()=>Object.fromEntries(CUTS.map(r=>[r,[]])));
+
+  // 요일별 최저 요일 계산은 완전히 끝난 하루만 사용
+  const completeEndDay=addDaysToKey(latestDay,-1);
+  const completeStartDay=addDaysToKey(completeEndDay,-(weekdayDays-1));
+  const daily={};
 
   for(const s of snaps){
     const dkey=snapDay(s);
     const hour=snapHour(s);
     if(!dkey || hour==null) continue;
 
-    // captured_at_kst의 YYYY-MM-DD를 그대로 요일 계산에 사용
     const [yy,mm,dd]=dkey.split("-").map(Number);
     const weekday=new Date(Date.UTC(yy,mm-1,dd)).getUTCDay();
-    if(weekday!==selectedWeekday) continue;
 
-    for(const r of CUTS){
-      const v=valAt(s,r);
-      if(v!=null) buckets[hour][r].push(Number(v));
+    // 선택 요일 시간대 평균표
+    if(dkey>=tableStartDay && dkey<=latestDay && weekday===selectedWeekday){
+      for(const r of CUTS){
+        const v=valAt(s,r);
+        if(v!=null) buckets[hour][r].push(Number(v));
+      }
+    }
+
+    // 완료된 날짜만 일평균 계산용으로 저장
+    if(dkey>=completeStartDay && dkey<=completeEndDay){
+      if(!daily[dkey]){
+        daily[dkey]={
+          weekday,
+          values:Object.fromEntries(CUTS.map(r=>[r,[]]))
+        };
+      }
+      for(const r of CUTS){
+        const v=valAt(s,r);
+        if(v!=null) daily[dkey].values[r].push(Number(v));
+      }
     }
   }
 
   const avg=arr=>arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):null;
 
-  // 선택한 요일에서 가장 낮은 시간대
+  // 선택 요일 시간대 최저
   let selectedLowHour=null, selectedLowValue=null;
   for(let h=0; h<24; h++){
     const v=avg(buckets[h][selectedRank]);
@@ -691,41 +721,32 @@ function renderWeekdayTable(){
     }
   }
 
-  // 전체 요일 × 시간대 중 가장 낮은 조합
-  const allBuckets=Array.from({length:7},()=>Array.from({length:24},()=>[]));
-  for(const s of snaps){
-    const dkey=snapDay(s);
-    const hour=snapHour(s);
-    if(!dkey || hour==null) continue;
-    const [yy,mm,dd]=dkey.split("-").map(Number);
-    const wd=new Date(Date.UTC(yy,mm-1,dd)).getUTCDay();
-    const v=valAt(s,selectedRank);
-    if(v!=null) allBuckets[wd][hour].push(Number(v));
+  // 날짜별 자정~23:59 하루 평균 -> 요일별 평균 -> 가장 낮은 요일
+  const weekdayDaily=Array.from({length:7},()=>[]);
+  for(const obj of Object.values(daily)){
+    const oneDayAvg=avg(obj.values[selectedRank]);
+    if(oneDayAvg!=null) weekdayDaily[obj.weekday].push(oneDayAvg);
   }
 
-  let overallDay=null, overallHour=null, overallValue=null;
+  let lowDay=null, lowDayAvg=null;
   for(let wd=0; wd<7; wd++){
-    for(let h=0; h<24; h++){
-      const v=avg(allBuckets[wd][h]);
-      if(v!=null && (overallValue==null || v<overallValue)){
-        overallValue=v;
-        overallDay=wd;
-        overallHour=h;
-      }
+    const v=avg(weekdayDaily[wd]);
+    if(v!=null && (lowDayAvg==null || v<lowDayAvg)){
+      lowDayAvg=v;
+      lowDay=wd;
     }
   }
 
   const dayNames=["일","월","화","수","목","금","토"];
-  const selectedName=dayNames[selectedWeekday];
+  const periodLabel=weekdayDays===30?"최근 1달":`최근 ${weekdayDays}일`;
 
   $("weekdayLowSummary").innerHTML =
-    `<b>${selectedRank}위 최저 컷</b><br>`+
-    (selectedLowHour==null
-      ? `${selectedName}요일: 데이터 없음`
-      : `${selectedName}요일 · ${String(selectedLowHour).padStart(2,"0")}:15 · ${fmt(selectedLowValue)}`)+
-    (overallHour==null
-      ? ``
-      : `<div class="sub">전체 요일 중 최저: ${dayNames[overallDay]}요일 ${String(overallHour).padStart(2,"0")}:15 · ${fmt(overallValue)}</div>`);
+    lowDay==null
+      ? `<b>${selectedRank}위 · ${periodLabel} · 최저 요일 데이터 없음</b>`
+      : `<b>${selectedRank}위 · ${periodLabel} · 가장 낮은 요일: ${dayNames[lowDay]}요일 · 하루 평균 ${fmt(lowDayAvg)}</b>
+         <div class="sub">완료된 날짜의 KST 00:00~23:59 하루 평균을 요일별로 다시 평균</div>`+
+        (selectedLowHour==null ? `` :
+         `<div class="sub">${dayNames[selectedWeekday]}요일 시간대 최저: ${String(selectedLowHour).padStart(2,"0")}:15 · ${fmt(selectedLowValue)}</div>`);
 
   $("weekdayTable").innerHTML=
     `<thead><tr><th>시간대</th>${CUTS.map(r=>`<th>${r}위</th>`).join("")}</tr></thead>`+
@@ -738,6 +759,9 @@ function renderWeekdayTable(){
 
   document.querySelectorAll(".weekdayBtn").forEach(b=>{
     b.classList.toggle("active",Number(b.dataset.day)===selectedWeekday);
+  });
+  document.querySelectorAll(".weekdayRangeBtn").forEach(b=>{
+    b.classList.toggle("active",Number(b.dataset.days)===weekdayDays);
   });
 }
 
@@ -775,6 +799,11 @@ document.querySelectorAll(".hourlyBtn").forEach(b=>b.addEventListener("click",()
 
 document.querySelectorAll(".weekdayBtn").forEach(b=>b.addEventListener("click",()=>{
   selectedWeekday=Number(b.dataset.day);
+  renderWeekdayTable();
+}));
+
+document.querySelectorAll(".weekdayRangeBtn").forEach(b=>b.addEventListener("click",()=>{
+  weekdayDays=Number(b.dataset.days);
   renderWeekdayTable();
 }));
 $("yearSelect").addEventListener("change",renderMonthly);

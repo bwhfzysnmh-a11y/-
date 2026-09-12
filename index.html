@@ -253,7 +253,7 @@ th:first-child,td:first-child{text-align:left}
       <table id="hourlyTable" class="hourlyTable"></table>
     </div>
     <div class="hourlyNote">
-      각 시간대에 수집된 기록을 기간별로 평균낸 값입니다. 데이터가 없는 시간대는 - 로 표시됩니다.
+      한국시간(KST) 자정 00:00에 날짜를 리셋해 집계합니다. 00:15부터는 새 날짜 데이터입니다. 데이터가 없는 시간대는 - 로 표시됩니다.
     </div>
   </section>
 
@@ -275,7 +275,7 @@ th:first-child,td:first-child{text-align:left}
       <table id="weekdayTable" class="weekdayTable"></table>
     </div>
     <div class="hourlyNote">
-      선택한 요일의 각 시간대 기록을 평균낸 값입니다. 데이터가 없는 시간대는 - 로 표시됩니다.
+      한국시간(KST) 자정 00:00 기준으로 요일을 나눠 각 시간대 기록을 평균냅니다. 데이터가 없는 시간대는 - 로 표시됩니다.
     </div>
   </section>
 
@@ -328,20 +328,54 @@ function itemAt(s,r){
   return nearby || null;
 }
 function valAt(s,r){const x=itemAt(s,r);return x?.views_24h_verified ?? x?.score ?? null}
-function dayKey(d){return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).format(d)}
-function hm(d){return new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",hour:"2-digit",minute:"2-digit",hour12:false}).format(d)}
-function md(d){return new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",month:"2-digit",day:"2-digit"}).format(d)}
-function ym(d){return {y:d.getFullYear(),m:d.getMonth()+1}}
+function dayKey(d){
+  return new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"
+  }).format(d)
+}
+function hm(d){
+  return new Intl.DateTimeFormat("ko-KR",{
+    timeZone:"Asia/Seoul",hour:"2-digit",minute:"2-digit",hour12:false
+  }).format(d)
+}
+function md(d){
+  return new Intl.DateTimeFormat("ko-KR",{
+    timeZone:"Asia/Seoul",month:"2-digit",day:"2-digit"
+  }).format(d)
+}
+function kstHour(d){
+  const p=new Intl.DateTimeFormat("en-US",{
+    timeZone:"Asia/Seoul",hour:"2-digit",hour12:false
+  }).formatToParts(d);
+  return Number(p.find(x=>x.type==="hour")?.value||0)%24;
+}
+function kstMinute(d){
+  const p=new Intl.DateTimeFormat("en-US",{
+    timeZone:"Asia/Seoul",minute:"2-digit"
+  }).formatToParts(d);
+  return Number(p.find(x=>x.type==="minute")?.value||0);
+}
+function minuteOfDayKST(d){return kstHour(d)*60+kstMinute(d)}
+function addDaysToKey(key,delta){
+  const [y,m,d]=key.split("-").map(Number);
+  const x=new Date(Date.UTC(y,m-1,d));
+  x.setUTCDate(x.getUTCDate()+delta);
+  return x.toISOString().slice(0,10);
+}
+function ym(d){
+  const [y,m]=dayKey(d).split("-").map(Number);
+  return {y,m};
+}
 
 function sameTimeValue(latestDate,rank,daysAgo){
   const target=new Date(latestDate.getTime()-daysAgo*86400000);
   const targetDay=dayKey(target);
-  const targetMin=target.getHours()*60+target.getMinutes();
+  const targetMin=minuteOfDayKST(target);
   let best=null,gap=1e9;
   for(const s of snaps){
     const d=dt(s.captured_at_kst);
     if(dayKey(d)!==targetDay) continue;
-    const g=Math.abs((d.getHours()*60+d.getMinutes())-targetMin);
+    const g=Math.abs(minuteOfDayKST(d)-targetMin);
     if(g<gap){gap=g;best=valAt(s,rank)}
   }
   return gap<=90?best:null;
@@ -369,14 +403,23 @@ function renderCutGrid(){
 function getSeries(){
   if(!snaps.length)return[];
   const latest=dt(snaps[snaps.length-1].captured_at_kst);
-  let start;
-  if(selectedRange==="today"){start=new Date(latest);start.setHours(0,0,0,0)}
-  else if(selectedRange==="24h")start=new Date(latest.getTime()-86400000);
-  else if(selectedRange==="7d")start=new Date(latest.getTime()-7*86400000);
-  else start=new Date(latest.getTime()-30*86400000);
+  const latestDay=dayKey(latest);
+
+  let startDay=null;
+  let startTime=null;
+
+  if(selectedRange==="today") startDay=latestDay;
+  else if(selectedRange==="24h") startTime=new Date(latest.getTime()-86400000);
+  else if(selectedRange==="7d") startDay=addDaysToKey(latestDay,-6);
+  else startDay=addDaysToKey(latestDay,-29);
 
   return snaps.map(s=>({d:dt(s.captured_at_kst),v:valAt(s,selectedRank)}))
-    .filter(x=>x.v!=null&&x.d>=start)
+    .filter(x=>{
+      if(x.v==null)return false;
+      if(startTime)return x.d>=startTime;
+      const k=dayKey(x.d);
+      return k>=startDay && k<=latestDay;
+    })
     .sort((a,b)=>a.d-b.d);
 }
 
@@ -477,9 +520,10 @@ function monthlyStats(year){
   for(let m=1;m<=12;m++)map.set(m,[]);
   for(const s of snaps){
     const d=dt(s.captured_at_kst);
-    if(d.getFullYear()!==year)continue;
+    const {y,m}=ym(d);
+    if(y!==year)continue;
     const v=valAt(s,selectedRank);
-    if(v!=null)map.get(d.getMonth()+1).push(Number(v));
+    if(v!=null)map.get(m).push(Number(v));
   }
   return [...map.entries()].map(([m,arr])=>({
     m,
@@ -492,7 +536,7 @@ function monthlyStats(year){
 
 function renderMonthly(){
   if(!snaps.length)return;
-  const years=[...new Set(snaps.map(s=>dt(s.captured_at_kst).getFullYear()))].sort((a,b)=>b-a);
+  const years=[...new Set(snaps.map(s=>ym(dt(s.captured_at_kst)).y))].sort((a,b)=>b-a);
   if(!$("yearSelect").options.length){
     $("yearSelect").innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join("");
   }
@@ -543,17 +587,18 @@ function renderHourlyTable(){
   if(!snaps.length)return;
 
   const latest=dt(snaps[snaps.length-1].captured_at_kst);
-  const start=new Date(latest.getTime()-(hourlyDays*86400000));
+  const latestDay=dayKey(latest);
+  const startDay=addDaysToKey(latestDay,-(hourlyDays-1));
 
-  // 0~23시 × 각 순위의 값을 모아 평균
+  // KST 00:00에 날짜를 리셋.
+  // 예: 9/13의 00:15, 01:15는 전부 9/13 데이터로만 취급.
   const buckets=Array.from({length:24},()=>Object.fromEntries(CUTS.map(r=>[r,[]])));
 
   for(const s of snaps){
     const d=dt(s.captured_at_kst);
-    if(d<start || d>latest) continue;
-    const hour=Number(new Intl.DateTimeFormat("en-US",{
-      timeZone:"Asia/Seoul",hour:"2-digit",hour12:false
-    }).format(d))%24;
+    const sDay=dayKey(d);
+    if(sDay<startDay || sDay>latestDay) continue;
+    const hour=kstHour(d);
 
     for(const r of CUTS){
       const v=valAt(s,r);
@@ -585,21 +630,12 @@ function renderWeekdayTable(){
   for(const s of snaps){
     const d=dt(s.captured_at_kst);
 
-    // KST 기준 요일
-    const parts=new Intl.DateTimeFormat("en-US",{
-      timeZone:"Asia/Seoul",
-      weekday:"short",
-      hour:"2-digit",
-      hour12:false
-    }).formatToParts(d);
+    // KST 자정 기준 날짜에서 요일 계산
+    const [yy,mm,dd]=dayKey(d).split("-").map(Number);
+    const weekday=new Date(Date.UTC(yy,mm-1,dd)).getUTCDay();
+    if(weekday!==selectedWeekday) continue;
 
-    const wd=parts.find(p=>p.type==="weekday")?.value;
-    const map={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
-    if(map[wd]!==selectedWeekday) continue;
-
-    const hour=Number(new Intl.DateTimeFormat("en-US",{
-      timeZone:"Asia/Seoul",hour:"2-digit",hour12:false
-    }).format(d))%24;
+    const hour=kstHour(d);
 
     for(const r of CUTS){
       const v=valAt(s,r);

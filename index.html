@@ -185,19 +185,6 @@ th:first-child,td:first-child{text-align:left}
     </div>
   </header>
 
-  <div class="controls">
-    <div class="tabs">
-      <button class="rangeBtn active" data-range="today">오늘</button>
-      <button class="rangeBtn" data-range="24h">최근 24시간</button>
-      <button class="rangeBtn" data-range="7d">최근 7일</button>
-      <button class="rangeBtn" data-range="30d">최근 30일</button>
-    </div>
-    <div class="rankSelectWrap">
-      <span>조회할 순위 선택</span>
-      <select id="rankSelect"></select>
-    </div>
-  </div>
-
 
 
   <!-- 2. 현재 순위별 커트라인 -->
@@ -210,6 +197,19 @@ th:first-child,td:first-child{text-align:left}
       <div id="cutGrid" class="cutGrid"></div>
     </div>
   </section>
+
+  <div class="controls">
+    <div class="rankSelectWrap">
+      <span>조회할 순위 선택</span>
+      <select id="rankSelect"></select>
+    </div>
+    <div class="tabs">
+      <button class="rangeBtn active" data-range="today">오늘</button>
+      <button class="rangeBtn" data-range="24h">최근 24시간</button>
+      <button class="rangeBtn" data-range="7d">최근 7일</button>
+      <button class="rangeBtn" data-range="30d">최근 30일</button>
+    </div>
+  </div>
 
   <!-- 1. 그래프를 맨 위 -->
   <section class="gridTop">

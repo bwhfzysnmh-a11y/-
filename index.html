@@ -122,6 +122,36 @@ th:first-child,td:first-child{text-align:left}
 }
 .lowCutSummary b{font-size:16px}
 .lowCutSummary .sub{color:var(--muted);font-size:12px;margin-top:2px}
+.todayHourlyBlock{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+.todayHourlyTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+  font-size:14px;
+}
+.todayHourlyTable{
+  min-width:100%;
+}
+.todayHourlyTable th,
+.todayHourlyTable td{
+  padding:9px 10px;
+  text-align:center;
+  white-space:nowrap;
+}
+.todayHourlyTable th:first-child,
+.todayHourlyTable td:first-child{
+  text-align:left;
+}
+.todayHourlyScroll{
+  max-height:250px;
+  overflow:auto;
+}
 .hourlyNote{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
 .weekdayControls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .weekdayBtn{padding:9px 13px;font-size:12px}
@@ -235,6 +265,15 @@ th:first-child,td:first-child{text-align:left}
         <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
         <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
         <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+      </div>
+      <div class="todayHourlyBlock">
+        <div class="todayHourlyTitle">
+          <b>오늘 시간별 커트</b>
+          <span id="todayHourlyRank" class="small">200위</span>
+        </div>
+        <div class="scroll todayHourlyScroll">
+          <table id="todayHourlyTable" class="todayHourlyTable"></table>
+        </div>
       </div>
     </div>
   </section>
@@ -534,6 +573,34 @@ function renderSideStats(){
   }
 }
 
+
+function renderTodayHourlyCut(){
+  if(!snaps.length)return;
+
+  const latestDay=snapDay(snaps[snaps.length-1]);
+  const byHour=new Map();
+
+  // 오늘(KST 00:00~) 기록만 사용.
+  // 같은 시간대에 중복 수집이 있으면 가장 마지막 기록을 표시한다.
+  for(const s of snaps){
+    if(snapDay(s)!==latestDay) continue;
+    const hour=snapHour(s);
+    if(hour==null) continue;
+    const v=valAt(s,selectedRank);
+    if(v==null) continue;
+    byHour.set(hour, Number(v));
+  }
+
+  $("todayHourlyRank").textContent=selectedRank+"위";
+
+  const rows=[...byHour.entries()].sort((a,b)=>a[0]-b[0]);
+  $("todayHourlyTable").innerHTML = rows.length
+    ? `<thead><tr><th>시간</th><th>${selectedRank}위 커트</th></tr></thead><tbody>`+
+      rows.map(([h,v])=>`<tr><td>${String(h).padStart(2,"0")}:15</td><td>${fmt(v)}</td></tr>`).join("")+
+      `</tbody>`
+    : `<tbody><tr><td colspan="2">오늘 데이터 없음</td></tr></tbody>`;
+}
+
 function monthlyStats(year){
   const map=new Map();
   for(let m=1;m<=12;m++)map.set(m,[]);
@@ -772,6 +839,7 @@ function renderAll(){
   renderCutGrid();
   drawLineChart();
   renderSideStats();
+  renderTodayHourlyCut();
   renderHourlyTable();
   renderWeekdayTable();
   renderMonthly();

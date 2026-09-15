@@ -168,9 +168,22 @@ th:first-child,td:first-child{text-align:left}
   text-align:left;
 }
 .todayHourlyScroll{
-  max-height:250px;
+  max-height:125px;
   overflow:auto;
 }
+/* 오늘 추이 영역: 오른쪽 요약 카드 때문에 그래프 아래가 과하게 비지 않도록 압축 */
+.gridTop{align-items:start}
+.gridTop .sideStats{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:14px;
+}
+.gridTop .sideRow{padding:9px 0}
+.gridTop .sideRow .v{font-size:16px;margin-top:3px}
+.gridTop .recordTime{margin-top:2px}
+.gridTop .todayHourlyBlock{margin-top:10px;padding-top:10px}
+.gridTop .todayHourlyTable th,
+.gridTop .todayHourlyTable td{padding:7px 9px}
+
 .hourlyNote{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
 .weekdayControls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .weekdayBtn{padding:9px 13px;font-size:12px}
@@ -241,6 +254,19 @@ th:first-child,td:first-child{text-align:left}
 .myMetric{display:flex;flex-direction:column;justify-content:center}.myMetric span{font-size:11px;color:var(--muted)}.myMetric b{font-size:27px;margin:5px 0}.myMetric small{color:var(--muted)}
 .ghostBtn{margin-top:12px;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:9px;padding:7px 9px;cursor:pointer}
 .myTwoCol{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.distanceList,.recentList{display:grid;gap:8px}.distanceRow,.recentRow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.distanceRow:last-child,.recentRow:last-child{border-bottom:0}.positive{font-weight:800}.mutedText{color:var(--muted)}
+.myHourlyBox{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.myHourlyHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.myHourlyHead h3{margin:0;font-size:14px}.myHourlyHead span{font-size:11px;color:var(--muted)}
+.myHourlyScroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.myHourlyTable{border-collapse:collapse;width:100%;min-width:1220px;table-layout:fixed;font-size:11px}
+.myHourlyTable th,.myHourlyTable td{border-right:1px solid var(--line);padding:10px 5px;text-align:center;white-space:nowrap}
+.myHourlyTable th:last-child,.myHourlyTable td:last-child{border-right:0}
+.myHourlyTable th{background:#f7f9fc;color:var(--muted);font-weight:700}
+.myHourlyTable td{font-weight:800;color:var(--text)}
+.myHourlyTable .rowLabel{position:sticky;left:0;z-index:2;width:70px;min-width:70px;background:#f7f9fc;color:var(--muted);box-shadow:1px 0 0 var(--line)}
+.myHourlyTable td.rowLabel{font-weight:700}
+.myHourlyTable .rankHit{color:#246ee9}
+.myChartNote{padding:9px 14px 11px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
 .guideStandalone{margin-top:18px}.guideStandalone h1{margin-top:0}.guideStandalone>p{color:var(--muted);line-height:1.7}.guideNote{margin-top:16px!important}
 @media(max-width:760px){.myTopCards{grid-template-columns:1fr 1fr}.myIdentity{grid-column:1/-1}.myTwoCol{grid-template-columns:1fr}.urlRow{flex-direction:column}.urlRow button{padding:12px}.myHero h1{font-size:24px}}
 
@@ -1266,16 +1292,16 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       <div class="adSlot adPrimary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품 ①</b></div>
 
       <section class="panel">
-        <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small" id="myChartModeLabel">투데이베스트 · 최근 기록</span></div>
+        <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small" id="myChartModeLabel">투데이베스트 · 오늘</span></div>
         <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="myHourlyBox">
+          <div class="myHourlyHead"><h3>오늘 시간별 순위</h3><span id="myHourlyModeLabel">투베 · 00:15~23:15</span></div>
+          <div class="myHourlyScroll"><table class="myHourlyTable" id="myHourlyRankTable"></table></div>
+          <div class="myChartNote">그래프의 점을 누르면 해당 시간의 순위와 인증조회수를 확인할 수 있어요.</div>
+        </div>
       </section>
 
       <div class="adSlot adSecondary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품 ②</b></div>
-
-      <section class="myTwoCol">
-        <div class="panel"><div class="panelTitle"><h2 id="myCompareSummaryTitle">투베 비교</h2><span class="small">주요 순위</span></div><div id="myDistances" class="distanceList"></div></div>
-        <div class="panel"><div class="panelTitle"><h2>최근 기록</h2><span class="small" id="myRecentMode">투베</span></div><div id="myRecent" class="recentList"></div></div>
-      </section>
     </div>
   </main>
 </section>
@@ -1357,17 +1383,16 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     const latestDay=stamp(records.at(-1).s).slice(0,10);
     const rec=records.filter(r=>stamp(r.s).slice(0,10)===latestDay);
     if(!rec.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">오늘 순위 기록이 아직 없습니다.</text>`;return}
-    const vals=rec.map(x=>x.rank);
-    let min=Math.max(1,Math.min(...vals)-8),max=Math.min(200,Math.max(...vals)+8);
-    if(min===max){min=Math.max(1,min-1);max=Math.min(200,max+1)}
+    // 순위축은 데이터 범위에 따라 확대하지 않고 항상 1위~200위 전체를 보여준다.
+    const min=1,max=200;
     const domainStart=kstDayStartMs(latestDay),domainEnd=domainStart+86400000;
     const x=r=>L+(W-L-R)*Math.max(0,Math.min(1,(new Date(stamp(r.s).replace(' ','T')+'+09:00').getTime()-domainStart)/(domainEnd-domainStart)));
-    const y=v=>T+(H-T-B)*((v-min)/Math.max(1,max-min));
+    const y=v=>T+(H-T-B)*((v-min)/(max-min));
     let out='';
-    for(let i=0;i<5;i++){
-      const yy=T+(H-T-B)*i/4,rv=Math.round(min+(max-min)*i/4);
+    [1,40,80,120,160,200].forEach(rv=>{
+      const yy=y(rv);
       out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${rv}위</text>`;
-    }
+    });
     const path=rec.map((r,i)=>(i?'L':'M')+x(r)+','+y(r.rank)).join(' ');
     out+=`<path d="${path}" fill="none" stroke="#246ee9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
     rec.forEach(r=>{
@@ -1379,7 +1404,25 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       out+=`<text x="${xx}" y="${H-9}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${String(h).padStart(2,'0')}:00</text>`;
     });
     svg.innerHTML=out;
-    const label=$q('myChartModeLabel');if(label)label.textContent=(myCompareMode==='new'?'신규베스트':'투데이베스트')+' · 오늘 00:00~24:00';
+    const label=$q('myChartModeLabel');if(label)label.textContent=(myCompareMode==='new'?'신규베스트':'투데이베스트')+' · 오늘';
+  }
+
+  function renderMyHourlyTable(records,isNew){
+    const table=$q("myHourlyRankTable"), label=$q("myHourlyModeLabel");
+    if(!table)return;
+    const minute=isNew?"05":"15", shortName=isNew?"신베":"투베";
+    if(label)label.textContent=`${shortName} · 00:${minute}~23:${minute}`;
+    const latestDay=records.length?stamp(records.at(-1).s).slice(0,10):"";
+    const today=latestDay?records.filter(r=>stamp(r.s).slice(0,10)===latestDay):[];
+    const byHour=new Map();
+    today.forEach(r=>{
+      const st=stamp(r.s),h=Number(st.slice(11,13));
+      const prev=byHour.get(h);
+      if(!prev || st>stamp(prev.s))byHour.set(h,r);
+    });
+    const hours=Array.from({length:24},(_,h)=>h);
+    table.innerHTML=`<tr><th class="rowLabel">시간</th>${hours.map(h=>`<th>${String(h).padStart(2,'0')}:${minute}</th>`).join('')}</tr>`+
+      `<tr><td class="rowLabel">${shortName} 순위</td>${hours.map(h=>{const r=byHour.get(h);return `<td class="${r?'rankHit':''}">${r?r.rank+'위':'-'}</td>`}).join('')}</tr>`;
   }
 
   function renderTabs(list,id){
@@ -1437,9 +1480,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     const snaps=isNew?newSnaps:todaySnaps;
     const modeName=isNew?"신규베스트":"투데이베스트";
     const shortName=isNew?"신베":"투베";
-    $q("myChartModeLabel").textContent=modeName+" · 최근 기록";
-    $q("myCompareSummaryTitle").textContent=shortName+" 비교";
-    $q("myRecentMode").textContent=shortName;
+    $q("myChartModeLabel").textContent=modeName+" · 오늘";
 
     // 작품 제목은 다른 베스트 기록에서 찾았더라도, 선택한 베스트 기록이 없으면 해당사항 없음으로 표시
     if(!records.length){
@@ -1447,8 +1488,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       $q("myRankChange").textContent=shortName+" 미진입";
       $q("myCutBasis").textContent="기준 데이터 없음";
       $q("myCutNeedGrid").innerHTML=[4,8,10,20,40,60,80,100,120,140,160,180,200].map(r=>`<div class="myCutCell"><span>${r}위</span><b class="blue">해당사항 없음</b></div>`).join("");
-      $q("myDistances").innerHTML='<div class="mutedText">'+shortName+' 기록이 없어 비교할 수 없어요.</div>';
-      $q("myRecent").innerHTML='<div class="mutedText">기록 없음</div>';drawMyChart([]);return;
+      drawMyChart([]);renderMyHourlyTable([],isNew);return;
     }
 
     const last=records.at(-1);
@@ -1487,14 +1527,8 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       return `<div class="myCutCell"><span>${r}위</span><b class="${diff>0?'need':'done'}">${diff>0?('+'+fmtN(diff)):'달성'}</b></div>`;
     }).join("");
 
-    $q("myDistances").innerHTML=ranks.map(r=>{
-      const cv=latest?Number(valAt(latest,r)):NaN;
-      if(!Number.isFinite(cv))return `<div class="distanceRow"><span>${r}위</span><b>데이터 없음</b></div>`;
-      const diff=Math.max(0,cv-Number(last.views));
-      return `<div class="distanceRow"><span>${r}위 커트 ${fmtN(cv)}</span><b class="${diff>0?'':'positive'}">${diff>0?('+'+fmtN(diff)+' 필요'):'달성'}</b></div>`;
-    }).join("");
-    $q("myRecent").innerHTML=records.slice(-8).reverse().map(r=>`<div class="recentRow"><span>${stamp(r.s).slice(5,16)}</span><b>${r.rank}위 · ${fmtN(r.views)}</b></div>`).join("");
     drawMyChart(records);
+    renderMyHourlyTable(records,isNew);
   };
 
   $q("saveNovelBtn")?.addEventListener("click",()=>{

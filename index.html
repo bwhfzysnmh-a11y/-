@@ -8,15 +8,15 @@
 <title>문피아 무료 투데이베스트 분석</title>
 <style>
 :root{
-  --bg:#07111f;--bg2:#0a1422;--card:#0e1b2b;--card2:#101f31;
-  --line:#263b54;--text:#f5f8ff;--muted:#9db0c8;
+  --bg:#0d1c2f;--bg2:#11243a;--card:#152b43;--card2:#19324d;
+  --line:#36536f;--text:#f7faff;--muted:#b3c5d8;
   --accent:#3478ff;--accent2:#7357ff;--good:#39d98a;--bad:#ff6f7d;
 }
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{
   margin:0;color:var(--text);
-  background:linear-gradient(180deg,#08111d 0%,#07111f 100%);
+  background:linear-gradient(180deg,#10243a 0%,#0d1c2f 100%);
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
 }
 .wrap{max-width:1180px;margin:auto;padding:20px 16px 48px}
@@ -52,7 +52,7 @@ button.active{background:linear-gradient(135deg,var(--accent),#416bff);border-co
 
 .gridTop{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(260px,.85fr);gap:14px}
 .panel{
-  background:linear-gradient(180deg,#0d1928,#0a1522);
+  background:linear-gradient(180deg,#172c43,#12263b);
   border:1px solid var(--line);border-radius:16px;padding:16px
 }
 .panelTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
@@ -78,7 +78,7 @@ svg{width:100%;height:100%;display:block}
 .midGrid{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px}
 .cutGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .cut{
-  background:linear-gradient(180deg,#122236,#0e1b2b);
+  background:linear-gradient(180deg,#1a3552,#152b43);
   border:1px solid var(--line);border-radius:12px;padding:12px
 }
 .cut .r{font-size:12px;color:#b9c8db;font-weight:800}
@@ -277,6 +277,48 @@ th:first-child,td:first-child{text-align:left}
 .novelTab{width:100%;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);border-radius:11px;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:750;white-space:normal;line-height:1.45}
 .novelTab.active{background:rgba(255,255,255,.09);color:var(--text);border-color:rgba(255,255,255,.18)}
 .novelTab.addTab{border-style:dashed}
+
+
+/* ===== Light hybrid theme: keep existing layout, brighten visual tone ===== */
+:root{
+  --bg:#f5f7fb;--bg2:#eef3f9;--card:#ffffff;--card2:#f7f9fc;
+  --line:#d9e3ef;--text:#142033;--muted:#718096;
+  --accent:#3478ff;--accent2:#7357ff;--good:#169c62;--bad:#e64f5f;
+}
+html{background:var(--bg)}
+body{background:linear-gradient(180deg,#ffffff 0%,#f5f7fb 100%);color:var(--text)}
+.panel,.miniHead{background:#fff;box-shadow:0 4px 18px rgba(31,55,88,.055)}
+button,select{color:var(--text);background:#fff;border-color:var(--line)}
+button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBtn.active{color:#fff}
+.gridline{stroke:#e5ebf3}.axis{fill:#7b8ca3}
+.notice{background:#f2f7ff;border-color:#c9dcf7;color:#52677f}
+.hourlyTable th:first-child,.hourlyTable td:first-child{background:#fff}
+.serviceHeader{background:rgba(255,255,255,.94);border-bottom:1px solid #e8edf4}
+.brandMark{background:#edf4ff;border-color:#cfe0f7;color:#286ce8}
+.serviceNav button.active,.serviceNav button:hover,.serviceNav .bestTab.active{background:#edf3fb;color:var(--text)}
+.serviceNav .bestTab.active span{color:#4d6683}
+.infoCard,.infoGrid div{background:#fff}
+.adSlot{background:#f8fafc;border-color:#cfd9e6;color:#8290a3}
+.urlRow input,#newRankSelect,.novelTab{background:#fff;color:var(--text)}
+.novelTab.active{background:#eef4ff;color:var(--text);border-color:#bcd0ef}
+
+/* Main current-cutline cards use the clearer compact visual treatment */
+.cutGrid{gap:8px}
+.cut{background:#f6f8fc;border-color:#e5ebf3;border-radius:10px;padding:11px 13px;box-shadow:none}
+.cut .r{color:#52647b;font-size:13px}
+.cut .n{color:#246ee9;font-size:23px}
+.cut .h{color:#8492a6}
+
+/* New Best uses the same visual language as Today Best */
+#newbestView .panel{background:#fff;border-color:var(--line)}
+#newbestView #newCutGrid .cut{background:#f6f8fc;border-color:#e5ebf3}
+#newbestView #newCutGrid .cut .n{color:#246ee9}
+
+@media(max-width:700px){
+  .serviceHeader{background:#fff}
+  .cut{padding:10px 11px}
+  .cut .n{font-size:21px}
+}
 
 </style>
 </head>
@@ -995,12 +1037,19 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 
 <section id="newbestView" class="siteView">
  <main class="wrap">
-  <section class="myHero">
-   <div><div class="eyebrow">NEW BEST</div><h1>무료 신규베스트</h1>
-   <p>신규 작품의 최근 24시간 본인 인증 조회수 기준 신규베스트 커트라인을 시간별로 기록합니다.</p></div>
-  </section>
+  <header class="header">
+    <div>
+      <h1>문피아 무료 신규베스트 분석</h1>
+      <div class="sub">24시간 인증조회수 커트라인 · 시간별/일별 기록</div>
+      <div class="meta">최근 수집: <span id="newHeaderLatest">-</span>&nbsp; | &nbsp;<span class="live">● 자동 수집 중 (매시간 5분)</span></div>
+    </div>
+    <div class="headerCards">
+      <div class="miniHead"><div class="k">데이터 기준</div><div class="v">문피아 무료 신규베스트<br>24시간 인증조회수</div></div>
+      <div class="miniHead"><div class="k">현재 선택</div><div class="v">신규베스트 커트라인</div></div>
+    </div>
+  </header>
   <section class="panel">
-   <div class="panelTitle"><h2>주요 순위 현재 커트라인</h2><span id="newLatest" class="small">수집 시작 전</span></div>
+   <div class="panelTitle"><h2>주요 순위 현재 커트라인</h2><span class="small">24시간 인증조회수</span></div>
    <div id="newCutGrid" class="cutGrid"></div>
   </section>
   <section class="panel">
@@ -1039,6 +1088,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       <div class="urlRow"><input id="novelUrlInput" type="url" placeholder="문피아 작품 URL 또는 작품번호"><button id="saveNovelBtn">등록</button></div>
       <div id="registerMsg" class="registerMsg">등록 정보는 현재 기기의 브라우저에만 저장됩니다.</div><div id="novelTabs" class="novelTabs"></div>
     </section>
+    <div class="adSlot adPrimary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품</b></div>
     <section id="myEmpty" class="panel myEmpty">
       <div class="emptyIcon">✍️</div><h2>등록된 작품이 없어요</h2><p>위에 작품 URL을 넣으면 투베 기록을 찾아볼게요.</p>
     </section>
@@ -1054,7 +1104,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
         <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 300" preserveAspectRatio="none"></svg></div>
       </section>
       <section class="myTwoCol">
-        <div class="panel"><div class="panelTitle"><h2>커트라인까지 거리</h2></div><div id="myDistances" class="distanceList"></div></div>
+        <div class="panel"><div class="panelTitle"><h2>베스트 커트라인까지</h2></div><div id="myDistances" class="distanceList"></div></div>
         <div class="panel"><div class="panelTitle"><h2>최근 기록</h2></div><div id="myRecent" class="recentList"></div></div>
       </section>
     </div>
@@ -1169,8 +1219,28 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     const d=stamp(last.s).slice(0,10),tod=records.filter(r=>stamp(r.s).startsWith(d));
     $q("myBestToday").textContent=Math.min(...tod.map(r=>r.rank))+"위";$q("myFirstToday").textContent="오늘 "+tod.length+"회 기록";
 
-    const targets=[200,160,120,100,80,60,40,20,10];
-    $q("myDistances").innerHTML=targets.map(t=>{const cut=(last.s.items||[]).filter(x=>Number(x.rank)<=t).sort((a,b)=>Math.abs(Number(a.rank)-t)-Math.abs(Number(b.rank)-t))[0];if(!cut)return"";const cv=Number(cut.views_24h_verified??cut.score),diff=cv-last.views;return `<div class="distanceRow"><span>${t}위권</span><b>${last.rank<=t?"진입":"+"+fmtN(Math.max(0,diff))+" 조회 필요"}</b></div>`}).join("");
+    // 투베/신베 200위 커트라인까지 거리를 각각 표시
+    const todaySnaps=getTodaySnaps(), newSnaps=await getNewSnaps();
+    const latestToday=todaySnaps.at(-1), latestNew=newSnaps.at(-1);
+    const nearestCut=(snap,target=200)=>{
+      const items=(snap?.items||[]).filter(x=>Number.isFinite(Number(x.rank)));
+      return items.sort((a,b)=>Math.abs(Number(a.rank)-target)-Math.abs(Number(b.rank)-target) || Number(a.rank)-Number(b.rank))[0]||null;
+    };
+    const cutDistance=(snap,novelRec,label,eligible=true)=>{
+      if(!eligible) return `<div class="distanceRow"><span>${label}</span><b>해당사항 없음</b></div>`;
+      const cut=nearestCut(snap,200);
+      if(!cut) return `<div class="distanceRow"><span>${label}</span><b>데이터 부족</b></div>`;
+      const cv=Number(cut.views_24h_verified??cut.score);
+      const views=Number(novelRec?.views ?? last.views);
+      const rank=Number(novelRec?.rank);
+      const entered=Number.isFinite(rank) && rank<=200;
+      const diff=Math.max(0,cv-views);
+      return `<div class="distanceRow"><span>${label}</span><b>${entered?"진입":"+"+fmtN(diff)+" 조회 필요"}</b></div>`;
+    };
+    // 신베 기록이 한 번도 없는 작품은 신베 항목을 '해당사항 없음'으로 표시
+    $q("myDistances").innerHTML=
+      cutDistance(latestNew,newLast,"신베 커트라인까지",newRec.length>0)+
+      cutDistance(latestToday,todayLast,"투베 커트라인까지",true);
     $q("myRecent").innerHTML=records.slice(-8).reverse().map(r=>`<div class="recentRow"><span>${stamp(r.s).slice(5,16)}</span><b>${r.rank}위 · ${fmtN(r.views)}</b></div>`).join("");
     drawMyChart(records);
   };
@@ -1229,7 +1299,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
  }
  function renderNewBestInner(){
    if(!ns.length){el("newCutGrid").innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';chart();return}
-   const last=ns.at(-1);el("newLatest").textContent=stamp(last).slice(5,16)+" KST";
+   const last=ns.at(-1);el("newHeaderLatest").textContent=stamp(last).slice(5,16)+" KST";
    el("newCutGrid").innerHTML=ranks.map(r=>`<div class="cutCard"><span>${r}위</span><b>${fmt(val(last,r))}</b></div>`).join("");
    const today=ns.filter(s=>day(s)===day(last)).map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);
    if(today.length){const vs=today.map(x=>x.v);el("newTodayStats").innerHTML=`<div class="distanceRow"><span>현재</span><b>${fmt(vs.at(-1))}</b></div><div class="distanceRow"><span>오늘 최고</span><b>${fmt(Math.max(...vs))}</b></div><div class="distanceRow"><span>오늘 최저</span><b>${fmt(Math.min(...vs))}</b></div><div class="distanceRow"><span>오늘 평균</span><b>${fmt(vs.reduce((a,b)=>a+b,0)/vs.length)}</b></div>`;

@@ -272,9 +272,9 @@ th:first-child,td:first-child{text-align:left}
 }
 
 
-.novelTabs{display:flex;gap:8px;overflow-x:auto;padding:13px 1px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.novelTabs::-webkit-scrollbar{display:none}
-.novelTab{flex:0 0 auto;max-width:230px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);border-radius:11px;padding:9px 12px;cursor:pointer;font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.novelTabs{display:flex;flex-direction:column;gap:7px;padding:13px 1px 2px}
+
+.novelTab{width:100%;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);border-radius:11px;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:750;white-space:normal;line-height:1.45}
 .novelTab.active{background:rgba(255,255,255,.09);color:var(--text);border-color:rgba(255,255,255,.18)}
 .novelTab.addTab{border-style:dashed}
 
@@ -1122,7 +1122,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
   }
   function bestKnownTitle(id,todayRec,newRec,list){
     const found=[...todayRec,...newRec].reverse().find(r=>r.it?.title);
-    const title=found?.it?.title || list.find(x=>String(x.id)===String(id))?.title || "작품 "+id;
+    const title=found?.it?.title || list.find(x=>String(x.id)===String(id))?.title || "제목 불러오는 중…";
     if(found?.it?.title){
       const x=list.find(x=>String(x.id)===String(id)); if(x){x.title=found.it.title;saveList(list)}
     }
@@ -1139,7 +1139,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 
   function renderTabs(list,id){
     const box=$q("novelTabs"); if(!box)return;
-    box.innerHTML=list.map(x=>`<button class="novelTab ${String(x.id)===String(id)?"active":""}" data-id="${x.id}" title="${x.title||""}">${x.title||("작품 "+x.id)}</button>`).join("")+
+    box.innerHTML=list.map(x=>`<button class="novelTab ${String(x.id)===String(id)?"active":""}" data-id="${x.id}" title="${x.title||""}">${((x.title && !/^작품 \d+$/.test(x.title))?x.title:"제목 불러오는 중…")}</button>`).join("")+
       '<button class="novelTab addTab" id="focusAddNovel">＋ 작품 추가</button>';
     box.querySelectorAll(".novelTab[data-id]").forEach(b=>b.onclick=()=>{localStorage.setItem(ACTIVE,b.dataset.id);renderMyWork()});
     $q("focusAddNovel").onclick=()=>{$q("novelUrlInput").focus();$q("novelUrlInput").scrollIntoView({behavior:"smooth",block:"center"})};
@@ -1179,9 +1179,9 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     const id=novelIdFromInput($q("novelUrlInput").value);
     if(!id){$q("registerMsg").textContent="문피아 작품 URL 또는 작품번호를 확인해줘.";return}
     const list=getList();
-    if(!list.some(x=>String(x.id)===String(id)))list.push({id:String(id),title:"작품 "+id});
+    if(!list.some(x=>String(x.id)===String(id)))list.push({id:String(id),title:"제목 불러오는 중…"});
     saveList(list);localStorage.setItem(ACTIVE,String(id));$q("novelUrlInput").value="";
-    $q("registerMsg").textContent="작품 추가 완료! 제목은 수집 데이터에서 자동으로 가져와.";renderMyWork();
+    $q("registerMsg").textContent="작품 추가 완료! 수집 데이터에 작품이 확인되면 제목으로 자동 표시돼.";renderMyWork();
   });
   $q("removeNovelBtn")?.addEventListener("click",()=>{
     const list=getList(),id=activeId(list),next=list.filter(x=>String(x.id)!==String(id));saveList(next);

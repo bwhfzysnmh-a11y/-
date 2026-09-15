@@ -271,6 +271,13 @@ th:first-child,td:first-child{text-align:left}
   .serviceNav .bestTab{min-width:52px;padding-left:7px;padding-right:7px}
 }
 
+
+.novelTabs{display:flex;gap:8px;overflow-x:auto;padding:13px 1px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.novelTabs::-webkit-scrollbar{display:none}
+.novelTab{flex:0 0 auto;max-width:230px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);border-radius:11px;padding:9px 12px;cursor:pointer;font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.novelTab.active{background:rgba(255,255,255,.09);color:var(--text);border-color:rgba(255,255,255,.18)}
+.novelTab.addTab{border-style:dashed}
+
 </style>
 </head>
 <body>
@@ -1024,20 +1031,20 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       <div>
         <div class="eyebrow">MY NOVEL TRACKER</div>
         <h1>내 작품 추적</h1>
-        <p>문피아 작품 URL을 한 번 등록하면 이 브라우저에 저장하고, 투데이베스트 진입 이후 순위 변화를 자동으로 보여줘요.</p>
+        <p>연재 중인 작품을 여러 개 등록해두고, 작품 제목을 눌러 각각의 투데이·신규베스트 기록을 확인할 수 있어요.</p>
       </div>
     </section>
     <section class="panel myRegister">
-      <div class="panelTitle"><h2>작품 등록</h2><span class="small">회원가입 필요 없음</span></div>
+      <div class="panelTitle"><h2>작품 관리</h2><span class="small">여러 작품 등록 가능</span></div>
       <div class="urlRow"><input id="novelUrlInput" type="url" placeholder="문피아 작품 URL 또는 작품번호"><button id="saveNovelBtn">등록</button></div>
-      <div id="registerMsg" class="registerMsg">등록 정보는 현재 기기의 브라우저에만 저장됩니다.</div>
+      <div id="registerMsg" class="registerMsg">등록 정보는 현재 기기의 브라우저에만 저장됩니다.</div><div id="novelTabs" class="novelTabs"></div>
     </section>
     <section id="myEmpty" class="panel myEmpty">
       <div class="emptyIcon">✍️</div><h2>등록된 작품이 없어요</h2><p>위에 작품 URL을 넣으면 투베 기록을 찾아볼게요.</p>
     </section>
     <div id="myDashboard" style="display:none">
       <section class="myTopCards">
-        <div class="panel myIdentity"><div class="small">등록 작품</div><h2 id="myNovelName">내 작품</h2><div class="myId" id="myNovelId">-</div><button id="removeNovelBtn" class="ghostBtn">등록 해제</button></div>
+        <div class="panel myIdentity"><div class="small">등록 작품</div><h2 id="myNovelName">내 작품</h2><div class="myId" id="myNovelId">-</div><button id="removeNovelBtn" class="ghostBtn">이 작품 등록 해제</button></div>
         <div class="panel myMetric"><span>현재 순위</span><b id="myCurrentRank">-</b><small id="myRankChange">최근 기록 기준</small></div>
         <div class="panel myMetric"><span>인증조회수</span><b id="myViews">-</b><small>최근 24시간</small></div>
         <div class="panel myMetric"><span>오늘 최고순위</span><b id="myBestToday">-</b><small id="myFirstToday">-</small></div>
@@ -1063,11 +1070,13 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 <script>
 (function(){
   const $q=id=>document.getElementById(id);
+  const STORE="tubecut_my_novels", ACTIVE="tubecut_my_active";
   function switchView(name){
     ["analysis","newbest","mywork","guide"].forEach(v=>$q(v+"View")?.classList.toggle("active",v===name));
     document.querySelectorAll(".viewBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
     window.scrollTo({top:0,behavior:"smooth"});
-    if(name==="mywork") renderMyWork(); if(name==="newbest") renderNewBest();
+    if(name==="mywork") renderMyWork();
+    if(name==="newbest" && window.renderNewBest) window.renderNewBest();
   }
   document.querySelectorAll(".viewBtn").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
 
@@ -1075,66 +1084,109 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     const m=String(v||"").match(/(?:novel\/detail\/|novel\/)(\d+)|^\s*(\d+)\s*$/);
     return m ? (m[1]||m[2]) : null;
   }
-  function getSnaps(){ return Array.isArray(window.snaps)?window.snaps:(typeof snaps!=="undefined"?snaps:[]); }
-  function itemFor(s,id){ return (s.items||[]).find(x=>String(x.novel_id)===String(id)); }
-  function titleFor(item){ return item?.title || "내 작품"; }
-  function fmtN(v){ return v==null?"-":Number(v).toLocaleString("ko-KR"); }
+  function getList(){
+    try{
+      let a=JSON.parse(localStorage.getItem(STORE)||"[]");
+      if(!Array.isArray(a))a=[];
+      const old=localStorage.getItem("tubecut_my_novel");
+      if(old && !a.some(x=>String(x.id)===String(old))) a.push({id:String(old),title:"내 작품"});
+      localStorage.setItem(STORE,JSON.stringify(a));
+      return a;
+    }catch(e){return[]}
+  }
+  function saveList(a){localStorage.setItem(STORE,JSON.stringify(a))}
+  function activeId(list){
+    let id=localStorage.getItem(ACTIVE);
+    if(!list.some(x=>String(x.id)===String(id))) id=list[0]?.id||null;
+    if(id)localStorage.setItem(ACTIVE,String(id));
+    return id;
+  }
+  function getTodaySnaps(){return Array.isArray(window.snaps)?window.snaps:(typeof snaps!=="undefined"?snaps:[])}
+  function itemFor(s,id){return (s.items||[]).find(x=>String(x.novel_id)===String(id))}
+  function fmtN(v){return v==null?"-":Number(v).toLocaleString("ko-KR")}
+  function stamp(s){return String(s?.slot_at_kst||s?.captured_at_kst||"")}
+
+  async function getNewSnaps(){
+    if(Array.isArray(window.newBestSnaps)) return window.newBestSnaps;
+    try{
+      const r=await fetch("./data/new/latest.json?ts="+Date.now(),{cache:"no-store"});
+      window.newBestSnaps=r.ok?await r.json():[];
+    }catch(e){window.newBestSnaps=[]}
+    return window.newBestSnaps;
+  }
+
+  function recordsFor(ss,id){
+    const out=[];
+    ss.forEach(s=>{const it=itemFor(s,id);if(it)out.push({s,it,rank:Number(it.rank),views:Number(it.views_24h_verified??it.score)})});
+    return out;
+  }
+  function bestKnownTitle(id,todayRec,newRec,list){
+    const found=[...todayRec,...newRec].reverse().find(r=>r.it?.title);
+    const title=found?.it?.title || list.find(x=>String(x.id)===String(id))?.title || "작품 "+id;
+    if(found?.it?.title){
+      const x=list.find(x=>String(x.id)===String(id)); if(x){x.title=found.it.title;saveList(list)}
+    }
+    return title;
+  }
 
   function drawMyChart(records){
     const svg=$q("myRankChart"); if(!svg)return;
     if(records.length<2){svg.innerHTML='<text x="380" y="145" text-anchor="middle" fill="#8d99aa" font-size="13">순위 기록이 더 쌓이면 그래프가 표시됩니다.</text>';return}
-    const rec=records.slice(-72), W=760,H=300,p=38;
-    const vals=rec.map(x=>x.rank), min=Math.max(1,Math.min(...vals)-10), max=Math.min(200,Math.max(...vals)+10);
-    const x=i=>p+(W-p*2)*(i/(rec.length-1));
-    const y=v=>p+(H-p*2)*((v-min)/Math.max(1,max-min));
-    const pts=rec.map((r,i)=>`${x(i)},${y(r.rank)}`).join(" ");
-    svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/>
-      <line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/>
-      <text x="8" y="${p+5}" fill="#8d99aa" font-size="11">${min}위</text>
-      <text x="8" y="${H-p+4}" fill="#8d99aa" font-size="11">${max}위</text>
-      <polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/>
-      <circle cx="${x(rec.length-1)}" cy="${y(rec[rec.length-1].rank)}" r="5" fill="currentColor"/>`;
+    const rec=records.slice(-72),W=760,H=300,p=38,vals=rec.map(x=>x.rank),min=Math.max(1,Math.min(...vals)-10),max=Math.min(200,Math.max(...vals)+10);
+    const x=i=>p+(W-p*2)*(i/(rec.length-1)),y=v=>p+(H-p*2)*((v-min)/Math.max(1,max-min));
+    svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><text x="8" y="${p+5}" fill="#8d99aa" font-size="11">${min}위</text><text x="8" y="${H-p+4}" fill="#8d99aa" font-size="11">${max}위</text><polyline points="${rec.map((r,i)=>`${x(i)},${y(r.rank)}`).join(" ")}" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/>`;
   }
 
-  window.renderMyWork=function(){
-    const id=localStorage.getItem("tubecut_my_novel");
-    $q("myEmpty").style.display=id?"none":"block"; $q("myDashboard").style.display=id?"block":"none";
+  function renderTabs(list,id){
+    const box=$q("novelTabs"); if(!box)return;
+    box.innerHTML=list.map(x=>`<button class="novelTab ${String(x.id)===String(id)?"active":""}" data-id="${x.id}" title="${x.title||""}">${x.title||("작품 "+x.id)}</button>`).join("")+
+      '<button class="novelTab addTab" id="focusAddNovel">＋ 작품 추가</button>';
+    box.querySelectorAll(".novelTab[data-id]").forEach(b=>b.onclick=()=>{localStorage.setItem(ACTIVE,b.dataset.id);renderMyWork()});
+    $q("focusAddNovel").onclick=()=>{$q("novelUrlInput").focus();$q("novelUrlInput").scrollIntoView({behavior:"smooth",block:"center"})};
+  }
+
+  window.renderMyWork=async function(){
+    const list=getList(),id=activeId(list);
+    renderTabs(list,id);
+    $q("myEmpty").style.display=id?"none":"block";$q("myDashboard").style.display=id?"block":"none";
     if(!id)return;
-    const ss=getSnaps(), records=[];
-    ss.forEach(s=>{const it=itemFor(s,id);if(it)records.push({s,it,rank:Number(it.rank),views:Number(it.views_24h_verified??it.score)});});
-    $q("myNovelId").textContent="작품번호 "+id;
+
+    const todayRec=recordsFor(getTodaySnaps(),id), newRec=recordsFor(await getNewSnaps(),id);
+    const title=bestKnownTitle(id,todayRec,newRec,list);
+    renderTabs(list,id);
+    $q("myNovelName").textContent=title;$q("myNovelId").textContent="작품번호 "+id;
+
+    const records=todayRec.length?todayRec:newRec;
     if(!records.length){
-      $q("myNovelName").textContent="내 작품";$q("myCurrentRank").textContent="200위 밖 / 기록 없음";$q("myViews").textContent="-";$q("myBestToday").textContent="-";$q("myFirstToday").textContent="투베 진입 후 자동 기록";
-      $q("myDistances").innerHTML='<div class="mutedText">아직 수집된 투베 1~200위 기록에서 이 작품을 찾지 못했어요.</div>';
-      $q("myRecent").innerHTML='<div class="mutedText">기록 없음</div>'; drawMyChart([]); return;
+      $q("myCurrentRank").textContent="기록 없음";$q("myViews").textContent="-";$q("myBestToday").textContent="-";$q("myFirstToday").textContent="신베·투베 진입 후 자동 기록";
+      $q("myRankChange").textContent="투베 / 신베 200위 밖";$q("myDistances").innerHTML='<div class="mutedText">아직 수집된 신베·투베 기록에서 이 작품을 찾지 못했어요.</div>';$q("myRecent").innerHTML='<div class="mutedText">기록 없음</div>';drawMyChart([]);return;
     }
-    const last=records.at(-1), prev=records.at(-2);
-    $q("myNovelName").textContent=titleFor(last.it); $q("myCurrentRank").textContent=last.rank+"위"; $q("myViews").textContent=fmtN(last.views);
-    $q("myRankChange").textContent=prev?(prev.rank===last.rank?"변동 없음":`${prev.rank-last.rank>0?"▲":"▼"} ${Math.abs(prev.rank-last.rank)}위`):"첫 기록";
-    const day=(last.s.slot_at_kst||last.s.captured_at_kst||"").slice(0,10);
-    const today=records.filter(r=>(r.s.slot_at_kst||r.s.captured_at_kst||"").startsWith(day));
-    $q("myBestToday").textContent=Math.min(...today.map(r=>r.rank))+"위";
-    $q("myFirstToday").textContent="오늘 "+today.length+"회 기록";
+    const last=records.at(-1),prev=records.at(-2);
+    const todayLast=todayRec.at(-1),newLast=newRec.at(-1);
+    $q("myCurrentRank").textContent=todayLast?`투베 ${todayLast.rank}위`:`신베 ${newLast.rank}위`;
+    $q("myViews").textContent=fmtN(last.views);
+    $q("myRankChange").textContent=[todayLast?`투베 ${todayLast.rank}위`:null,newLast?`신베 ${newLast.rank}위`:null].filter(Boolean).join(" · ");
+    const d=stamp(last.s).slice(0,10),tod=records.filter(r=>stamp(r.s).startsWith(d));
+    $q("myBestToday").textContent=Math.min(...tod.map(r=>r.rank))+"위";$q("myFirstToday").textContent="오늘 "+tod.length+"회 기록";
+
     const targets=[200,160,120,100,80,60,40,20,10];
-    $q("myDistances").innerHTML=targets.map(t=>{
-      const cut=(last.s.items||[]).filter(x=>Number(x.rank)<=t).sort((a,b)=>Math.abs(Number(a.rank)-t)-Math.abs(Number(b.rank)-t))[0];
-      if(!cut)return "";
-      const cv=Number(cut.views_24h_verified??cut.score), diff=cv-last.views;
-      return `<div class="distanceRow"><span>${t}위권</span><b>${last.rank<=t?"진입":"+"+fmtN(Math.max(0,diff))+" 조회 필요"}</b></div>`;
-    }).join("");
-    $q("myRecent").innerHTML=records.slice(-8).reverse().map(r=>{
-      const stamp=r.s.slot_at_kst||r.s.captured_at_kst||"";
-      return `<div class="recentRow"><span>${stamp.slice(5,16)}</span><b>${r.rank}위 · ${fmtN(r.views)}</b></div>`;
-    }).join("");
+    $q("myDistances").innerHTML=targets.map(t=>{const cut=(last.s.items||[]).filter(x=>Number(x.rank)<=t).sort((a,b)=>Math.abs(Number(a.rank)-t)-Math.abs(Number(b.rank)-t))[0];if(!cut)return"";const cv=Number(cut.views_24h_verified??cut.score),diff=cv-last.views;return `<div class="distanceRow"><span>${t}위권</span><b>${last.rank<=t?"진입":"+"+fmtN(Math.max(0,diff))+" 조회 필요"}</b></div>`}).join("");
+    $q("myRecent").innerHTML=records.slice(-8).reverse().map(r=>`<div class="recentRow"><span>${stamp(r.s).slice(5,16)}</span><b>${r.rank}위 · ${fmtN(r.views)}</b></div>`).join("");
     drawMyChart(records);
   };
 
   $q("saveNovelBtn")?.addEventListener("click",()=>{
     const id=novelIdFromInput($q("novelUrlInput").value);
     if(!id){$q("registerMsg").textContent="문피아 작품 URL 또는 작품번호를 확인해줘.";return}
-    localStorage.setItem("tubecut_my_novel",id);$q("registerMsg").textContent="등록 완료! 투베 기록을 확인했어.";renderMyWork();
+    const list=getList();
+    if(!list.some(x=>String(x.id)===String(id)))list.push({id:String(id),title:"작품 "+id});
+    saveList(list);localStorage.setItem(ACTIVE,String(id));$q("novelUrlInput").value="";
+    $q("registerMsg").textContent="작품 추가 완료! 제목은 수집 데이터에서 자동으로 가져와.";renderMyWork();
   });
-  $q("removeNovelBtn")?.addEventListener("click",()=>{localStorage.removeItem("tubecut_my_novel");renderMyWork()});
+  $q("removeNovelBtn")?.addEventListener("click",()=>{
+    const list=getList(),id=activeId(list),next=list.filter(x=>String(x.id)!==String(id));saveList(next);
+    localStorage.removeItem("tubecut_my_novel");localStorage.setItem(ACTIVE,String(next[0]?.id||""));renderMyWork();
+  });
 })();
 </script>
 

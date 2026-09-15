@@ -320,6 +320,21 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
   .cut .n{font-size:21px}
 }
 
+
+/* ===== My Work: compact comparison card ===== */
+.myWorkOverview{margin-bottom:14px}
+.myOverviewHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.myOverviewTitle{margin:0}.myOverviewTitle h2{font-size:20px}
+.myCompareTabs{display:flex;gap:8px}.myCompareBtn{padding:9px 15px;font-weight:800;color:var(--text);background:#f7f9fc}.myCompareBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.myWorkInfo{display:grid;grid-template-columns:86px minmax(180px,1.3fr) minmax(0,2fr);gap:14px;align-items:center}
+.myCover{width:86px;height:112px;border-radius:10px;background:linear-gradient(145deg,#eaf2ff,#d8e7ff);border:1px solid #cbdcf3;display:grid;place-items:center;color:#3478ff;font-weight:900;font-size:17px;overflow:hidden}
+.myCover img{width:100%;height:100%;object-fit:cover}.myWorkMain h2{font-size:17px;margin:0 0 7px;line-height:1.4}.myWorkMain .ghostBtn{margin-top:9px}
+.mySummaryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.mySummary{background:#f6f8fc;border:1px solid #e6ecf4;border-radius:11px;padding:11px;min-width:0}.mySummary span,.mySummary small{display:block;color:var(--muted);font-size:11px}.mySummary b{display:block;font-size:21px;margin:4px 0;color:var(--text);white-space:nowrap}.mySummary:first-child b{color:#246ee9}.mySummary small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.myCutHead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:17px 0 8px}.myCutHead h3{margin:0;font-size:15px}.myCutHead span{color:var(--muted);font-size:11px}
+.myCutNeedGrid{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid #e3eaf3;border-radius:11px;overflow:hidden}.myCutCell{padding:11px 8px;text-align:center;background:#fff;border-right:1px solid #e3eaf3}.myCutCell:last-child{border-right:0}.myCutCell span{display:block;color:var(--muted);font-size:11px}.myCutCell b{display:block;margin-top:3px;font-size:16px}.myCutCell b.need{color:#e64f5f}.myCutCell b.done{color:#169c62}.myCutCell b.blue{color:#246ee9}.myCutNote{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5}
+@media(max-width:760px){.myOverviewHead{align-items:flex-start}.myOverviewTitle h2{font-size:18px}.myCompareBtn{padding:8px 11px;font-size:12px}.myWorkInfo{grid-template-columns:72px 1fr}.myCover{width:72px;height:96px}.mySummaryGrid{grid-column:1/-1;grid-template-columns:repeat(4,1fr)}.mySummary{padding:9px 7px}.mySummary b{font-size:18px}.mySummary span,.mySummary small{font-size:10px}.myCutNeedGrid{grid-template-columns:repeat(3,1fr)}.myCutCell{border-bottom:1px solid #e3eaf3}.myCutCell:nth-child(3n){border-right:0}.myCutCell:nth-last-child(-n+3){border-bottom:0}}
+@media(max-width:420px){.myWorkInfo{grid-template-columns:64px 1fr}.myCover{width:64px;height:86px}.mySummaryGrid{grid-template-columns:repeat(2,1fr)}.myCutHead{align-items:flex-start;flex-direction:column;gap:4px}}
+
 </style>
 </head>
 <body>
@@ -1088,24 +1103,46 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       <div class="urlRow"><input id="novelUrlInput" type="url" placeholder="문피아 작품 URL 또는 작품번호"><button id="saveNovelBtn">등록</button></div>
       <div id="registerMsg" class="registerMsg">등록 정보는 현재 기기의 브라우저에만 저장됩니다.</div><div id="novelTabs" class="novelTabs"></div>
     </section>
-    <div class="adSlot adPrimary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품</b></div>
     <section id="myEmpty" class="panel myEmpty">
       <div class="emptyIcon">✍️</div><h2>등록된 작품이 없어요</h2><p>위에 작품 URL을 넣으면 투베 기록을 찾아볼게요.</p>
     </section>
     <div id="myDashboard" style="display:none">
-      <section class="myTopCards">
-        <div class="panel myIdentity"><div class="small">등록 작품</div><h2 id="myNovelName">내 작품</h2><div class="myId" id="myNovelId">-</div><button id="removeNovelBtn" class="ghostBtn">이 작품 등록 해제</button></div>
-        <div class="panel myMetric"><span>현재 순위</span><b id="myCurrentRank">-</b><small id="myRankChange">최근 기록 기준</small></div>
-        <div class="panel myMetric"><span>인증조회수</span><b id="myViews">-</b><small>최근 24시간</small></div>
-        <div class="panel myMetric"><span>오늘 최고순위</span><b id="myBestToday">-</b><small id="myFirstToday">-</small></div>
+      <section class="panel myWorkOverview">
+        <div class="myOverviewHead">
+          <div class="panelTitle myOverviewTitle"><h2>📊 내 작품 분석</h2></div>
+          <div class="myCompareTabs">
+            <button class="myCompareBtn active" data-mode="today">투베 비교</button>
+            <button class="myCompareBtn" data-mode="new">신베 비교</button>
+          </div>
+        </div>
+        <div class="myWorkInfo">
+          <div class="myCover" id="myNovelCover"><span>작품</span></div>
+          <div class="myWorkMain">
+            <h2 id="myNovelName">내 작품</h2>
+            <div class="myId" id="myNovelId">-</div>
+            <button id="removeNovelBtn" class="ghostBtn">이 작품 등록 해제</button>
+          </div>
+          <div class="mySummaryGrid">
+            <div class="mySummary"><span>오늘</span><b id="myCurrentRank">-</b><small id="myRankChange">최근 기록 기준</small></div>
+            <div class="mySummary"><span>어제</span><b id="myYesterdayRank">-</b><small>마지막 기록</small></div>
+            <div class="mySummary"><span>최고</span><b id="myBestToday">-</b><small id="myFirstToday">전체 기록</small></div>
+            <div class="mySummary"><span>현재 인증조회수</span><b id="myViews">-</b><small>최근 24시간</small></div>
+          </div>
+        </div>
+        <div class="myCutHead"><h3>베스트 커트라인까지 필요한 인증 조회수</h3><span id="myCutBasis">-</span></div>
+        <div id="myCutNeedGrid" class="myCutNeedGrid"></div>
+        <div class="myCutNote">※ 현재 작품의 인증조회수를 기준으로, 각 주요 순위까지 필요한 추가 조회수입니다.</div>
       </section>
+
+      <div class="adSlot adPrimary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품</b></div>
+
       <section class="panel">
-        <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small">최근 기록</span></div>
+        <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small" id="myChartModeLabel">투데이베스트 · 최근 기록</span></div>
         <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 300" preserveAspectRatio="none"></svg></div>
       </section>
       <section class="myTwoCol">
-        <div class="panel"><div class="panelTitle"><h2>베스트 커트라인까지</h2></div><div id="myDistances" class="distanceList"></div></div>
-        <div class="panel"><div class="panelTitle"><h2>최근 기록</h2></div><div id="myRecent" class="recentList"></div></div>
+        <div class="panel"><div class="panelTitle"><h2 id="myCompareSummaryTitle">투베 비교</h2><span class="small">주요 순위</span></div><div id="myDistances" class="distanceList"></div></div>
+        <div class="panel"><div class="panelTitle"><h2>최근 기록</h2><span class="small" id="myRecentMode">투베</span></div><div id="myRecent" class="recentList"></div></div>
       </section>
     </div>
   </main>
@@ -1121,6 +1158,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 (function(){
   const $q=id=>document.getElementById(id);
   const STORE="tubecut_my_novels", ACTIVE="tubecut_my_active";
+  let myCompareMode="today";
   function switchView(name){
     ["analysis","newbest","mywork","guide"].forEach(v=>$q(v+"View")?.classList.toggle("active",v===name));
     document.querySelectorAll(".viewBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
@@ -1201,46 +1239,66 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     $q("myEmpty").style.display=id?"none":"block";$q("myDashboard").style.display=id?"block":"none";
     if(!id)return;
 
-    const todayRec=recordsFor(getTodaySnaps(),id), newRec=recordsFor(await getNewSnaps(),id);
+    const todaySnaps=getTodaySnaps(), newSnaps=await getNewSnaps();
+    const todayRec=recordsFor(todaySnaps,id), newRec=recordsFor(newSnaps,id);
     const title=bestKnownTitle(id,todayRec,newRec,list);
     renderTabs(list,id);
-    $q("myNovelName").textContent=title;$q("myNovelId").textContent="작품번호 "+id;
+    $q("myNovelName").textContent=title;$q("myNovelId").textContent="무료연재 · 작품번호 "+id;
 
-    const records=todayRec.length?todayRec:newRec;
+    document.querySelectorAll(".myCompareBtn").forEach(b=>{
+      b.classList.toggle("active",b.dataset.mode===myCompareMode);
+      b.onclick=()=>{myCompareMode=b.dataset.mode;renderMyWork()};
+    });
+
+    const isNew=myCompareMode==="new";
+    const records=isNew?newRec:todayRec;
+    const snaps=isNew?newSnaps:todaySnaps;
+    const modeName=isNew?"신규베스트":"투데이베스트";
+    const shortName=isNew?"신베":"투베";
+    $q("myChartModeLabel").textContent=modeName+" · 최근 기록";
+    $q("myCompareSummaryTitle").textContent=shortName+" 비교";
+    $q("myRecentMode").textContent=shortName;
+
+    // 작품 제목은 다른 베스트 기록에서 찾았더라도, 선택한 베스트 기록이 없으면 해당사항 없음으로 표시
     if(!records.length){
-      $q("myCurrentRank").textContent="기록 없음";$q("myViews").textContent="-";$q("myBestToday").textContent="-";$q("myFirstToday").textContent="신베·투베 진입 후 자동 기록";
-      $q("myRankChange").textContent="투베 / 신베 200위 밖";$q("myDistances").innerHTML='<div class="mutedText">아직 수집된 신베·투베 기록에서 이 작품을 찾지 못했어요.</div>';$q("myRecent").innerHTML='<div class="mutedText">기록 없음</div>';drawMyChart([]);return;
+      $q("myCurrentRank").textContent="해당사항 없음";$q("myYesterdayRank").textContent="-";$q("myViews").textContent="-";$q("myBestToday").textContent="-";$q("myFirstToday").textContent=shortName+" 기록 없음";
+      $q("myRankChange").textContent=shortName+" 미진입";
+      $q("myCutBasis").textContent="기준 데이터 없음";
+      $q("myCutNeedGrid").innerHTML=[4,10,20,40,60,100].map(r=>`<div class="myCutCell"><span>${r}위</span><b class="blue">해당사항 없음</b></div>`).join("");
+      $q("myDistances").innerHTML='<div class="mutedText">'+shortName+' 기록이 없어 비교할 수 없어요.</div>';
+      $q("myRecent").innerHTML='<div class="mutedText">기록 없음</div>';drawMyChart([]);return;
     }
-    const last=records.at(-1),prev=records.at(-2);
-    const todayLast=todayRec.at(-1),newLast=newRec.at(-1);
-    $q("myCurrentRank").textContent=todayLast?`투베 ${todayLast.rank}위`:`신베 ${newLast.rank}위`;
-    $q("myViews").textContent=fmtN(last.views);
-    $q("myRankChange").textContent=[todayLast?`투베 ${todayLast.rank}위`:null,newLast?`신베 ${newLast.rank}위`:null].filter(Boolean).join(" · ");
-    const d=stamp(last.s).slice(0,10),tod=records.filter(r=>stamp(r.s).startsWith(d));
-    $q("myBestToday").textContent=Math.min(...tod.map(r=>r.rank))+"위";$q("myFirstToday").textContent="오늘 "+tod.length+"회 기록";
 
-    // 투베/신베 200위 커트라인까지 거리를 각각 표시
-    const todaySnaps=getTodaySnaps(), newSnaps=await getNewSnaps();
-    const latestToday=todaySnaps.at(-1), latestNew=newSnaps.at(-1);
-    const nearestCut=(snap,target=200)=>{
-      const items=(snap?.items||[]).filter(x=>Number.isFinite(Number(x.rank)));
-      return items.sort((a,b)=>Math.abs(Number(a.rank)-target)-Math.abs(Number(b.rank)-target) || Number(a.rank)-Number(b.rank))[0]||null;
-    };
-    const cutDistance=(snap,novelRec,label,eligible=true)=>{
-      if(!eligible) return `<div class="distanceRow"><span>${label}</span><b>해당사항 없음</b></div>`;
-      const cut=nearestCut(snap,200);
-      if(!cut) return `<div class="distanceRow"><span>${label}</span><b>데이터 부족</b></div>`;
-      const cv=Number(cut.views_24h_verified??cut.score);
-      const views=Number(novelRec?.views ?? last.views);
-      const rank=Number(novelRec?.rank);
-      const entered=Number.isFinite(rank) && rank<=200;
-      const diff=Math.max(0,cv-views);
-      return `<div class="distanceRow"><span>${label}</span><b>${entered?"진입":"+"+fmtN(diff)+" 조회 필요"}</b></div>`;
-    };
-    // 신베 기록이 한 번도 없는 작품은 신베 항목을 '해당사항 없음'으로 표시
-    $q("myDistances").innerHTML=
-      cutDistance(latestNew,newLast,"신베 커트라인까지",newRec.length>0)+
-      cutDistance(latestToday,todayLast,"투베 커트라인까지",true);
+    const last=records.at(-1);
+    const lastDate=stamp(last.s).slice(0,10);
+    const todayRecords=records.filter(r=>stamp(r.s).slice(0,10)===lastDate);
+    const prevDates=[...new Set(records.map(r=>stamp(r.s).slice(0,10)).filter(d=>d<lastDate))].sort();
+    const yDate=prevDates.at(-1), yRec=yDate?records.filter(r=>stamp(r.s).slice(0,10)===yDate).at(-1):null;
+    const bestRank=Math.min(...records.map(r=>r.rank));
+
+    $q("myCurrentRank").textContent=last.rank+"위";
+    $q("myYesterdayRank").textContent=yRec?yRec.rank+"위":"-";
+    $q("myViews").textContent=fmtN(last.views);
+    $q("myRankChange").textContent=shortName+" 현재";
+    $q("myBestToday").textContent=bestRank+"위";
+    $q("myFirstToday").textContent="오늘 "+todayRecords.length+"회 기록";
+
+    const latest=snaps.at(-1);
+    $q("myCutBasis").textContent=latest?("기준: "+stamp(latest).slice(5,16)):"기준 데이터 없음";
+    const ranks=[4,10,20,40,60,100];
+    $q("myCutNeedGrid").innerHTML=ranks.map(r=>{
+      const cv=latest?Number(valAt(latest,r)):NaN;
+      if(!Number.isFinite(cv))return `<div class="myCutCell"><span>${r}위</span><b class="blue">-</b></div>`;
+      const diff=Math.max(0,cv-Number(last.views));
+      return `<div class="myCutCell"><span>${r}위</span><b class="${diff>0?'need':'done'}">${diff>0?('+'+fmtN(diff)):'달성'}</b></div>`;
+    }).join("");
+
+    $q("myDistances").innerHTML=ranks.map(r=>{
+      const cv=latest?Number(valAt(latest,r)):NaN;
+      if(!Number.isFinite(cv))return `<div class="distanceRow"><span>${r}위</span><b>데이터 없음</b></div>`;
+      const diff=Math.max(0,cv-Number(last.views));
+      return `<div class="distanceRow"><span>${r}위 커트 ${fmtN(cv)}</span><b class="${diff>0?'':'positive'}">${diff>0?('+'+fmtN(diff)+' 필요'):'달성'}</b></div>`;
+    }).join("");
     $q("myRecent").innerHTML=records.slice(-8).reverse().map(r=>`<div class="recentRow"><span>${stamp(r.s).slice(5,16)}</span><b>${r.rank}위 · ${fmtN(r.views)}</b></div>`).join("");
     drawMyChart(records);
   };

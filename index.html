@@ -90,7 +90,12 @@ svg{width:100%;height:100%;display:block}
 .cut .h{font-size:11px;color:var(--muted);margin-top:3px}
 .monthControls{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .monthControls select{padding:8px 11px}
-.monthChart{height:310px;margin-top:4px}
+.monthBody{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(390px,.85fr);gap:18px;align-items:start}
+.monthChart{height:310px;margin-top:4px;min-width:0}
+.monthTableScroll{max-height:310px;overflow:auto;-webkit-overflow-scrolling:touch;border-left:1px solid var(--line);padding-left:14px}
+.monthTableScroll table{min-width:430px}
+.monthTableScroll th,.monthTableScroll td{padding:8px 7px}
+.monthTableScroll thead th{position:sticky;top:0;background:#fff;z-index:2}
 
 table{width:100%;border-collapse:collapse}
 th,td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:12px;text-align:right}
@@ -168,6 +173,11 @@ th:first-child,td:first-child{text-align:left}
 .fullPanel{margin-top:14px}
 .footer{color:#61758d;font-size:11px;text-align:center;margin-top:22px}
 
+@media(max-width:1050px) and (min-width:781px){
+  .monthBody{grid-template-columns:minmax(0,1fr) minmax(350px,.9fr);gap:12px}
+  .monthTableScroll{padding-left:10px}
+}
+
 @media(max-width:780px){
   .wrap{padding:14px 12px 36px}
   .header{display:block}
@@ -184,7 +194,9 @@ th:first-child,td:first-child{text-align:left}
   .cutGrid{grid-template-columns:repeat(3,1fr)}
   .cut .n{font-size:21px}
   .rankButtons{grid-template-columns:repeat(4,1fr)}
+  .monthBody{grid-template-columns:1fr;gap:10px}
   .monthChart{height:255px}
+  .monthTableScroll{max-height:none;border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:8px;overflow-x:auto}
   .panel{padding:14px}
 }
 
@@ -499,11 +511,13 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
       <select id="monthRankSelect" aria-label="월별 분석 순위"></select>
       <select id="yearSelect" aria-label="월별 분석 연도"></select>
     </div>
-    <div class="monthChart">
-      <svg id="monthChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg>
-    </div>
-    <div class="scroll">
-      <table id="monthTable"></table>
+    <div class="monthBody">
+      <div class="monthChart">
+        <svg id="monthChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="monthTableScroll">
+        <table id="monthTable"></table>
+      </div>
     </div>
   </section>
 
@@ -1197,8 +1211,10 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
   <section class="panel fullPanel">
     <div class="panelTitle"><h2 id="newMonthTitle">200위 월별 평균 인증조회수 커트라인</h2><span class="small">주요 순위별 월간 평균</span></div>
     <div class="monthControls"><select id="newMonthRankSelect" aria-label="신베 월별 분석 순위"></select><select id="newYearSelect" aria-label="신베 월별 분석 연도"></select></div>
-    <div class="monthChart"><svg id="newMonthChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg></div>
-    <div class="scroll"><table id="newMonthTable"></table></div>
+    <div class="monthBody">
+      <div class="monthChart"><svg id="newMonthChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="monthTableScroll"><table id="newMonthTable"></table></div>
+    </div>
   </section>
 
   <div class="footer">문피아 무료 신규베스트 24시간 인증조회수 기준</div>

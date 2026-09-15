@@ -8,9 +8,12 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-URL = "https://www.munpia.com/best/today?displayType=GRID"
-LEGACY_OUT = Path("data/data.json")
-ARCHIVE_ROOT = Path("data/archive")
+TODAY_URL = "https://www.munpia.com/best/today?displayType=GRID"
+NEW_URL = "https://www.munpia.com/best/new.novel.today?displayType=LIST"
+MODE = os.getenv("MUNPIA_BEST_MODE", "today")
+URL = NEW_URL if MODE == "new" else TODAY_URL
+LEGACY_OUT = Path("data/new/latest.json") if MODE == "new" else Path("data/data.json")
+ARCHIVE_ROOT = Path("data/new/archive") if MODE == "new" else Path("data/today/archive")
 KST = timezone(timedelta(hours=9))
 
 HEADERS = {
@@ -105,6 +108,7 @@ for a in soup.find_all("a", href=True):
         items_by_rank[rank] = {
             "rank": rank,
             "novel_id": novel_id,
+            "title": clean(a.get_text(" ", strip=True)) or None,
             "url": full_url,
             "hours_after_upload": hours,
             "score": views,
@@ -140,7 +144,7 @@ def load_snapshots(path):
         return [
             x for x in data
             if isinstance(x, dict)
-            and x.get("metric") == "free_today_verified_views_24h"
+            and x.get("metric") == ("free_new_verified_views_24h" if MODE == "new" else "free_today_verified_views_24h")
         ]
     except Exception:
         return []
@@ -202,7 +206,7 @@ snapshot = {
     "captured_at_kst": stamp,
     "slot_at_kst": slot.strftime("%Y-%m-%d %H:%M:%S"),
     "count": len(items),
-    "metric": "free_today_verified_views_24h",
+    "metric": ("free_new_verified_views_24h" if MODE == "new" else "free_today_verified_views_24h"),
     "items": items,
 }
 
@@ -275,3 +279,12 @@ print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
     f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
 )
+
+
+# 기본 실행에서는 투데이 수집이 끝난 뒤 신규베스트도 연속 수집한다.
+if __name__ == "__main__" and MODE == "today" and os.getenv("MUNPIA_DUAL_CHILD") != "1":
+    import subprocess, sys
+    env = os.environ.copy()
+    env["MUNPIA_BEST_MODE"] = "new"
+    env["MUNPIA_DUAL_CHILD"] = "1"
+    subprocess.run([sys.executable, __file__], check=True, env=env)

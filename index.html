@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#07111f">
 <title>문피아 무료 투데이베스트 분석</title>
 <style>
@@ -190,10 +190,100 @@ th:first-child,td:first-child{text-align:left}
   .cut .n{font-size:19px}
   .chartWrap{height:235px}
 }
+
+.serviceHeader{max-width:1180px;margin:0 auto;padding:20px 18px 6px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.serviceBrand{display:flex;align-items:center;gap:11px}.brandMark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:900;font-size:20px;background:rgba(255,255,255,.09);border:1px solid var(--line)}
+.brandName{font-weight:900;font-size:20px;letter-spacing:-.4px}.brandDesc{color:var(--muted);font-size:12px;margin-top:2px}
+.serviceNav{display:flex;gap:8px;flex-wrap:wrap}.serviceNav a{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 10px;border-radius:10px}.serviceNav a:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.serviceInfo{margin-top:20px}.infoCard{border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.025)}.infoCard h2{font-size:17px;margin:0 0 8px}.infoCard p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+.infoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.infoGrid div{padding:12px;border-radius:12px;background:rgba(255,255,255,.035)}.infoGrid b,.infoGrid span{display:block}.infoGrid b{font-size:12px;margin-bottom:5px}.infoGrid span{font-size:12px;color:var(--muted)}
+.adSlot{margin:14px 0;border:1px dashed var(--line);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--muted);background:rgba(255,255,255,.018)}
+.adSlot span{font-size:9px;letter-spacing:1.2px;opacity:.65}.adSlot b{font-size:12px;font-weight:600}.adPrimary{min-height:90px}.adSecondary{min-height:110px}
+.serviceFooter{padding:22px 2px 30px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:700px){.serviceHeader{align-items:flex-start;flex-direction:column;padding-top:16px}.serviceNav{width:100%;overflow:auto;flex-wrap:nowrap}.serviceNav a{white-space:nowrap;background:rgba(255,255,255,.025)}.infoGrid{grid-template-columns:1fr}}
+
+.siteView{display:none}.siteView.active{display:block}
+.serviceNav button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:13px;padding:8px 10px;border-radius:10px;cursor:pointer}
+.serviceNav button.active,.serviceNav button:hover{background:rgba(255,255,255,.07);color:var(--text)}
+.myHero{padding:18px 2px 14px}.myHero h1{font-size:28px;margin:4px 0 8px}.myHero p{color:var(--muted);max-width:680px;line-height:1.6;margin:0}.eyebrow{font-size:10px;letter-spacing:1.8px;color:var(--muted)}
+.myRegister{margin-bottom:14px}.urlRow{display:flex;gap:8px}.urlRow input{flex:1;min-width:0;background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--text);font-size:14px;outline:none}.urlRow button{border:0;border-radius:12px;padding:0 18px;font-weight:800;cursor:pointer}
+.registerMsg{font-size:11px;color:var(--muted);margin-top:8px}.myEmpty{text-align:center;padding:44px 20px}.emptyIcon{font-size:32px}.myEmpty h2{margin:8px 0}.myEmpty p{color:var(--muted);font-size:13px}
+.myTopCards{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:12px;margin-bottom:12px}.myIdentity h2{margin:7px 0 4px}.myId{font-size:11px;color:var(--muted)}
+.myMetric{display:flex;flex-direction:column;justify-content:center}.myMetric span{font-size:11px;color:var(--muted)}.myMetric b{font-size:27px;margin:5px 0}.myMetric small{color:var(--muted)}
+.ghostBtn{margin-top:12px;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:9px;padding:7px 9px;cursor:pointer}
+.myTwoCol{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.distanceList,.recentList{display:grid;gap:8px}.distanceRow,.recentRow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.distanceRow:last-child,.recentRow:last-child{border-bottom:0}.positive{font-weight:800}.mutedText{color:var(--muted)}
+.guideStandalone{margin-top:18px}.guideStandalone h1{margin-top:0}.guideStandalone>p{color:var(--muted);line-height:1.7}.guideNote{margin-top:16px!important}
+@media(max-width:760px){.myTopCards{grid-template-columns:1fr 1fr}.myIdentity{grid-column:1/-1}.myTwoCol{grid-template-columns:1fr}.urlRow{flex-direction:column}.urlRow button{padding:12px}.myHero h1{font-size:24px}}
+
+
+.newNote{color:var(--muted);font-size:13px;line-height:1.65;margin:0}
+#newRankSelect{width:100%;max-width:220px;background:rgba(255,255,255,.045);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px;margin-bottom:10px}
+#newCutGrid .cutCard{min-width:0}
+
+/* compact two-line ranking tabs */
+.serviceNav .bestTab{
+  position:relative;
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  min-width:58px;
+  padding:7px 10px 9px;
+  line-height:1.05;
+  background:transparent;
+}
+.serviceNav .bestTab span{
+  font-size:11px;
+  font-weight:600;
+  color:var(--muted);
+}
+.serviceNav .bestTab strong{
+  margin-top:3px;
+  font-size:14px;
+  font-weight:850;
+  color:var(--text);
+}
+.serviceNav .bestTab::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:2px;
+  height:2px;
+  border-radius:99px;
+  background:currentColor;
+  opacity:0;
+  transform:scaleX(.45);
+  transition:.18s ease;
+}
+.serviceNav .bestTab.active{
+  background:rgba(255,255,255,.055);
+}
+.serviceNav .bestTab.active span{color:var(--text)}
+.serviceNav .bestTab.active::after{
+  opacity:1;
+  transform:scaleX(1);
+}
+@media(max-width:560px){
+  .serviceNav{gap:2px}
+  .serviceNav button{padding-left:7px;padding-right:7px}
+  .serviceNav .bestTab{min-width:52px;padding-left:7px;padding-right:7px}
+}
+
 </style>
 </head>
 <body>
-<main class="wrap">
+<header class="serviceHeader">
+ <div class="serviceBrand"><div class="brandMark">T</div><div><div class="brandName">투베컷</div><div class="brandDesc">문피아 무료연재 랭킹 데이터 분석</div></div></div>
+ <nav class="serviceNav">
+<button class="viewBtn bestTab active" data-view="analysis"><span>투데이</span><strong>베스트</strong></button>
+<button class="viewBtn bestTab" data-view="newbest"><span>신규</span><strong>베스트</strong></button>
+<button class="viewBtn" data-view="mywork">✍️ 내 작품</button>
+<button class="viewBtn" data-view="guide">ℹ️ 이용안내</button>
+</nav>
+</header>
+<div id="analysisView" class="siteView active"><main class="wrap" id="current">
   <header class="header">
     <div>
       <h1>문피아 무료 투데이베스트 분석</h1>
@@ -227,6 +317,8 @@ th:first-child,td:first-child{text-align:left}
       <div id="cutGrid" class="cutGrid"></div>
     </div>
   </section>
+  <div class="adSlot adPrimary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ①</b></div>
+
 
   <div class="controls">
     <div class="rankSelectWrap">
@@ -278,7 +370,8 @@ th:first-child,td:first-child{text-align:left}
     </div>
   </section>
 
-  <section class="panel hourlyPanel">
+    <div class="adSlot adSecondary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ②</b></div>
+<section class="panel hourlyPanel">
     <div class="panelTitle">
       <h2>일주일 시간별 커트라인 평균</h2>
       <span class="small">각 순위 · 시간대별 평균</span>
@@ -342,7 +435,12 @@ th:first-child,td:first-child{text-align:left}
   </section>
 
   <div class="footer">문피아 무료 투데이베스트 24시간 인증조회수 기준</div>
-</main>
+<section class="serviceInfo" id="guide">
+<div class="infoCard"><h2>투베컷은 어떤 서비스인가요?</h2>
+<p>문피아 무료 투데이베스트의 인증조회수 커트라인을 정기적으로 기록해 시간대·요일·기간별 변화를 보기 쉽게 정리합니다.</p>
+<div class="infoGrid"><div><b>집계 기준</b><span>최근 24시간 인증조회수</span></div><div><b>업데이트</b><span>매시간 정기 수집</span></div><div><b>시간 기준</b><span>대한민국 표준시(KST)</span></div></div></div>
+</section>
+<footer class="serviceFooter"><span>투베컷 · 비공식 데이터 분석 서비스</span><span>이용안내 · 개인정보처리방침 · 문의</span></footer></main></div>
 
 <script>
 const CUTS=[4,8,10,20,40,60,80,100,120,140,160,180,200];
@@ -854,7 +952,9 @@ fetch("./data/data.json?ts="+Date.now(),{cache:"no-store"})
     .sort((a,b)=>snapDate(a)-snapDate(b));
 
   $("rankSelect").innerHTML=CUTS.map(r=>`<option value="${r}" ${r===200?"selected":""}>${r}위</option>`).join("");
+  window.snaps=snaps;
   renderAll();
+  if(window.renderMyWork) window.renderMyWork();
 })
 .catch(e=>{
   document.body.innerHTML=`<div style="padding:30px;color:white">데이터를 불러오지 못했습니다: ${e.message}</div>`;
@@ -884,5 +984,210 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
   drawLineChart();
 }));
 </script>
+
+
+<section id="newbestView" class="siteView">
+ <main class="wrap">
+  <section class="myHero">
+   <div><div class="eyebrow">NEW BEST</div><h1>무료 신규베스트</h1>
+   <p>신규 작품의 최근 24시간 본인 인증 조회수 기준 신규베스트 커트라인을 시간별로 기록합니다.</p></div>
+  </section>
+  <section class="panel">
+   <div class="panelTitle"><h2>주요 순위 현재 커트라인</h2><span id="newLatest" class="small">수집 시작 전</span></div>
+   <div id="newCutGrid" class="cutGrid"></div>
+  </section>
+  <section class="panel">
+   <div class="panelTitle"><h2>조회할 순위 선택</h2><span class="small">신규베스트</span></div>
+   <select id="newRankSelect" class="rankSelect"></select>
+   <div class="rangeBtns" id="newRangeBtns">
+    <button class="newRangeBtn active" data-range="today">오늘</button>
+    <button class="newRangeBtn" data-range="24h">최근 24시간</button>
+    <button class="newRangeBtn" data-range="7d">최근 7일</button>
+    <button class="newRangeBtn" data-range="30d">최근 30일</button>
+   </div>
+   <div class="chartWrap"><svg id="newChart" viewBox="0 0 760 300" preserveAspectRatio="none"></svg></div>
+  </section>
+  <section class="myTwoCol">
+   <div class="panel"><div class="panelTitle"><h2>오늘 요약</h2></div><div id="newTodayStats" class="distanceList"></div></div>
+   <div class="panel"><div class="panelTitle"><h2>오늘 시간별 커트</h2></div><div class="scroll todayHourlyScroll"><table id="newHourlyTable" class="todayHourlyTable"></table></div></div>
+  </section>
+  <section class="panel">
+   <div class="panelTitle"><h2>신규베스트 집계 기준</h2></div>
+   <p class="newNote">문피아 무료 신규베스트는 최근 24시간 내 연재분 중 본인 인증 조회수가 높은 작품을 기준으로 하며, 신규 작품 등록 60일 이내·2회 이상 20화 이하 작품을 대상으로 합니다.</p>
+  </section>
+ </main>
+</section>
+
+<section id="myworkView" class="siteView">
+  <main class="wrap">
+    <section class="myHero">
+      <div>
+        <div class="eyebrow">MY NOVEL TRACKER</div>
+        <h1>내 작품 추적</h1>
+        <p>문피아 작품 URL을 한 번 등록하면 이 브라우저에 저장하고, 투데이베스트 진입 이후 순위 변화를 자동으로 보여줘요.</p>
+      </div>
+    </section>
+    <section class="panel myRegister">
+      <div class="panelTitle"><h2>작품 등록</h2><span class="small">회원가입 필요 없음</span></div>
+      <div class="urlRow"><input id="novelUrlInput" type="url" placeholder="문피아 작품 URL 또는 작품번호"><button id="saveNovelBtn">등록</button></div>
+      <div id="registerMsg" class="registerMsg">등록 정보는 현재 기기의 브라우저에만 저장됩니다.</div>
+    </section>
+    <section id="myEmpty" class="panel myEmpty">
+      <div class="emptyIcon">✍️</div><h2>등록된 작품이 없어요</h2><p>위에 작품 URL을 넣으면 투베 기록을 찾아볼게요.</p>
+    </section>
+    <div id="myDashboard" style="display:none">
+      <section class="myTopCards">
+        <div class="panel myIdentity"><div class="small">등록 작품</div><h2 id="myNovelName">내 작품</h2><div class="myId" id="myNovelId">-</div><button id="removeNovelBtn" class="ghostBtn">등록 해제</button></div>
+        <div class="panel myMetric"><span>현재 순위</span><b id="myCurrentRank">-</b><small id="myRankChange">최근 기록 기준</small></div>
+        <div class="panel myMetric"><span>인증조회수</span><b id="myViews">-</b><small>최근 24시간</small></div>
+        <div class="panel myMetric"><span>오늘 최고순위</span><b id="myBestToday">-</b><small id="myFirstToday">-</small></div>
+      </section>
+      <section class="panel">
+        <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small">최근 기록</span></div>
+        <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 300" preserveAspectRatio="none"></svg></div>
+      </section>
+      <section class="myTwoCol">
+        <div class="panel"><div class="panelTitle"><h2>커트라인까지 거리</h2></div><div id="myDistances" class="distanceList"></div></div>
+        <div class="panel"><div class="panelTitle"><h2>최근 기록</h2></div><div id="myRecent" class="recentList"></div></div>
+      </section>
+    </div>
+  </main>
+</section>
+<section id="guideView" class="siteView">
+ <main class="wrap"><section class="panel guideStandalone"><h1>이용안내</h1><p>투베컷은 문피아 무료 투데이베스트의 인증조회수와 순위 변화를 정기적으로 기록해 보기 쉽게 정리하는 비공식 분석 서비스입니다.</p>
+ <div class="infoGrid"><div><b>집계 기준</b><span>최근 24시간 인증조회수</span></div><div><b>업데이트</b><span>매시간 정기 수집</span></div><div><b>시간 기준</b><span>대한민국 표준시(KST)</span></div></div>
+ <p class="guideNote">내 작품 등록 정보는 회원 서버가 아니라 사용 중인 브라우저의 로컬 저장공간에 저장됩니다.</p></section></main>
+</section>
+
+
+<script>
+(function(){
+  const $q=id=>document.getElementById(id);
+  function switchView(name){
+    ["analysis","newbest","mywork","guide"].forEach(v=>$q(v+"View")?.classList.toggle("active",v===name));
+    document.querySelectorAll(".viewBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+    window.scrollTo({top:0,behavior:"smooth"});
+    if(name==="mywork") renderMyWork(); if(name==="newbest") renderNewBest();
+  }
+  document.querySelectorAll(".viewBtn").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
+
+  function novelIdFromInput(v){
+    const m=String(v||"").match(/(?:novel\/detail\/|novel\/)(\d+)|^\s*(\d+)\s*$/);
+    return m ? (m[1]||m[2]) : null;
+  }
+  function getSnaps(){ return Array.isArray(window.snaps)?window.snaps:(typeof snaps!=="undefined"?snaps:[]); }
+  function itemFor(s,id){ return (s.items||[]).find(x=>String(x.novel_id)===String(id)); }
+  function titleFor(item){ return item?.title || "내 작품"; }
+  function fmtN(v){ return v==null?"-":Number(v).toLocaleString("ko-KR"); }
+
+  function drawMyChart(records){
+    const svg=$q("myRankChart"); if(!svg)return;
+    if(records.length<2){svg.innerHTML='<text x="380" y="145" text-anchor="middle" fill="#8d99aa" font-size="13">순위 기록이 더 쌓이면 그래프가 표시됩니다.</text>';return}
+    const rec=records.slice(-72), W=760,H=300,p=38;
+    const vals=rec.map(x=>x.rank), min=Math.max(1,Math.min(...vals)-10), max=Math.min(200,Math.max(...vals)+10);
+    const x=i=>p+(W-p*2)*(i/(rec.length-1));
+    const y=v=>p+(H-p*2)*((v-min)/Math.max(1,max-min));
+    const pts=rec.map((r,i)=>`${x(i)},${y(r.rank)}`).join(" ");
+    svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/>
+      <line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/>
+      <text x="8" y="${p+5}" fill="#8d99aa" font-size="11">${min}위</text>
+      <text x="8" y="${H-p+4}" fill="#8d99aa" font-size="11">${max}위</text>
+      <polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/>
+      <circle cx="${x(rec.length-1)}" cy="${y(rec[rec.length-1].rank)}" r="5" fill="currentColor"/>`;
+  }
+
+  window.renderMyWork=function(){
+    const id=localStorage.getItem("tubecut_my_novel");
+    $q("myEmpty").style.display=id?"none":"block"; $q("myDashboard").style.display=id?"block":"none";
+    if(!id)return;
+    const ss=getSnaps(), records=[];
+    ss.forEach(s=>{const it=itemFor(s,id);if(it)records.push({s,it,rank:Number(it.rank),views:Number(it.views_24h_verified??it.score)});});
+    $q("myNovelId").textContent="작품번호 "+id;
+    if(!records.length){
+      $q("myNovelName").textContent="내 작품";$q("myCurrentRank").textContent="200위 밖 / 기록 없음";$q("myViews").textContent="-";$q("myBestToday").textContent="-";$q("myFirstToday").textContent="투베 진입 후 자동 기록";
+      $q("myDistances").innerHTML='<div class="mutedText">아직 수집된 투베 1~200위 기록에서 이 작품을 찾지 못했어요.</div>';
+      $q("myRecent").innerHTML='<div class="mutedText">기록 없음</div>'; drawMyChart([]); return;
+    }
+    const last=records.at(-1), prev=records.at(-2);
+    $q("myNovelName").textContent=titleFor(last.it); $q("myCurrentRank").textContent=last.rank+"위"; $q("myViews").textContent=fmtN(last.views);
+    $q("myRankChange").textContent=prev?(prev.rank===last.rank?"변동 없음":`${prev.rank-last.rank>0?"▲":"▼"} ${Math.abs(prev.rank-last.rank)}위`):"첫 기록";
+    const day=(last.s.slot_at_kst||last.s.captured_at_kst||"").slice(0,10);
+    const today=records.filter(r=>(r.s.slot_at_kst||r.s.captured_at_kst||"").startsWith(day));
+    $q("myBestToday").textContent=Math.min(...today.map(r=>r.rank))+"위";
+    $q("myFirstToday").textContent="오늘 "+today.length+"회 기록";
+    const targets=[200,160,120,100,80,60,40,20,10];
+    $q("myDistances").innerHTML=targets.map(t=>{
+      const cut=(last.s.items||[]).filter(x=>Number(x.rank)<=t).sort((a,b)=>Math.abs(Number(a.rank)-t)-Math.abs(Number(b.rank)-t))[0];
+      if(!cut)return "";
+      const cv=Number(cut.views_24h_verified??cut.score), diff=cv-last.views;
+      return `<div class="distanceRow"><span>${t}위권</span><b>${last.rank<=t?"진입":"+"+fmtN(Math.max(0,diff))+" 조회 필요"}</b></div>`;
+    }).join("");
+    $q("myRecent").innerHTML=records.slice(-8).reverse().map(r=>{
+      const stamp=r.s.slot_at_kst||r.s.captured_at_kst||"";
+      return `<div class="recentRow"><span>${stamp.slice(5,16)}</span><b>${r.rank}위 · ${fmtN(r.views)}</b></div>`;
+    }).join("");
+    drawMyChart(records);
+  };
+
+  $q("saveNovelBtn")?.addEventListener("click",()=>{
+    const id=novelIdFromInput($q("novelUrlInput").value);
+    if(!id){$q("registerMsg").textContent="문피아 작품 URL 또는 작품번호를 확인해줘.";return}
+    localStorage.setItem("tubecut_my_novel",id);$q("registerMsg").textContent="등록 완료! 투베 기록을 확인했어.";renderMyWork();
+  });
+  $q("removeNovelBtn")?.addEventListener("click",()=>{localStorage.removeItem("tubecut_my_novel");renderMyWork()});
+})();
+</script>
+
+
+<script>
+(function(){
+ const ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+ let ns=[], nr=200, range="today";
+ const el=id=>document.getElementById(id);
+ function stamp(s){return String(s.slot_at_kst||s.captured_at_kst||"")}
+ function day(s){return stamp(s).slice(0,10)}
+ function item(s,r){
+   const a=s.items||[], exact=a.find(x=>+x.rank===+r); if(exact)return exact;
+   return [...a].sort((x,y)=>Math.abs(+x.rank-r)-Math.abs(+y.rank-r)||+x.rank-+y.rank)[0]||null;
+ }
+ function val(s,r){const x=item(s,r);return x==null?null:Number(x.views_24h_verified??x.score)}
+ function fmt(v){return v==null?"-":Math.round(v).toLocaleString("ko-KR")}
+ function filtered(){
+   if(!ns.length)return[];
+   const last=new Date(stamp(ns.at(-1)).replace(" ","T")+"+09:00"), ld=day(ns.at(-1));
+   if(range==="today")return ns.filter(s=>day(s)===ld);
+   const hrs=range==="24h"?24:range==="7d"?168:720, cut=last.getTime()-hrs*3600000;
+   return ns.filter(s=>new Date(stamp(s).replace(" ","T")+"+09:00").getTime()>=cut);
+ }
+ function chart(){
+   const svg=el("newChart"), arr=filtered().map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);
+   if(arr.length<2){svg.innerHTML='<text x="380" y="145" text-anchor="middle" fill="#8d99aa" font-size="13">신규베스트 데이터가 쌓이면 그래프가 표시됩니다.</text>';return}
+   const W=760,H=300,p=38, vs=arr.map(x=>x.v), min=Math.min(...vs),max=Math.max(...vs),pad=Math.max(5,(max-min)*.12),lo=Math.max(0,min-pad),hi=max+pad;
+   const x=i=>p+(W-p*2)*(i/(arr.length-1)), y=v=>H-p-(H-p*2)*((v-lo)/Math.max(1,hi-lo));
+   const pts=arr.map((o,i)=>`${x(i)},${y(o.v)}`).join(" ");
+   svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><text x="5" y="${p+5}" fill="#8d99aa" font-size="11">${fmt(hi)}</text><text x="5" y="${H-p+4}" fill="#8d99aa" font-size="11">${fmt(lo)}</text><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/>`;
+ }
+ window.renderNewBest=async function(){
+   if(!ns.length){
+     try{const r=await fetch("./data/new/latest.json?ts="+Date.now(),{cache:"no-store"});if(r.ok)ns=await r.json()}catch(e){}
+   }
+   const sel=el("newRankSelect");
+   if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?"selected":""}>${r}위</option>`).join("");sel.onchange=()=>{nr=+sel.value;renderNewBestInner()}}
+   renderNewBestInner();
+ }
+ function renderNewBestInner(){
+   if(!ns.length){el("newCutGrid").innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';chart();return}
+   const last=ns.at(-1);el("newLatest").textContent=stamp(last).slice(5,16)+" KST";
+   el("newCutGrid").innerHTML=ranks.map(r=>`<div class="cutCard"><span>${r}위</span><b>${fmt(val(last,r))}</b></div>`).join("");
+   const today=ns.filter(s=>day(s)===day(last)).map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);
+   if(today.length){const vs=today.map(x=>x.v);el("newTodayStats").innerHTML=`<div class="distanceRow"><span>현재</span><b>${fmt(vs.at(-1))}</b></div><div class="distanceRow"><span>오늘 최고</span><b>${fmt(Math.max(...vs))}</b></div><div class="distanceRow"><span>오늘 최저</span><b>${fmt(Math.min(...vs))}</b></div><div class="distanceRow"><span>오늘 평균</span><b>${fmt(vs.reduce((a,b)=>a+b,0)/vs.length)}</b></div>`;
+     const by=new Map();today.forEach(x=>by.set(stamp(x.s).slice(11,13),x.v));el("newHourlyTable").innerHTML='<thead><tr><th>시간</th><th>'+nr+'위 커트</th></tr></thead><tbody>'+[...by].map(([h,v])=>`<tr><td>${h}:15</td><td>${fmt(v)}</td></tr>`).join("")+'</tbody>';
+   } else {el("newTodayStats").innerHTML='<div class="mutedText">오늘 데이터 없음</div>';el("newHourlyTable").innerHTML='<tbody><tr><td>오늘 데이터 없음</td></tr></tbody>'}
+   chart();
+ }
+ document.querySelectorAll(".newRangeBtn").forEach(b=>b.addEventListener("click",()=>{range=b.dataset.range;document.querySelectorAll(".newRangeBtn").forEach(x=>x.classList.toggle("active",x===b));renderNewBestInner()}));
+})();
+</script>
+
 </body>
 </html>

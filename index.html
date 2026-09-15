@@ -1179,7 +1179,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     </div>
     <div id="newWeekdayLowSummary" class="lowCutSummary"></div>
     <div class="scroll"><table id="newWeekdayTable" class="weekdayTable"></table></div>
-    <div class="hourlyNote">시간대 표는 KST 00:00부터 새 요일로 즉시 기록됩니다. 최저 요일은 완료된 날짜만 대상으로 계산합니다.</div>
+    <div class="hourlyNote">시간대 표는 KST 00:00부터 새 요일로 즉시 기록됩니다. 최저 요일은 최근 7일/14일/1달의 완료된 날짜만 대상으로, 각 날짜의 00:00~23:59 컷 평균을 비교합니다.</div>
   </section>
 
   <section class="panel fullPanel">

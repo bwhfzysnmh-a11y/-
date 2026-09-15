@@ -156,10 +156,10 @@ def parse_kst(value):
         return None
 
 def scheduled_slot(t):
-    # 매시간 :15를 해당 시간대 슬롯으로 사용.
-    # 00:15부터는 새 날짜/새 요일.
-    base = t.replace(minute=15, second=0, microsecond=0)
-    if t.minute < 15:
+    # 투베는 매시 :15, 신베는 매시 :05를 해당 시간대 슬롯으로 사용.
+    slot_minute = 5 if MODE == "new" else 15
+    base = t.replace(minute=slot_minute, second=0, microsecond=0)
+    if t.minute < slot_minute:
         base -= timedelta(hours=1)
     return base
 

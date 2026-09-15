@@ -86,7 +86,7 @@ svg{width:100%;height:100%;display:block}
 .cut .h{font-size:11px;color:var(--muted);margin-top:3px}
 .monthControls{display:flex;justify-content:flex-end;margin-bottom:8px}
 .monthControls select{padding:8px 11px}
-.monthChart{height:190px;margin-top:4px}
+.monthChart{height:310px;margin-top:4px}
 
 table{width:100%;border-collapse:collapse}
 th,td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:12px;text-align:right}
@@ -180,7 +180,7 @@ th:first-child,td:first-child{text-align:left}
   .cutGrid{grid-template-columns:repeat(3,1fr)}
   .cut .n{font-size:21px}
   .rankButtons{grid-template-columns:repeat(4,1fr)}
-  .monthChart{height:170px}
+  .monthChart{height:255px}
   .panel{padding:14px}
 }
 
@@ -292,7 +292,8 @@ button,select{color:var(--text);background:#fff;border-color:var(--line)}
 button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBtn.active{color:#fff}
 .gridline{stroke:#e5ebf3}.axis{fill:#7b8ca3}
 .notice{background:#f2f7ff;border-color:#c9dcf7;color:#52677f}
-.hourlyTable th:first-child,.hourlyTable td:first-child{background:#fff}
+.hourlyTable th:first-child,.hourlyTable td:first-child,
+.weekdayTable th:first-child,.weekdayTable td:first-child{background:#fff;color:var(--text)}
 .serviceHeader{background:rgba(255,255,255,.94);border-bottom:1px solid #e8edf4}
 .brandMark{background:#edf4ff;border-color:#cfe0f7;color:#286ce8}
 .serviceNav button.active,.serviceNav button:hover,.serviceNav .bestTab.active{background:#edf3fb;color:var(--text)}
@@ -311,8 +312,11 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 
 /* New Best uses the same visual language as Today Best */
 #newbestView .panel{background:#fff;border-color:var(--line)}
-#newbestView #newCutGrid .cut{background:#f6f8fc;border-color:#e5ebf3}
+#newbestView #newCutGrid .cut{background:#f6f8fc;border:1px solid #dce5f0;border-color:#dce5f0}
 #newbestView #newCutGrid .cut .n{color:#246ee9}
+#newbestView .weekdayTable th:first-child,#newbestView .weekdayTable td:first-child,#newbestView .hourlyTable th:first-child,#newbestView .hourlyTable td:first-child{background:#fff!important;color:var(--text)!important}
+#newbestView .chartWrap,#newbestView .monthChart{min-height:330px}
+#newbestView .chartWrap svg,#newbestView .monthChart svg{height:330px!important;min-height:330px}
 
 @media(max-width:700px){
   .serviceHeader{background:#fff}
@@ -491,7 +495,7 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
       <select id="yearSelect"></select>
     </div>
     <div class="monthChart">
-      <svg id="monthChart" viewBox="0 0 760 190" preserveAspectRatio="none"></svg>
+      <svg id="monthChart" viewBox="0 0 760 310" preserveAspectRatio="none"></svg>
     </div>
     <div class="scroll">
       <table id="monthTable"></table>
@@ -794,9 +798,9 @@ function renderMonthly(){
   const svg=$("monthChart");
 
   if(!valid.length){
-    svg.innerHTML='<text x="380" y="95" text-anchor="middle" class="axis">월별 데이터가 아직 없습니다</text>';
+    svg.innerHTML='<text x="380" y="155" text-anchor="middle" class="axis">월별 데이터가 아직 없습니다</text>';
   }else{
-    const W=760,H=190,L=50,R=12,T=12,B=28;
+    const W=760,H=310,L=58,R=18,T=18,B=36;
     const max=Math.max(...valid.map(r=>r.avg))*1.15;
     const bw=(W-L-R)/12;
     let out="";
@@ -1055,37 +1059,88 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
   <header class="header">
     <div>
       <h1>문피아 무료 신규베스트 분석</h1>
-      <div class="sub">24시간 인증조회수 커트라인 · 시간별/일별 기록</div>
+      <div class="sub">24시간 인증조회수 커트라인 · 시간별/일별/월별 기록</div>
       <div class="meta">최근 수집: <span id="newHeaderLatest">-</span>&nbsp; | &nbsp;<span class="live">● 자동 수집 중 (매시간 5분)</span></div>
     </div>
     <div class="headerCards">
       <div class="miniHead"><div class="k">데이터 기준</div><div class="v">문피아 무료 신규베스트<br>24시간 인증조회수</div></div>
-      <div class="miniHead"><div class="k">현재 선택</div><div class="v">신규베스트 커트라인</div></div>
+      <div class="miniHead"><div class="k">현재 선택</div><div class="v" id="newHeaderRank">200위 커트라인</div></div>
     </div>
   </header>
-  <section class="panel">
-   <div class="panelTitle"><h2>주요 순위 현재 커트라인</h2><span class="small">24시간 인증조회수</span></div>
-   <div id="newCutGrid" class="cutGrid"></div>
+
+  <section class="fullPanel"><div class="panel">
+    <div class="panelTitle"><h2>주요 순위 현재 커트라인</h2><span class="small">24시간 인증조회수</span></div>
+    <div id="newCutGrid" class="cutGrid"></div>
+  </div></section>
+  <div class="adSlot adPrimary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ①</b></div>
+
+  <div class="controls">
+    <div class="rankSelectWrap"><span>조회할 순위 선택</span><select id="newRankSelect"></select></div>
+    <div class="tabs">
+      <button class="newRangeBtn active" data-range="today">오늘</button>
+      <button class="newRangeBtn" data-range="24h">최근 24시간</button>
+      <button class="newRangeBtn" data-range="7d">최근 7일</button>
+      <button class="newRangeBtn" data-range="30d">최근 30일</button>
+    </div>
+  </div>
+
+  <section class="gridTop">
+    <div class="panel">
+      <div class="panelTitle"><h2 id="newChartTitle">200위 커트라인 시간대별 추이</h2><span class="small" id="newChartCount">-</span></div>
+      <div class="chartWrap"><svg id="newChart" viewBox="0 0 760 310" preserveAspectRatio="none"></svg></div>
+    </div>
+    <div class="panel">
+      <div class="panelTitle"><h2 id="newSideRankTitle">200위</h2></div>
+      <div class="bigStat" id="newCurrentValue">-</div>
+      <div class="statLabel">현재 24시간 인증조회수</div>
+      <div class="sideStats">
+        <div class="sideRow"><div class="k">어제 같은 시간 대비</div><div class="v" id="newYdayDiff">데이터 부족</div></div>
+        <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="newAvg7">데이터 부족</div></div>
+        <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="newMaxVal">-</div><div class="recordTime" id="newMaxTime">-</div></div>
+        <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="newMinVal">-</div><div class="recordTime" id="newMinTime">-</div></div>
+        <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="newAvg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+      </div>
+      <div class="todayHourlyBlock">
+        <div class="todayHourlyTitle"><b>오늘 시간별 커트</b><span id="newTodayHourlyRank" class="small">200위</span></div>
+        <div class="scroll todayHourlyScroll"><table id="newTodayHourlyTable" class="todayHourlyTable"></table></div>
+      </div>
+    </div>
   </section>
-  <section class="panel">
-   <div class="panelTitle"><h2>조회할 순위 선택</h2><span class="small">신규베스트</span></div>
-   <select id="newRankSelect" class="rankSelect"></select>
-   <div class="rangeBtns" id="newRangeBtns">
-    <button class="newRangeBtn active" data-range="today">오늘</button>
-    <button class="newRangeBtn" data-range="24h">최근 24시간</button>
-    <button class="newRangeBtn" data-range="7d">최근 7일</button>
-    <button class="newRangeBtn" data-range="30d">최근 30일</button>
-   </div>
-   <div class="chartWrap"><svg id="newChart" viewBox="0 0 760 300" preserveAspectRatio="none"></svg></div>
+
+  <div class="adSlot adSecondary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ②</b></div>
+
+  <section class="panel hourlyPanel">
+    <div class="panelTitle"><h2>일주일 시간별 커트라인 평균</h2><span class="small">각 순위 · 시간대별 평균</span></div>
+    <div class="hourlyControls">
+      <button class="newHourlyBtn active" data-days="7">최근 7일</button><button class="newHourlyBtn" data-days="14">최근 14일</button><button class="newHourlyBtn" data-days="30">최근 1달</button>
+    </div>
+    <div id="newHourlyLowSummary" class="lowCutSummary"></div>
+    <div class="scroll"><table id="newHourlyAvgTable" class="hourlyTable"></table></div>
+    <div class="hourlyNote">매일 한국시간(KST) 00:00에 날짜를 리셋합니다. 같은 날 중복 수집은 먼저 1회 평균 처리합니다.</div>
   </section>
-  <section class="myTwoCol">
-   <div class="panel"><div class="panelTitle"><h2>오늘 요약</h2></div><div id="newTodayStats" class="distanceList"></div></div>
-   <div class="panel"><div class="panelTitle"><h2>오늘 시간별 커트</h2></div><div class="scroll todayHourlyScroll"><table id="newHourlyTable" class="todayHourlyTable"></table></div></div>
+
+  <section class="panel hourlyPanel">
+    <div class="panelTitle"><h2>요일별 시간대 신베 커트라인</h2><span class="small">요일 선택 · 시간대별 평균</span></div>
+    <div class="hourlyControls">
+      <button class="newWeekdayRangeBtn active" data-days="7">최근 7일</button><button class="newWeekdayRangeBtn" data-days="14">최근 14일</button><button class="newWeekdayRangeBtn" data-days="30">최근 1달</button>
+    </div>
+    <div class="weekdayControls">
+      <button class="newWeekdayBtn active" data-day="1">월</button><button class="newWeekdayBtn" data-day="2">화</button><button class="newWeekdayBtn" data-day="3">수</button><button class="newWeekdayBtn" data-day="4">목</button><button class="newWeekdayBtn" data-day="5">금</button><button class="newWeekdayBtn" data-day="6">토</button><button class="newWeekdayBtn" data-day="0">일</button>
+    </div>
+    <div id="newWeekdayLowSummary" class="lowCutSummary"></div>
+    <div class="scroll"><table id="newWeekdayTable" class="weekdayTable"></table></div>
+    <div class="hourlyNote">시간대 표는 KST 00:00부터 새 요일로 즉시 기록됩니다. 최저 요일은 완료된 날짜만 대상으로 계산합니다.</div>
   </section>
-  <section class="panel">
-   <div class="panelTitle"><h2>신규베스트 집계 기준</h2></div>
-   <p class="newNote">문피아 무료 신규베스트는 최근 24시간 내 연재분 중 본인 인증 조회수가 높은 작품을 기준으로 하며, 신규 작품 등록 60일 이내·2회 이상 20화 이하 작품을 대상으로 합니다.</p>
+
+  <section class="panel fullPanel">
+    <div class="panelTitle"><h2>월별 평균 커트라인</h2><span class="small">선택 순위 기준</span></div>
+    <div class="monthControls"><select id="newYearSelect"></select></div>
+    <div class="monthChart"><svg id="newMonthChart" viewBox="0 0 760 310" preserveAspectRatio="none"></svg></div>
+    <div class="scroll"><table id="newMonthTable"></table></div>
   </section>
+
+  <div class="footer">문피아 무료 신규베스트 24시간 인증조회수 기준</div>
+  <section class="serviceInfo"><div class="infoCard"><h2>신규베스트 데이터 안내</h2><p>문피아 무료 신규베스트의 인증조회수 커트라인을 정기적으로 기록해 시간대·요일·기간별 변화를 투데이베스트와 같은 방식으로 정리합니다.</p><div class="infoGrid"><div><b>집계 기준</b><span>최근 24시간 인증조회수</span></div><div><b>업데이트</b><span>매시간 5분 정기 수집</span></div><div><b>시간 기준</b><span>대한민국 표준시(KST)</span></div></div></div></section>
  </main>
 </section>
 
@@ -1138,7 +1193,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 
       <section class="panel">
         <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small" id="myChartModeLabel">투데이베스트 · 최근 기록</span></div>
-        <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 300" preserveAspectRatio="none"></svg></div>
+        <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 310" preserveAspectRatio="none"></svg></div>
       </section>
       <section class="myTwoCol">
         <div class="panel"><div class="panelTitle"><h2 id="myCompareSummaryTitle">투베 비교</h2><span class="small">주요 순위</span></div><div id="myDistances" class="distanceList"></div></div>
@@ -1219,10 +1274,23 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 
   function drawMyChart(records){
     const svg=$q("myRankChart"); if(!svg)return;
-    if(records.length<2){svg.innerHTML='<text x="380" y="145" text-anchor="middle" fill="#8d99aa" font-size="13">순위 기록이 더 쌓이면 그래프가 표시됩니다.</text>';return}
-    const rec=records.slice(-72),W=760,H=300,p=38,vals=rec.map(x=>x.rank),min=Math.max(1,Math.min(...vals)-10),max=Math.min(200,Math.max(...vals)+10);
-    const x=i=>p+(W-p*2)*(i/(rec.length-1)),y=v=>p+(H-p*2)*((v-min)/Math.max(1,max-min));
-    svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><text x="8" y="${p+5}" fill="#8d99aa" font-size="11">${min}위</text><text x="8" y="${H-p+4}" fill="#8d99aa" font-size="11">${max}위</text><polyline points="${rec.map((r,i)=>`${x(i)},${y(r.rank)}`).join(" ")}" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/>`;
+    if(records.length<2){svg.innerHTML='<text x="380" y="155" text-anchor="middle" class="axis">순위 기록이 더 쌓이면 그래프가 표시됩니다.</text>';return}
+    const rec=records.slice(-72),W=760,H=310,L=58,R=18,T=18,B=36,vals=rec.map(x=>x.rank);
+    let min=Math.max(1,Math.min(...vals)-8),max=Math.min(200,Math.max(...vals)+8); if(min===max){min=Math.max(1,min-1);max=Math.min(200,max+1)}
+    const x=i=>L+(W-L-R)*(i/(rec.length-1)), y=v=>T+(H-T-B)*((v-min)/Math.max(1,max-min));
+    let out='';
+    for(let i=0;i<5;i++){
+      const yy=T+(H-T-B)*i/4, rv=Math.round(min+(max-min)*i/4);
+      out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${rv}위</text>`;
+    }
+    const path=rec.map((r,i)=>(i?'L':'M')+x(i)+','+y(r.rank)).join(' ');
+    out+=`<path d="${path}" fill="none" stroke="#246ee9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+    rec.forEach((r,i)=>out+=`<circle cx="${x(i)}" cy="${y(r.rank)}" r="3.1" fill="#3478ff"/>`);
+    [0,Math.floor((rec.length-1)/2),rec.length-1].forEach(i=>{
+      const st=stamp(rec[i].s), label=st.slice(5,10).replace('-','/')+' '+st.slice(11,13)+'시';
+      out+=`<text x="${x(i)}" y="${H-9}" text-anchor="${i===0?'start':i===rec.length-1?'end':'middle'}" class="axis">${label}</text>`;
+    });
+    svg.innerHTML=out;
   }
 
   function renderTabs(list,id){
@@ -1359,50 +1427,32 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 <script>
 (function(){
  const ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
- let ns=[], nr=200, range="today";
+ let ns=[], nr=200, range="today", hDays=7, wd=1, wdDays=7;
  const el=id=>document.getElementById(id);
- function stamp(s){return String(s.slot_at_kst||s.captured_at_kst||"")}
- function day(s){return stamp(s).slice(0,10)}
- function item(s,r){
-   const a=s.items||[], exact=a.find(x=>+x.rank===+r); if(exact)return exact;
-   return [...a].sort((x,y)=>Math.abs(+x.rank-r)-Math.abs(+y.rank-r)||+x.rank-+y.rank)[0]||null;
- }
- function val(s,r){const x=item(s,r);return x==null?null:Number(x.views_24h_verified??x.score)}
- function fmt(v){return v==null?"-":Math.round(v).toLocaleString("ko-KR")}
- function filtered(){
-   if(!ns.length)return[];
-   const last=new Date(stamp(ns.at(-1)).replace(" ","T")+"+09:00"), ld=day(ns.at(-1));
-   if(range==="today")return ns.filter(s=>day(s)===ld);
-   const hrs=range==="24h"?24:range==="7d"?168:720, cut=last.getTime()-hrs*3600000;
-   return ns.filter(s=>new Date(stamp(s).replace(" ","T")+"+09:00").getTime()>=cut);
- }
- function chart(){
-   const svg=el("newChart"), arr=filtered().map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);
-   if(arr.length<2){svg.innerHTML='<text x="380" y="145" text-anchor="middle" fill="#8d99aa" font-size="13">신규베스트 데이터가 쌓이면 그래프가 표시됩니다.</text>';return}
-   const W=760,H=300,p=38, vs=arr.map(x=>x.v), min=Math.min(...vs),max=Math.max(...vs),pad=Math.max(5,(max-min)*.12),lo=Math.max(0,min-pad),hi=max+pad;
-   const x=i=>p+(W-p*2)*(i/(arr.length-1)), y=v=>H-p-(H-p*2)*((v-lo)/Math.max(1,hi-lo));
-   const pts=arr.map((o,i)=>`${x(i)},${y(o.v)}`).join(" ");
-   svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><line x1="${p}" y1="${H-p}" x2="${W-p}" y2="${H-p}" stroke="rgba(255,255,255,.12)"/><text x="5" y="${p+5}" fill="#8d99aa" font-size="11">${fmt(hi)}</text><text x="5" y="${H-p+4}" fill="#8d99aa" font-size="11">${fmt(lo)}</text><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/>`;
- }
- window.renderNewBest=async function(){
-   if(!ns.length){
-     try{const r=await fetch("./data/new/latest.json?ts="+Date.now(),{cache:"no-store"});if(r.ok)ns=await r.json()}catch(e){}
-   }
-   const sel=el("newRankSelect");
-   if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?"selected":""}>${r}위</option>`).join("");sel.onchange=()=>{nr=+sel.value;renderNewBestInner()}}
-   renderNewBestInner();
- }
- function renderNewBestInner(){
-   if(!ns.length){el("newCutGrid").innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';chart();return}
-   const last=ns.at(-1);el("newHeaderLatest").textContent=stamp(last).slice(5,16)+" KST";
-   el("newCutGrid").innerHTML=ranks.map(r=>`<div class="cutCard"><span>${r}위</span><b>${fmt(val(last,r))}</b></div>`).join("");
-   const today=ns.filter(s=>day(s)===day(last)).map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);
-   if(today.length){const vs=today.map(x=>x.v);el("newTodayStats").innerHTML=`<div class="distanceRow"><span>현재</span><b>${fmt(vs.at(-1))}</b></div><div class="distanceRow"><span>오늘 최고</span><b>${fmt(Math.max(...vs))}</b></div><div class="distanceRow"><span>오늘 최저</span><b>${fmt(Math.min(...vs))}</b></div><div class="distanceRow"><span>오늘 평균</span><b>${fmt(vs.reduce((a,b)=>a+b,0)/vs.length)}</b></div>`;
-     const by=new Map();today.forEach(x=>by.set(stamp(x.s).slice(11,13),x.v));el("newHourlyTable").innerHTML='<thead><tr><th>시간</th><th>'+nr+'위 커트</th></tr></thead><tbody>'+[...by].map(([h,v])=>`<tr><td>${h}:15</td><td>${fmt(v)}</td></tr>`).join("")+'</tbody>';
-   } else {el("newTodayStats").innerHTML='<div class="mutedText">오늘 데이터 없음</div>';el("newHourlyTable").innerHTML='<tbody><tr><td>오늘 데이터 없음</td></tr></tbody>'}
-   chart();
- }
- document.querySelectorAll(".newRangeBtn").forEach(b=>b.addEventListener("click",()=>{range=b.dataset.range;document.querySelectorAll(".newRangeBtn").forEach(x=>x.classList.toggle("active",x===b));renderNewBestInner()}));
+ const stamp=s=>String(s?.slot_at_kst||s?.captured_at_kst||"");
+ const dkey=s=>stamp(s).slice(0,10);
+ const hour=s=>{const h=Number(stamp(s).slice(11,13));return Number.isFinite(h)?h:null};
+ const item=(s,r)=>{const a=s?.items||[],e=a.find(x=>+x.rank===+r);if(e)return e;return [...a].filter(x=>Number.isFinite(+x.rank)).sort((x,y)=>Math.abs(+x.rank-r)-Math.abs(+y.rank-r)||+x.rank-+y.rank)[0]||null};
+ const val=(s,r)=>{const x=item(s,r);const v=x?.views_24h_verified??x?.score;return v==null?null:Number(v)};
+ const fmt=v=>v==null||Number.isNaN(Number(v))?"-":Math.round(v).toLocaleString("ko-KR");
+ const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):null;
+ const addDay=(key,n)=>{const [y,m,d]=key.split('-').map(Number),x=new Date(Date.UTC(y,m-1,d));x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)};
+ function filtered(){if(!ns.length)return[];const last=new Date(stamp(ns.at(-1)).replace(' ','T')+'+09:00'),ld=dkey(ns.at(-1));if(range==='today')return ns.filter(s=>dkey(s)===ld);if(range==='24h'){const c=last.getTime()-86400000;return ns.filter(s=>new Date(stamp(s).replace(' ','T')+'+09:00').getTime()>=c)}const st=addDay(ld,range==='7d'?-6:-29);return ns.filter(s=>dkey(s)>=st&&dkey(s)<=ld)}
+ function sameTime(daysAgo){if(!ns.length)return null;const last=ns.at(-1),target=addDay(dkey(last),-daysAgo),hm=stamp(last).slice(11,16),tm=+hm.slice(0,2)*60 + +hm.slice(3,5);let best=null,gap=1e9;for(const s of ns){if(dkey(s)!==target)continue;const sh=stamp(s).slice(11,16),sm=+sh.slice(0,2)*60 + +sh.slice(3,5),g=Math.abs(sm-tm);if(g<gap){gap=g;best=val(s,nr)}}return gap<=90?best:null}
+ function cutGrid(){const last=ns.at(-1);el('newCutGrid').innerHTML=ranks.map(r=>{const x=item(last,r);return `<div class="cut"><div class="r">${r}위</div><div class="n">${fmt(val(last,r))}</div><div class="h">${x?.hours_after_upload!=null?x.hours_after_upload+'시간':'-'}</div></div>`}).join('')}
+ function chart(){const svg=el('newChart'),pts=filtered().map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);el('newChartTitle').textContent=`${nr}위 커트라인 시간대별 추이`;el('newChartCount').textContent=pts.length+'개 기록';if(pts.length<2){svg.innerHTML='<text x="380" y="155" text-anchor="middle" class="axis">기록이 더 쌓이면 그래프가 표시됩니다</text>';return}const W=760,H=310,L=58,R=18,T=16,B=34,vs=pts.map(x=>x.v);let mn=Math.min(...vs),mx=Math.max(...vs);if(mn===mx){mn-=1;mx+=1}const pad=(mx-mn)*.15;mn=Math.max(0,mn-pad);mx+=pad;const X=i=>L+(W-L-R)*(i/(pts.length-1)),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));let out='<defs><linearGradient id="newGradLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4b8cff"/><stop offset="100%" stop-color="#745dff"/></linearGradient><linearGradient id="newGradArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4b74ff" stop-opacity=".35"/><stop offset="100%" stop-color="#4b74ff" stop-opacity="0"/></linearGradient></defs>';for(let i=0;i<5;i++){const yy=T+(H-T-B)*i/4,vv=mx-(mx-mn)*i/4;out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${fmt(vv)}</text>`}const path=pts.map((p,i)=>(i?'L':'M')+X(i)+','+Y(p.v)).join(' '),area=path+` L ${X(pts.length-1)},${H-B} L ${X(0)},${H-B} Z`;out+=`<path d="${area}" fill="url(#newGradArea)"/><path d="${path}" fill="none" stroke="url(#newGradLine)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;pts.forEach((p,i)=>out+=`<circle cx="${X(i)}" cy="${Y(p.v)}" r="3.4" fill="#5d78ff"/>`);[0,Math.floor((pts.length-1)/2),pts.length-1].forEach(i=>{const st=stamp(pts[i].s),t=(range==='today'||range==='24h')?st.slice(11,16):st.slice(5,10).replace('-','/');out+=`<text x="${X(i)}" y="${H-8}" text-anchor="${i===0?'start':i===pts.length-1?'end':'middle'}" class="axis">${t}</text>`});svg.innerHTML=out}
+ function side(){const last=ns.at(-1),cur=val(last,nr),ld=dkey(last),today=ns.map(s=>({s,v:val(s,nr)})).filter(x=>dkey(x.s)===ld&&x.v!=null);el('newSideRankTitle').textContent=nr+'위';el('newCurrentValue').textContent=fmt(cur);const y=sameTime(1);if(y==null){el('newYdayDiff').textContent='데이터 부족';el('newYdayDiff').className='v same'}else{const d=cur-y;el('newYdayDiff').textContent=(d>0?'▲ ':d<0?'▼ ':'')+fmt(Math.abs(d));el('newYdayDiff').className='v '+(d>0?'up':d<0?'down':'same')}const a=[];for(let i=1;i<=7;i++){const v=sameTime(i);if(v!=null)a.push(v)}el('newAvg7').textContent=a.length?fmt(avg(a)):'데이터 부족';const vs=today.map(x=>x.v);el('newAvg24').textContent=fmt(avg(vs));if(vs.length){const mx=Math.max(...vs),mn=Math.min(...vs),mr=[...today].reverse().find(x=>x.v===mx),nr0=[...today].reverse().find(x=>x.v===mn);el('newMaxVal').textContent=fmt(mx);el('newMinVal').textContent=fmt(mn);el('newMaxTime').textContent=stamp(mr.s).slice(11,16);el('newMinTime').textContent=stamp(nr0.s).slice(11,16)}else{['newMaxVal','newMinVal','newMaxTime','newMinTime'].forEach(id=>el(id).textContent='-')}
+ const by=new Map();today.forEach(x=>by.set(hour(x.s),x.v));el('newTodayHourlyRank').textContent=nr+'위';el('newTodayHourlyTable').innerHTML=by.size?`<thead><tr><th>시간</th><th>${nr}위 커트</th></tr></thead><tbody>`+[...by].sort((a,b)=>a[0]-b[0]).map(([h,v])=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>':'<tbody><tr><td colspan="2">오늘 데이터 없음</td></tr></tbody>'}
+ function hourly(){const last=dkey(ns.at(-1)),st=addDay(last,-(hDays-1)),dh={};for(const s of ns){const d=dkey(s),h=hour(s);if(!d||h==null||d<st||d>last)continue;if(!dh[d])dh[d]={};if(!dh[d][h])dh[d][h]=Object.fromEntries(ranks.map(r=>[r,[]]));for(const r of ranks){const v=val(s,r);if(v!=null)dh[d][h][r].push(v)}}const buckets=Array.from({length:24},()=>Object.fromEntries(ranks.map(r=>[r,[]])));for(const d of Object.keys(dh))for(const [ht,row] of Object.entries(dh[d]))for(const r of ranks){const v=avg(row[r]);if(v!=null)buckets[+ht][r].push(v)}let lh=null,lv=null;for(let h=0;h<24;h++){const v=avg(buckets[h][nr]);if(v!=null&&(lv==null||v<lv)){lv=v;lh=h}}const pl=hDays===30?'최근 1달':`최근 ${hDays}일`;el('newHourlyLowSummary').innerHTML=lh==null?`<b>${nr}위 최저 컷 시간대: 데이터 없음</b>`:`<b>${nr}위 최저 컷 시간대 · ${String(lh).padStart(2,'0')}:05 · ${fmt(lv)}</b><div class="sub">${pl} 시간대 평균 기준</div>`;el('newHourlyAvgTable').innerHTML=`<thead><tr><th>시간대</th>${ranks.map(r=>`<th>${r}위</th>`).join('')}</tr></thead><tbody>`+buckets.map((row,h)=>`<tr><td>${String(h).padStart(2,'0')}:05</td>${ranks.map(r=>`<td>${fmt(avg(row[r]))}</td>`).join('')}</tr>`).join('')+'</tbody>';document.querySelectorAll('.newHourlyBtn').forEach(b=>b.classList.toggle('active',+b.dataset.days===hDays))}
+ function weekday(){const last=dkey(ns.at(-1)),st=addDay(last,-(wdDays-1)),b=Array.from({length:24},()=>Object.fromEntries(ranks.map(r=>[r,[]]))),end=addDay(last,-1),cst=addDay(end,-(wdDays-1)),daily={};for(const s of ns){const d=dkey(s),h=hour(s);if(!d||h==null)continue;const [y,m,dd]=d.split('-').map(Number),w=new Date(Date.UTC(y,m-1,dd)).getUTCDay();if(d>=st&&d<=last&&w===wd)for(const r of ranks){const v=val(s,r);if(v!=null)b[h][r].push(v)}if(d>=cst&&d<=end){if(!daily[d])daily[d]={w,values:Object.fromEntries(ranks.map(r=>[r,[]]))};for(const r of ranks){const v=val(s,r);if(v!=null)daily[d].values[r].push(v)}}}let slh=null,slv=null;for(let h=0;h<24;h++){const v=avg(b[h][nr]);if(v!=null&&(slv==null||v<slv)){slv=v;slh=h}}const wda=Array.from({length:7},()=>[]);Object.values(daily).forEach(o=>{const v=avg(o.values[nr]);if(v!=null)wda[o.w].push(v)});let lw=null,lwv=null;for(let w=0;w<7;w++){const v=avg(wda[w]);if(v!=null&&(lwv==null||v<lwv)){lwv=v;lw=w}}const names=['일','월','화','수','목','금','토'],pl=wdDays===30?'최근 1달':`최근 ${wdDays}일`;el('newWeekdayLowSummary').innerHTML=lw==null?`<b>${nr}위 · ${pl} · 최저 요일 데이터 없음</b>`:`<b>${nr}위 · ${pl} · 가장 낮은 요일: ${names[lw]}요일 · 하루 평균 ${fmt(lwv)}</b><div class="sub">완료된 날짜의 KST 00:00~23:59 하루 평균을 요일별로 다시 평균</div>${slh==null?'':`<div class="sub">${names[wd]}요일 시간대 최저: ${String(slh).padStart(2,'0')}:05 · ${fmt(slv)}</div>`}`;el('newWeekdayTable').innerHTML=`<thead><tr><th>시간대</th>${ranks.map(r=>`<th>${r}위</th>`).join('')}</tr></thead><tbody>`+b.map((row,h)=>`<tr><td>${String(h).padStart(2,'0')}:05</td>${ranks.map(r=>`<td>${fmt(avg(row[r]))}</td>`).join('')}</tr>`).join('')+'</tbody>';document.querySelectorAll('.newWeekdayBtn').forEach(x=>x.classList.toggle('active',+x.dataset.day===wd));document.querySelectorAll('.newWeekdayRangeBtn').forEach(x=>x.classList.toggle('active',+x.dataset.days===wdDays))}
+ function monthly(){const years=[...new Set(ns.map(s=>+dkey(s).slice(0,4)))].filter(Boolean).sort((a,b)=>b-a),sel=el('newYearSelect');if(!sel.options.length)sel.innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join('');const year=+(sel.value||years[0]),rows=[];for(let m=1;m<=12;m++){const a=ns.filter(s=>+dkey(s).slice(0,4)===year&&+dkey(s).slice(5,7)===m).map(s=>val(s,nr)).filter(v=>v!=null);rows.push({m,avg:avg(a),max:a.length?Math.max(...a):null,min:a.length?Math.min(...a):null,count:a.length})}const valid=rows.filter(r=>r.avg!=null),svg=el('newMonthChart');if(!valid.length)svg.innerHTML='<text x="380" y="155" text-anchor="middle" class="axis">월별 데이터가 아직 없습니다</text>';else{const W=760,H=310,L=58,R=18,T=18,B=36,mx=Math.max(...valid.map(r=>r.avg))*1.15,bw=(W-L-R)/12;let out='';for(let i=0;i<4;i++){const yy=T+(H-T-B)*i/3;out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/>`}rows.forEach((r,i)=>{const x=L+i*bw+bw*.2,h=r.avg==null?0:(H-T-B)*(r.avg/mx),y=H-B-h;out+=`<rect x="${x}" y="${y}" width="${bw*.6}" height="${h}" rx="4" fill="#5876ff"/><text x="${x+bw*.3}" y="${H-8}" text-anchor="middle" class="axis">${r.m}월</text>`});svg.innerHTML=out}el('newMonthTable').innerHTML='<thead><tr><th>월</th><th>평균</th><th>최고</th><th>최저</th><th>기록 수</th></tr></thead><tbody>'+rows.map(r=>`<tr><td>${r.m}월</td><td>${fmt(r.avg)}</td><td>${fmt(r.max)}</td><td>${fmt(r.min)}</td><td>${r.count||'-'}</td></tr>`).join('')+'</tbody>'}
+ function render(){if(!ns.length){el('newCutGrid').innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';return}const last=ns.at(-1);el('newHeaderLatest').textContent=stamp(last).slice(5,16)+' KST';el('newHeaderRank').textContent=nr+'위 커트라인';cutGrid();chart();side();hourly();weekday();monthly()}
+ window.renderNewBest=async function(){if(!ns.length){try{const r=await fetch('./data/new/latest.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const d=await r.json();ns=(Array.isArray(d)?d:(Array.isArray(d?.snapshots)?d.snapshots:[])).filter(s=>Array.isArray(s.items)).sort((a,b)=>stamp(a).localeCompare(stamp(b)))}}catch(e){console.error(e)}}const sel=el('newRankSelect');if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?'selected':''}>${r}위</option>`).join('');sel.onchange=()=>{nr=+sel.value;render()}}render()};
+ document.querySelectorAll('.newRangeBtn').forEach(b=>b.addEventListener('click',()=>{range=b.dataset.range;document.querySelectorAll('.newRangeBtn').forEach(x=>x.classList.toggle('active',x===b));chart()}));
+ document.querySelectorAll('.newHourlyBtn').forEach(b=>b.addEventListener('click',()=>{hDays=+b.dataset.days;hourly()}));
+ document.querySelectorAll('.newWeekdayBtn').forEach(b=>b.addEventListener('click',()=>{wd=+b.dataset.day;weekday()}));
+ document.querySelectorAll('.newWeekdayRangeBtn').forEach(b=>b.addEventListener('click',()=>{wdDays=+b.dataset.days;weekday()}));
+ el('newYearSelect').addEventListener('change',monthly);
 })();
 </script>
 

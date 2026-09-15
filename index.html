@@ -1397,9 +1397,11 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 <script>
 (function(){
   const $q=id=>document.getElementById(id);
-  const STORE="tubecut_my_novels", ACTIVE="tubecut_my_active";
+  const STORE="tubecut_my_novels", ACTIVE="tubecut_my_active", VIEW_STORE="tubecut_active_view";
   let myCompareMode="today";
   function switchView(name){
+    if(!["analysis","newbest","mywork","guide"].includes(name)) name="analysis";
+    localStorage.setItem(VIEW_STORE,name);
     ["analysis","newbest","mywork","guide"].forEach(v=>$q(v+"View")?.classList.toggle("active",v===name));
     document.querySelectorAll(".viewBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
     window.scrollTo({top:0,behavior:"smooth"});
@@ -1724,6 +1726,15 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
  document.querySelectorAll('.newWeekdayRangeBtn').forEach(b=>b.addEventListener('click',()=>{wdDays=+b.dataset.days;weekday()}));
  el('newYearSelect').addEventListener('change',monthly);
  el('newMonthRankSelect').addEventListener('change',()=>{newMonthlyRank=+el('newMonthRankSelect').value;monthly()});
+})();
+</script>
+
+<script>
+(function(){
+  const saved=localStorage.getItem("tubecut_active_view");
+  if(!["analysis","newbest","mywork","guide"].includes(saved)) return;
+  const btn=document.querySelector(`.viewBtn[data-view="${saved}"]`);
+  if(btn && !btn.classList.contains("active")) btn.click();
 })();
 </script>
 

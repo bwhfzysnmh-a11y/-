@@ -417,6 +417,61 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 @media(max-width:760px){.myOverviewHead{align-items:flex-start}.myOverviewTitle h2{font-size:18px}.myCompareBtn{padding:8px 11px;font-size:12px}.myWorkInfo{grid-template-columns:72px 1fr}.myCover{width:72px;height:96px}.mySummaryGrid{grid-column:1/-1;grid-template-columns:repeat(4,1fr)}.mySummary{padding:9px 7px}.mySummary b{font-size:18px}.mySummary span,.mySummary small{font-size:10px}.myCutNeedGrid{grid-template-columns:repeat(13,minmax(78px,1fr));-webkit-overflow-scrolling:touch}.myCutCell{border-bottom:0}}
 @media(max-width:420px){.myWorkInfo{grid-template-columns:64px 1fr}.myCover{width:64px;height:86px}.mySummaryGrid{grid-template-columns:repeat(2,1fr)}.myCutHead{align-items:flex-start;flex-direction:column;gap:4px}}
 
+
+
+/* ===== final visual polish ===== */
+/* 투베/신베 오늘 추이: 오른쪽 요약 카드가 더 길어도 왼쪽 그래프가 같은 높이까지 채우도록 */
+@media(min-width:781px){
+  #analysisView .gridTop,
+  #newbestView .gridTop{align-items:stretch}
+  #analysisView .gridTop > .panel:first-child,
+  #newbestView .gridTop > .panel:first-child{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  #analysisView .gridTop > .panel:first-child .chartWrap,
+  #newbestView .gridTop > .panel:first-child .chartWrap{
+    flex:1 1 auto;
+    height:auto;
+    min-height:410px;
+  }
+  #analysisView .gridTop > .panel:first-child .chartWrap svg,
+  #newbestView .gridTop > .panel:first-child .chartWrap svg{
+    width:100%;
+    height:100%!important;
+    min-height:410px;
+  }
+}
+
+/* 내 작품 시간표: 긴 행 제목이 셀 밖으로 튀어나오지 않게 첫 열을 넉넉하게 고정 */
+.myHourlyTable .rowLabel{
+  width:100px;
+  min-width:100px;
+  max-width:100px;
+  padding-left:10px;
+  padding-right:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:clip;
+}
+.myDeltaTable .rowLabel{font-size:10.5px;letter-spacing:-.25px}
+
+/* 작은 디테일 통일 */
+.panel{box-shadow:0 5px 18px rgba(31,54,86,.035)}
+.panelTitle{min-height:24px}
+.todayHourlyScroll{scrollbar-width:thin;scrollbar-color:#c9d3e1 transparent}
+.todayHourlyScroll::-webkit-scrollbar,.myHourlyScroll::-webkit-scrollbar,.analysisTableScroll::-webkit-scrollbar,.monthTableScroll::-webkit-scrollbar{height:7px;width:7px}
+.todayHourlyScroll::-webkit-scrollbar-thumb,.myHourlyScroll::-webkit-scrollbar-thumb,.analysisTableScroll::-webkit-scrollbar-thumb,.monthTableScroll::-webkit-scrollbar-thumb{background:#c9d3e1;border-radius:999px}
+.myHourlyBox{box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.myHourlyTable th,.myHourlyTable td{font-variant-numeric:tabular-nums}
+.myHourlyTable .rowLabel{font-variant-numeric:normal}
+
+@media(max-width:780px){
+  .myHourlyTable .rowLabel{width:92px;min-width:92px;max-width:92px}
+  .myDeltaTable .rowLabel{font-size:10px}
+}
+
 </style>
 </head>
 <body>

@@ -9,7 +9,8 @@ import requests
 from bs4 import BeautifulSoup
 
 URL = "https://www.munpia.com/best/today?displayType=GRID"
-OUT = Path("data/data.json")
+LEGACY_OUT = Path("data/data.json")
+ARCHIVE_ROOT = Path("data/archive")
 KST = timezone(timedelta(hours=9))
 
 HEADERS = {
@@ -129,20 +130,20 @@ if parsed < 190:
 now_kst = datetime.now(KST)
 stamp = now_kst.strftime("%Y-%m-%d %H:%M:%S")
 
-OUT.parent.mkdir(parents=True, exist_ok=True)
+ARCHIVE_ROOT.mkdir(parents=True, exist_ok=True)
 
-try:
-    old = json.loads(OUT.read_text(encoding="utf-8"))
-    if not isinstance(old, list):
-        old = []
-except Exception:
-    old = []
-
-old = [
-    s for s in old
-    if isinstance(s, dict)
-    and s.get("metric") == "free_today_verified_views_24h"
-]
+def load_snapshots(path):
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            return []
+        return [
+            x for x in data
+            if isinstance(x, dict)
+            and x.get("metric") == "free_today_verified_views_24h"
+        ]
+    except Exception:
+        return []
 
 def parse_kst(value):
     try:
@@ -161,13 +162,30 @@ def scheduled_slot(t):
 current_slot = scheduled_slot(now_kst)
 slot = current_slot
 
+# 누락 슬롯 판단에는 모든 월별 보관 파일을 확인한다.
+all_old = []
+for path in sorted(ARCHIVE_ROOT.glob("*/*.json")):
+    all_old.extend(load_snapshots(path))
+
+# 처음 구조를 바꿀 때 기존 data/data.json의 과거 기록도 함께 참고한다.
+legacy_old = load_snapshots(LEGACY_OUT)
+if legacy_old:
+    known = {
+        (x.get("slot_at_kst") or x.get("captured_at_kst"), x.get("captured_at_kst"))
+        for x in all_old
+    }
+    for x in legacy_old:
+        key = (x.get("slot_at_kst") or x.get("captured_at_kst"), x.get("captured_at_kst"))
+        if key not in known:
+            all_old.append(x)
+            known.add(key)
+
 # 실패한 GitHub Action을 Re-run한 경우 최근 누락 시간대를 자동 복구.
-# 예: 22:15 실패 -> 재실행 시 slot_at_kst = 22:15
 run_attempt = int(os.getenv("GITHUB_RUN_ATTEMPT", "1") or "1")
-if run_attempt > 1 and old:
+if run_attempt > 1 and all_old:
     existing_slots = set()
-    for s in old:
-        raw = s.get("slot_at_kst") or s.get("captured_at_kst")
+    for old_snapshot in all_old:
+        raw = old_snapshot.get("slot_at_kst") or old_snapshot.get("captured_at_kst")
         d = parse_kst(raw)
         if d:
             existing_slots.add(scheduled_slot(d).strftime("%Y-%m-%d %H:%M:%S"))
@@ -188,11 +206,61 @@ snapshot = {
     "items": items,
 }
 
-old.append(snapshot)
-old = old[-720:]
+# 실제로 복구된 슬롯의 연/월 파일에 저장한다.
+archive_file = (
+    ARCHIVE_ROOT
+    / slot.strftime("%Y")
+    / f"{slot.strftime('%m')}.json"
+)
+archive_file.parent.mkdir(parents=True, exist_ok=True)
 
-OUT.write_text(
-    json.dumps(old, ensure_ascii=False, indent=2),
+month_data = load_snapshots(archive_file)
+
+# 첫 실행 때 기존 단일 data.json에 있던 같은 달 기록을 월별 파일로 이관한다.
+if legacy_old:
+    existing = {
+        (x.get("slot_at_kst") or x.get("captured_at_kst"), x.get("captured_at_kst"))
+        for x in month_data
+    }
+    for old_snapshot in legacy_old:
+        raw = old_snapshot.get("slot_at_kst") or old_snapshot.get("captured_at_kst")
+        d = parse_kst(raw)
+        if d and d.strftime("%Y-%m") == slot.strftime("%Y-%m"):
+            key = (raw, old_snapshot.get("captured_at_kst"))
+            if key not in existing:
+                month_data.append(old_snapshot)
+                existing.add(key)
+
+month_data.append(snapshot)
+month_data.sort(
+    key=lambda x: (
+        x.get("slot_at_kst") or x.get("captured_at_kst") or "",
+        x.get("captured_at_kst") or "",
+    )
+)
+
+archive_file.write_text(
+    json.dumps(month_data, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
+
+# 현재 대시보드 호환용 파일.
+# 사이트가 아직 data/data.json을 읽으므로 전체 누적본도 같이 갱신한다.
+# 이후 index.html을 월별 archive를 읽도록 바꾸면 이 호환 파일은 제거 가능하다.
+combined = []
+for path in sorted(ARCHIVE_ROOT.glob("*/*.json")):
+    combined.extend(load_snapshots(path))
+
+combined.sort(
+    key=lambda x: (
+        x.get("slot_at_kst") or x.get("captured_at_kst") or "",
+        x.get("captured_at_kst") or "",
+    )
+)
+
+LEGACY_OUT.parent.mkdir(parents=True, exist_ok=True)
+LEGACY_OUT.write_text(
+    json.dumps(combined, ensure_ascii=False, indent=2),
     encoding="utf-8",
 )
 
@@ -205,5 +273,5 @@ rank200_text = (
 
 print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
-    f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']}"
+    f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
 )

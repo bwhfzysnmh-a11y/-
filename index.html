@@ -184,6 +184,18 @@ th:first-child,td:first-child{text-align:left}
 .gridTop .todayHourlyTable th,
 .gridTop .todayHourlyTable td{padding:7px 9px}
 
+
+/* 최종 오늘 추이 레이아웃: 그래프는 조금 더 높게, 7일 동시간 평균은 오늘 평균 옆에 */
+.gridTop > .panel:first-child .chartWrap{min-height:360px}
+.gridTop > .panel:first-child .chartWrap svg{height:360px!important;min-height:360px}
+.gridTop .sideRow.sideWide{grid-column:1 / -1}
+/* 투베/신베 오늘 추이 그래프를 세로로 조금 더 넉넉하게 */
+#analysisView .gridTop .chartWrap,#newbestView .gridTop .chartWrap{height:370px;min-height:370px}
+#analysisView .gridTop .chartWrap svg,#newbestView .gridTop .chartWrap svg{height:370px!important;min-height:370px}
+@media(max-width:760px){
+  .gridTop > .panel:first-child .chartWrap{min-height:300px}
+  .gridTop > .panel:first-child .chartWrap svg{height:300px!important;min-height:300px}
+}
 .hourlyNote{color:var(--muted);font-size:11px;line-height:1.5;margin-top:8px}
 .weekdayControls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .weekdayBtn{padding:9px 13px;font-size:12px}
@@ -267,8 +279,19 @@ th:first-child,td:first-child{text-align:left}
 .myHourlyTable td.rowLabel{font-weight:700}
 .myHourlyTable .rankHit{color:#246ee9}
 .myChartNote{padding:9px 14px 11px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+.myCompareHistory{border-top:1px solid var(--line)}
+.myCompareHistoryHead{border-bottom:1px solid var(--line);padding-top:11px;padding-bottom:11px}
+.myDeltaTable .better{color:var(--good);font-weight:900}
+.myDeltaTable .worse{color:var(--bad);font-weight:900}
+.myDeltaTable .sameRank{color:var(--muted);font-weight:800}
+.myRankLegend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:0 0 7px;font-size:11px;color:var(--muted)}
+.myRankLegend span{display:inline-flex;align-items:center;gap:6px}
+.myRankLegend i{width:18px;height:3px;border-radius:3px;display:inline-block}
+.myRankLegend .today{background:#246ee9}.myRankLegend .yesterday{background:#8a9bb2}.myRankLegend .week{background:#169c62}
 .guideStandalone{margin-top:18px}.guideStandalone h1{margin-top:0}.guideStandalone>p{color:var(--muted);line-height:1.7}.guideNote{margin-top:16px!important}
-@media(max-width:760px){.myTopCards{grid-template-columns:1fr 1fr}.myIdentity{grid-column:1/-1}.myTwoCol{grid-template-columns:1fr}.urlRow{flex-direction:column}.urlRow button{padding:12px}.myHero h1{font-size:24px}}
+@media(max-width:760px){.myTopCards{grid-template-columns:1fr 1fr}.myIdentity{grid-column:1/-1}.myTwoCol{grid-template-columns:1fr}.urlRow{flex-direction:column}.urlRow button{padding:12px}.myHero h1{font-size:24px}
+#analysisView .gridTop .chartWrap,#newbestView .gridTop .chartWrap{height:285px;min-height:285px}
+#analysisView .gridTop .chartWrap svg,#newbestView .gridTop .chartWrap svg{height:285px!important;min-height:285px}}
 
 
 .newNote{color:var(--muted);font-size:13px;line-height:1.65;margin:0}
@@ -469,11 +492,11 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
       <div class="bigStat" id="currentValue">-</div>
       <div class="statLabel">현재 24시간 인증조회수</div>
       <div class="sideStats">
-        <div class="sideRow"><div class="k">어제 같은 시간 대비</div><div class="v" id="ydayDiff">데이터 부족</div></div>
-        <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="avg7">데이터 부족</div></div>
         <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
         <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
         <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+        <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="avg7">데이터 부족</div></div>
+        <div class="sideRow sideWide"><div class="k">어제 같은 시간 대비</div><div class="v" id="ydayDiff">데이터 부족</div></div>
       </div>
       <div class="todayHourlyBlock">
         <div class="todayHourlyTitle">
@@ -1196,11 +1219,11 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
       <div class="bigStat" id="newCurrentValue">-</div>
       <div class="statLabel">현재 24시간 인증조회수</div>
       <div class="sideStats">
-        <div class="sideRow"><div class="k">어제 같은 시간 대비</div><div class="v" id="newYdayDiff">데이터 부족</div></div>
-        <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="newAvg7">데이터 부족</div></div>
         <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="newMaxVal">-</div><div class="recordTime" id="newMaxTime">-</div></div>
         <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="newMinVal">-</div><div class="recordTime" id="newMinTime">-</div></div>
         <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="newAvg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+        <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="newAvg7">데이터 부족</div></div>
+        <div class="sideRow sideWide"><div class="k">어제 같은 시간 대비</div><div class="v" id="newYdayDiff">데이터 부족</div></div>
       </div>
       <div class="todayHourlyBlock">
         <div class="todayHourlyTitle"><b>오늘 시간별 커트</b><span id="newTodayHourlyRank" class="small">200위</span></div>
@@ -1297,6 +1320,10 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
         <div class="myHourlyBox">
           <div class="myHourlyHead"><h3>오늘 시간별 순위</h3><span id="myHourlyModeLabel">투베 · 00:15~23:15</span></div>
           <div class="myHourlyScroll"><table class="myHourlyTable" id="myHourlyRankTable"></table></div>
+          <div class="myCompareHistory">
+            <div class="myHourlyHead myCompareHistoryHead"><h3>과거 동일 시간대와 비교</h3><span>숫자가 작을수록 높은 순위</span></div>
+            <div class="myHourlyScroll"><table class="myHourlyTable myDeltaTable" id="myHourlyCompareTable"></table></div>
+          </div>
           <div class="myChartNote">그래프의 점을 누르면 해당 시간의 순위와 인증조회수를 확인할 수 있어요.</div>
         </div>
       </section>
@@ -1378,51 +1405,63 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
   function drawMyChart(records){
     const svg=$q("myRankChart"); if(!svg)return;
     const {W,H,L,R,T,B}=chartFrame(svg); enableChartPointTips(svg);
-    if(!records.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">순위 기록이 더 쌓이면 그래프가 표시됩니다.</text>`;return}
-    // 내 작품도 오늘 KST 00:00~다음날 00:00을 처음부터 고정해 둔다.
+    const oldLegend=svg.closest('.panel')?.querySelector('.myRankLegend');
+    if(!records.length){if(oldLegend)oldLegend.remove();svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">순위 기록이 더 쌓이면 그래프가 표시됩니다.</text>`;return}
     const latestDay=stamp(records.at(-1).s).slice(0,10);
-    const rec=records.filter(r=>stamp(r.s).slice(0,10)===latestDay);
-    if(!rec.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">오늘 순위 기록이 아직 없습니다.</text>`;return}
-    // 순위축은 데이터 범위에 따라 확대하지 않고 항상 1위~200위 전체를 보여준다.
+    const groups=[
+      {label:"오늘",day:latestDay,color:"#246ee9",dash:"",width:3.2,cls:"today"},
+      {label:"어제",day:addDaysToKey(latestDay,-1),color:"#8a9bb2",dash:"7 5",width:2.4,cls:"yesterday"},
+      {label:"일주일 전",day:addDaysToKey(latestDay,-7),color:"#169c62",dash:"5 5",width:2.4,cls:"week"}
+    ].map(g=>({...g,rec:records.filter(r=>stamp(r.s).slice(0,10)===g.day)}));
+    if(!groups[0].rec.length){if(oldLegend)oldLegend.remove();svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">오늘 순위 기록이 아직 없습니다.</text>`;return}
     const min=1,max=200;
-    const domainStart=kstDayStartMs(latestDay),domainEnd=domainStart+86400000;
-    const x=r=>L+(W-L-R)*Math.max(0,Math.min(1,(new Date(stamp(r.s).replace(' ','T')+'+09:00').getTime()-domainStart)/(domainEnd-domainStart)));
+    const x=r=>{const st=stamp(r.s),hh=Number(st.slice(11,13)),mm=Number(st.slice(14,16));return L+(W-L-R)*((hh*60+mm)/1440)};
     const y=v=>T+(H-T-B)*((v-min)/(max-min));
     let out='';
-    [1,40,80,120,160,200].forEach(rv=>{
-      const yy=y(rv);
-      out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${rv}위</text>`;
-    });
-    const path=rec.map((r,i)=>(i?'L':'M')+x(r)+','+y(r.rank)).join(' ');
-    out+=`<path d="${path}" fill="none" stroke="#246ee9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
-    rec.forEach(r=>{
-      const st=stamp(r.s),time=st.slice(11,16);
-      out+=`<circle class="chartPoint" data-tip="${pointTipText(time,r.rank,r.views)}" cx="${x(r)}" cy="${y(r.rank)}" r="4.2" fill="#3478ff"/>`;
-    });
-    [0,6,12,18,24].forEach((h,i)=>{
-      const xx=L+(W-L-R)*(h/24);
-      out+=`<text x="${xx}" y="${H-9}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${String(h).padStart(2,'0')}:00</text>`;
+    [1,20,40,60,80,100,120,140,160,180,200].forEach(rv=>{const yy=y(rv);out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${rv}위</text>`});
+    [0,6,12,18,24].forEach((h,i)=>{const xx=L+(W-L-R)*(h/24);out+=`<text x="${xx}" y="${H-9}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${String(h).padStart(2,'0')}:00</text>`});
+    groups.forEach(g=>{
+      if(!g.rec.length)return;
+      const path=g.rec.map((r,i)=>(i?'L':'M')+x(r)+','+y(r.rank)).join(' ');
+      out+=`<path d="${path}" fill="none" stroke="${g.color}" stroke-width="${g.width}" ${g.dash?`stroke-dasharray="${g.dash}"`:''} stroke-linecap="round" stroke-linejoin="round"/>`;
+      g.rec.forEach(r=>{const st=stamp(r.s),time=st.slice(11,16);out+=`<circle class="chartPoint" data-tip="${g.label} · ${pointTipText(time,r.rank,r.views)}" cx="${x(r)}" cy="${y(r.rank)}" r="${g.label==='오늘'?4.2:3.5}" fill="${g.color}"/>`});
     });
     svg.innerHTML=out;
-    const label=$q('myChartModeLabel');if(label)label.textContent=(myCompareMode==='new'?'신규베스트':'투데이베스트')+' · 오늘';
+    let legend=oldLegend;
+    if(!legend){legend=document.createElement('div');legend.className='myRankLegend';svg.closest('.chartWrap')?.before(legend)}
+    legend.innerHTML='<span><i class="today"></i>오늘</span><span><i class="yesterday"></i>어제</span><span><i class="week"></i>일주일 전</span>';
+    const label=$q('myChartModeLabel');if(label)label.textContent=(myCompareMode==='new'?'신규베스트':'투데이베스트')+' · 오늘/과거 비교';
   }
 
   function renderMyHourlyTable(records,isNew){
-    const table=$q("myHourlyRankTable"), label=$q("myHourlyModeLabel");
+    const table=$q("myHourlyRankTable"), compare=$q("myHourlyCompareTable"), label=$q("myHourlyModeLabel");
     if(!table)return;
     const minute=isNew?"05":"15", shortName=isNew?"신베":"투베";
     if(label)label.textContent=`${shortName} · 00:${minute}~23:${minute}`;
     const latestDay=records.length?stamp(records.at(-1).s).slice(0,10):"";
-    const today=latestDay?records.filter(r=>stamp(r.s).slice(0,10)===latestDay):[];
-    const byHour=new Map();
-    today.forEach(r=>{
-      const st=stamp(r.s),h=Number(st.slice(11,13));
-      const prev=byHour.get(h);
-      if(!prev || st>stamp(prev.s))byHour.set(h,r);
-    });
+    const days={today:latestDay,yesterday:latestDay?addDaysToKey(latestDay,-1):"",week:latestDay?addDaysToKey(latestDay,-7):""};
     const hours=Array.from({length:24},(_,h)=>h);
+    const byHourForDay=day=>{
+      const m=new Map();
+      records.filter(r=>stamp(r.s).slice(0,10)===day).forEach(r=>{const st=stamp(r.s),h=Number(st.slice(11,13)),prev=m.get(h);if(!prev||st>stamp(prev.s))m.set(h,r)});
+      return m;
+    };
+    const maps={today:byHourForDay(days.today),yesterday:byHourForDay(days.yesterday),week:byHourForDay(days.week)};
+    const rankRow=(name,map)=>`<tr><td class="rowLabel">${name}</td>${hours.map(h=>{const r=map.get(h);return `<td class="${r?'rankHit':''}">${r?r.rank+'위':'-'}</td>`}).join('')}</tr>`;
     table.innerHTML=`<tr><th class="rowLabel">시간</th>${hours.map(h=>`<th>${String(h).padStart(2,'0')}:${minute}</th>`).join('')}</tr>`+
-      `<tr><td class="rowLabel">${shortName} 순위</td>${hours.map(h=>{const r=byHour.get(h);return `<td class="${r?'rankHit':''}">${r?r.rank+'위':'-'}</td>`}).join('')}</tr>`;
+      rankRow('오늘',maps.today)+rankRow('어제',maps.yesterday)+rankRow('일주일 전',maps.week);
+    if(compare){
+      const deltaCell=(cur,past)=>{
+        if(!cur||!past)return '<td>-</td>';
+        const diff=Number(past.rank)-Number(cur.rank);
+        if(diff>0)return `<td class="better">▲ ${diff}</td>`;
+        if(diff<0)return `<td class="worse">▼ ${Math.abs(diff)}</td>`;
+        return '<td class="sameRank">-</td>';
+      };
+      compare.innerHTML=`<tr><th class="rowLabel">시간</th>${hours.map(h=>`<th>${String(h).padStart(2,'0')}:${minute}</th>`).join('')}</tr>`+
+        `<tr><td class="rowLabel">어제 대비</td>${hours.map(h=>deltaCell(maps.today.get(h),maps.yesterday.get(h))).join('')}</tr>`+
+        `<tr><td class="rowLabel">일주일 전 대비</td>${hours.map(h=>deltaCell(maps.today.get(h),maps.week.get(h))).join('')}</tr>`;
+    }
   }
 
   function renderTabs(list,id){

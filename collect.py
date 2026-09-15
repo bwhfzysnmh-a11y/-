@@ -279,12 +279,3 @@ print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
     f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
 )
-
-
-# 기본 실행에서는 투데이 수집이 끝난 뒤 신규베스트도 연속 수집한다.
-if __name__ == "__main__" and MODE == "today" and os.getenv("MUNPIA_DUAL_CHILD") != "1":
-    import subprocess, sys
-    env = os.environ.copy()
-    env["MUNPIA_BEST_MODE"] = "new"
-    env["MUNPIA_DUAL_CHILD"] = "1"
-    subprocess.run([sys.executable, __file__], check=True, env=env)

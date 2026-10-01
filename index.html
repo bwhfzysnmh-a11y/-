@@ -251,8 +251,6 @@ th:first-child,td:first-child{text-align:left}
 .serviceNav{display:flex;gap:8px;flex-wrap:wrap}.serviceNav a{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 10px;border-radius:10px}.serviceNav a:hover{background:rgba(255,255,255,.05);color:var(--text)}
 .serviceInfo{margin-top:20px}.infoCard{border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.025)}.infoCard h2{font-size:17px;margin:0 0 8px}.infoCard p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
 .infoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.infoGrid div{padding:12px;border-radius:12px;background:rgba(255,255,255,.035)}.infoGrid b,.infoGrid span{display:block}.infoGrid b{font-size:12px;margin-bottom:5px}.infoGrid span{font-size:12px;color:var(--muted)}
-.adSlot{margin:14px 0;border:1px dashed var(--line);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--muted);background:rgba(255,255,255,.018)}
-.adSlot span{font-size:9px;letter-spacing:1.2px;opacity:.65}.adSlot b{font-size:12px;font-weight:600}.adPrimary{min-height:90px}.adSecondary{min-height:110px}
 .serviceFooter{padding:22px 2px 30px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 @media(max-width:700px){.serviceHeader{align-items:flex-start;flex-direction:column;padding-top:16px}.serviceNav{width:100%;overflow:auto;flex-wrap:nowrap}.serviceNav a{white-space:nowrap;background:rgba(255,255,255,.025)}.infoGrid{grid-template-columns:1fr}}
 
@@ -377,7 +375,6 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .serviceNav button.active,.serviceNav button:hover,.serviceNav .bestTab.active{background:#edf3fb;color:var(--text)}
 .serviceNav .bestTab.active span{color:#4d6683}
 .infoCard,.infoGrid div{background:#fff}
-.adSlot{background:#f8fafc;border-color:#cfd9e6;color:#8290a3}
 .urlRow input,#newRankSelect,.novelTab{background:#fff;color:var(--text)}
 .novelTab.active{background:#eef4ff;color:var(--text);border-color:#bcd0ef}
 
@@ -472,6 +469,14 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
   .myDeltaTable .rowLabel{font-size:10px}
 }
 
+/* 최근 7일 날짜 선택 */
+.dayHistoryTabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.dayHistoryBtn{flex:0 0 auto;min-width:78px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--muted);font-size:11px;font-weight:750;line-height:1.25;cursor:pointer}
+.dayHistoryBtn b{display:block;color:var(--text);font-size:12px;margin-bottom:2px}
+.dayHistoryBtn.active{background:#3478ff;border-color:#3478ff;color:#dfeaff}
+.dayHistoryBtn.active b{color:#fff}
+@media(max-width:560px){.dayHistoryBtn{min-width:72px;padding:8px 9px}}
+
 </style>
 </head>
 <body>
@@ -518,7 +523,6 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
       <div id="cutGrid" class="cutGrid"></div>
     </div>
   </section>
-  <div class="adSlot adPrimary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ①</b></div>
 
 
   <div class="controls">
@@ -527,6 +531,7 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
       <select id="rankSelect"></select>
     </div>
   </div>
+  <div id="dayHistoryTabs" class="dayHistoryTabs" aria-label="최근 7일 기록 선택"></div>
 
   <!-- 1. 그래프를 맨 위 -->
   <section class="gridTop">
@@ -545,17 +550,17 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
         <h2 id="sideRankTitle">200위</h2>
       </div>
       <div class="bigStat" id="currentValue">-</div>
-      <div class="statLabel">현재 24시간 인증조회수</div>
+      <div class="statLabel" id="currentStatLabel">현재 24시간 인증조회수</div>
       <div class="sideStats">
-        <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
-        <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
-        <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+        <div class="sideRow"><div class="k" id="maxLabel">오늘 최고</div><div class="v" id="maxVal">-</div><div class="recordTime" id="maxTime">-</div></div>
+        <div class="sideRow"><div class="k" id="minLabel">오늘 최저</div><div class="v" id="minVal">-</div><div class="recordTime" id="minTime">-</div></div>
+        <div class="sideRow"><div class="k" id="avgLabel">오늘 평균</div><div class="v" id="avg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
         <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="avg7">데이터 부족</div></div>
-        <div class="sideRow sideWide"><div class="k">어제 같은 시간 대비</div><div class="v" id="ydayDiff">데이터 부족</div></div>
+        <div class="sideRow sideWide"><div class="k" id="ydayLabel">어제 같은 시간 대비</div><div class="v" id="ydayDiff">데이터 부족</div></div>
       </div>
       <div class="todayHourlyBlock">
         <div class="todayHourlyTitle">
-          <b>오늘 시간별 커트</b>
+          <b id="todayHourlyLabel">오늘 시간별 커트</b>
           <span id="todayHourlyRank" class="small">200위</span>
         </div>
         <div class="scroll todayHourlyScroll">
@@ -564,8 +569,6 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
       </div>
     </div>
   </section>
-
-    <div class="adSlot adSecondary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ②</b></div>
 <section class="panel hourlyPanel">
     <div class="panelTitle"><h2 id="hourlyTitle">200위 시간대별 평균 커트라인</h2><span class="small">최근 기간 기준 · 시간대별 평균</span></div>
     <div class="analysisControls"><select id="hourlyRankSelect" aria-label="시간별 분석 순위"></select><button class="hourlyBtn active" data-days="7">최근 7일</button><button class="hourlyBtn" data-days="14">최근 14일</button><button class="hourlyBtn" data-days="30">최근 1달</button></div>
@@ -634,6 +637,7 @@ let snaps=[];
 let selectedRank=200;
 let monthlyRank=200;
 let selectedRange="today";
+let selectedDayOffset=0;
 let hourlyDays=7;
 let hourlyRank=200;
 let selectedWeekday=1;
@@ -753,6 +757,15 @@ function addDaysToKey(key,delta){
   x.setUTCDate(x.getUTCDate()+delta);
   return x.toISOString().slice(0,10);
 }
+function selectedDayKey(){return addDaysToKey(dayKey(new Date()),-selectedDayOffset)}
+function historyDayLabel(offset){return offset===0?"오늘":offset===1?"어제":`${offset}일 전`}
+function shortDay(key){const p=key.split("-");return `${Number(p[1])}/${Number(p[2])}`}
+function renderDayHistoryTabs(){
+  const box=$("dayHistoryTabs"); if(!box)return;
+  const today=dayKey(new Date());
+  box.innerHTML=Array.from({length:7},(_,i)=>{const key=addDaysToKey(today,-i);return `<button class="dayHistoryBtn ${i===selectedDayOffset?'active':''}" data-offset="${i}"><b>${historyDayLabel(i)}</b>${shortDay(key)}</button>`}).join("");
+  box.querySelectorAll(".dayHistoryBtn").forEach(b=>b.addEventListener("click",()=>{selectedDayOffset=Number(b.dataset.offset);renderAll()}));
+}
 function ym(d){
   const [y,m]=dayKey(d).split("-").map(Number);
   return {y,m};
@@ -792,32 +805,16 @@ function renderCutGrid(){
 }
 
 function getSeries(){
-  selectedRange="today";
   if(!snaps.length)return[];
-  const latest=snapDate(snaps[snaps.length-1]);
-  const latestDay=dayKey(new Date());
-
-  let startDay=null;
-  let startTime=null;
-
-  if(selectedRange==="today") startDay=latestDay;
-  else if(selectedRange==="24h") startTime=new Date(latest.getTime()-86400000);
-  else if(selectedRange==="7d") startDay=addDaysToKey(latestDay,-6);
-  else startDay=addDaysToKey(latestDay,-29);
-
+  const targetDay=selectedDayKey();
   return snaps.map(s=>({d:snapDate(s),v:valAt(s,selectedRank)}))
-    .filter(x=>{
-      if(x.v==null)return false;
-      if(startTime)return x.d>=startTime;
-      const k=dayKey(x.d);
-      return k>=startDay && k<=latestDay;
-    })
+    .filter(x=>x.v!=null && dayKey(x.d)===targetDay)
     .sort((a,b)=>a.d-b.d);
 }
 
 function drawLineChart(){
   const pts=getSeries(),svg=$("mainChart");
-  $("chartTitle").textContent=`${selectedRank}위 오늘 추이`;
+  $("chartTitle").textContent=`${selectedRank}위 ${historyDayLabel(selectedDayOffset)} 추이`;
   $("chartCount").textContent=pts.length+"개 기록";
   const {W,H,L,R,T,B}=chartFrame(svg);
   enableChartPointTips(svg);
@@ -829,8 +826,8 @@ function drawLineChart(){
   let min=Math.min(...vals),max=Math.max(...vals);
   if(min===max){min-=1;max+=1}
   const pad=(max-min)*.15;min=Math.max(0,min-pad);max+=pad;
-  const latest=snapDate(snaps[snaps.length-1]),latestDay=dayKey(new Date());
-  const [domainStart,domainEnd]=fixedTimeDomain(selectedRange,latest,latestDay);
+  const targetDay=selectedDayKey();
+  const domainStart=kstDayStartMs(targetDay),domainEnd=domainStart+86400000;
   const x=d=>L+(W-L-R)*Math.max(0,Math.min(1,(d.getTime()-domainStart)/(domainEnd-domainStart)));
   const y=v=>T+(H-T-B)*(1-(v-min)/(max-min));
 
@@ -846,94 +843,41 @@ function drawLineChart(){
   const area=path+` L ${x(pts[pts.length-1].d)},${H-B} L ${x(pts[0].d)},${H-B} Z`;
   out+=`<path d="${area}" class="area"/><path d="${path}" class="line"/>`;
   pts.forEach(p=>{
-    const time=selectedRange==='today'?hm(p.d):`${md(p.d)} ${hm(p.d)}`;
+    const time=hm(p.d);
     out+=`<circle class="chartPoint" data-tip="${pointTipText(time,selectedRank,p.v)}" cx="${x(p.d)}" cy="${y(Number(p.v))}" r="4.2" fill="#3478ff"/>`;
   });
-  const tickCount=selectedRange==='today'?4:(selectedRange==='24h'?4:(selectedRange==='7d'?7:6));
+  const tickCount=4;
   for(let i=0;i<=tickCount;i++){
     const ms=domainStart+(domainEnd-domainStart)*(i/tickCount),d=new Date(ms);
-    const label=selectedRange==='today'?(i===tickCount?'24:00':hm(d)):(selectedRange==='24h'?`${md(d)} ${hm(d)}`:md(d));
+    const label=i===tickCount?'24:00':String(i*6).padStart(2,'0')+':00';
     out+=`<text x="${L+(W-L-R)*(i/tickCount)}" y="${H-9}" text-anchor="${i===0?'start':i===tickCount?'end':'middle'}" class="axis">${label}</text>`;
   }
   svg.innerHTML=out;
 }
 function renderSideStats(){
-  const s=snaps[snaps.length-1]; if(!s)return;
-  const latest=snapDate(s),cur=valAt(s,selectedRank);
-  $("sideRankTitle").textContent=selectedRank+"위";
-  $("currentValue").textContent=fmt(cur);
-
-  const yv=sameTimeValue(latest,selectedRank,1);
-  if(yv==null){$("ydayDiff").textContent="데이터 부족";$("ydayDiff").className="v same"}
-  else{
-    const d=Number(cur)-Number(yv);
-    $("ydayDiff").textContent=(d>0?"▲ ":d<0?"▼ ":"")+fmt(Math.abs(d));
-    $("ydayDiff").className="v "+(d>0?"up":d<0?"down":"same");
-  }
-
-  const vals7=[];
-  for(let i=1;i<=7;i++){const v=sameTimeValue(latest,selectedRank,i);if(v!=null)vals7.push(Number(v))}
-  $("avg7").textContent=vals7.length?fmt(Math.round(vals7.reduce((a,b)=>a+b,0)/vals7.length)):"데이터 부족";
-
-  const records=snaps
-    .map(s=>({v:valAt(s,selectedRank), d:snapDate(s)}))
-    .filter(x=>x.v!=null)
-    .map(x=>({v:Number(x.v),d:x.d}));
-
-  // 한국시간 00:00을 하루의 시작으로 잡아, 오늘 들어온 기록들의 평균을 계산
-  const latestDay=dayKey(new Date());
-  const todayRecords=records.filter(x=>dayKey(x.d)===latestDay);
-  $("avg24").textContent=todayRecords.length
-    ? fmt(Math.round(todayRecords.reduce((sum,x)=>sum+x.v,0)/todayRecords.length))
-    : "-";
-
-  if(todayRecords.length){
-    const maxV=Math.max(...todayRecords.map(x=>x.v));
-    const minV=Math.min(...todayRecords.map(x=>x.v));
-
-    // 오늘 00:00 이후 기록만 대상으로 최고/최저 계산
-    const maxRec=[...todayRecords].reverse().find(x=>x.v===maxV);
-    const minRec=[...todayRecords].reverse().find(x=>x.v===minV);
-
-    $("maxVal").textContent=fmt(maxV);
-    $("minVal").textContent=fmt(minV);
-    $("maxTime").textContent=maxRec?hm(maxRec.d):"-";
-    $("minTime").textContent=minRec?hm(minRec.d):"-";
-  }else{
-    $("maxVal").textContent="-";
-    $("minVal").textContent="-";
-    $("maxTime").textContent="-";
-    $("minTime").textContent="-";
-  }
+  const targetDay=selectedDayKey(),label=historyDayLabel(selectedDayOffset),daySnaps=snaps.filter(s=>snapDay(s)===targetDay),s=daySnaps.at(-1)||null,cur=s?valAt(s,selectedRank):null;
+  $("sideRankTitle").textContent=selectedRank+"위 · "+label; $("currentValue").textContent=fmt(cur);
+  $("currentStatLabel").textContent=selectedDayOffset===0?"현재 24시간 인증조회수":"선택일 마지막 24시간 인증조회수";
+  $("maxLabel").textContent=label+" 최고"; $("minLabel").textContent=label+" 최저"; $("avgLabel").textContent=label+" 평균"; $("ydayLabel").textContent=(selectedDayOffset===0?"어제":"전날")+" 같은 시간 대비";
+  const records=daySnaps.map(s=>({v:valAt(s,selectedRank),d:snapDate(s),s})).filter(x=>x.v!=null).map(x=>({...x,v:Number(x.v)}));
+  $("avg24").textContent=records.length?fmt(Math.round(records.reduce((sum,x)=>sum+x.v,0)/records.length)):"-";
+  if(records.length){const maxV=Math.max(...records.map(x=>x.v)),minV=Math.min(...records.map(x=>x.v)),maxRec=[...records].reverse().find(x=>x.v===maxV),minRec=[...records].reverse().find(x=>x.v===minV);$("maxVal").textContent=fmt(maxV);$("minVal").textContent=fmt(minV);$("maxTime").textContent=maxRec?hm(maxRec.d):"-";$("minTime").textContent=minRec?hm(minRec.d):"-"}else{["maxVal","minVal","maxTime","minTime"].forEach(id=>$(id).textContent="-")}
+  if(!s){$("ydayDiff").textContent="데이터 부족";$("ydayDiff").className="v same";$("avg7").textContent="데이터 부족";return}
+  const currentHM=snapStamp(s).slice(11,16),targetMin=Number(currentHM.slice(0,2))*60+Number(currentHM.slice(3,5));
+  const valueNear=day=>{let best=null,gap=1e9;for(const x of snaps){if(snapDay(x)!==day)continue;const h=snapHour(x),m=snapMinute(x),v=valAt(x,selectedRank);if(h==null||m==null||v==null)continue;const g=Math.abs(h*60+m-targetMin);if(g<gap){gap=g;best=Number(v)}}return gap<=90?best:null};
+  const yv=valueNear(addDaysToKey(targetDay,-1));if(yv==null||cur==null){$("ydayDiff").textContent="데이터 부족";$("ydayDiff").className="v same"}else{const d=Number(cur)-yv;$("ydayDiff").textContent=(d>0?"▲ ":d<0?"▼ ":"")+fmt(Math.abs(d));$("ydayDiff").className="v "+(d>0?"up":d<0?"down":"same")}
+  const vals7=[];for(let i=1;i<=7;i++){const v=valueNear(addDaysToKey(targetDay,-i));if(v!=null)vals7.push(v)}$("avg7").textContent=vals7.length?fmt(Math.round(vals7.reduce((a,b)=>a+b,0)/vals7.length)):"데이터 부족";
 }
 
 
 function renderTodayHourlyCut(){
   if(!snaps.length)return;
-
-  const latestDay=dayKey(new Date());
-  const byHour=new Map();
-
-  // 오늘(KST 00:00~) 기록만 사용.
-  // 같은 시간대에 중복 수집이 있으면 가장 마지막 기록을 표시한다.
-  for(const s of snaps){
-    if(snapDay(s)!==latestDay) continue;
-    const hour=snapHour(s);
-    if(hour==null) continue;
-    const v=valAt(s,selectedRank);
-    if(v==null) continue;
-    byHour.set(hour, Number(v));
-  }
-
-  $("todayHourlyRank").textContent=selectedRank+"위";
-
-  const rows=[...byHour.entries()].sort((a,b)=>a[0]-b[0]);
-  $("todayHourlyTable").innerHTML = rows.length
-    ? `<thead><tr><th>시간</th><th>${selectedRank}위 커트</th></tr></thead><tbody>`+
-      rows.map(([h,v])=>`<tr><td>${String(h).padStart(2,"0")}:15</td><td>${fmt(v)}</td></tr>`).join("")+
-      `</tbody>`
-    : `<tbody><tr><td colspan="2">오늘 데이터 없음</td></tr></tbody>`;
+  const targetDay=selectedDayKey(),label=historyDayLabel(selectedDayOffset),byHour=new Map();
+  for(const s of snaps){if(snapDay(s)!==targetDay)continue;const hour=snapHour(s);if(hour==null)continue;const v=valAt(s,selectedRank);if(v==null)continue;byHour.set(hour,Number(v))}
+  $("todayHourlyLabel").textContent=label+" 시간별 커트"; $("todayHourlyRank").textContent=selectedRank+"위";
+  const rows=[...byHour.entries()].sort((a,b)=>a[0]-b[0]);$("todayHourlyTable").innerHTML=rows.length?`<thead><tr><th>시간</th><th>${selectedRank}위 커트</th></tr></thead><tbody>`+rows.map(([h,v])=>`<tr><td>${String(h).padStart(2,"0")}:15</td><td>${fmt(v)}</td></tr>`).join("")+`</tbody>`:`<tbody><tr><td colspan="2">${label} 데이터 없음</td></tr></tbody>`;
 }
+
 
 function monthlyStats(year){
   const map=new Map();
@@ -1182,6 +1126,7 @@ function renderWeekdayTable(){
 }
 
 function renderAll(){
+  renderDayHistoryTabs();
   renderHeader();
   renderCutGrid();
   drawLineChart();
@@ -1231,12 +1176,6 @@ document.querySelectorAll(".weekdayRangeBtn").forEach(b=>b.addEventListener("cli
 $("weekdayRankSelect").addEventListener("change",()=>{weekdayRank=Number($("weekdayRankSelect").value);renderWeekdayTable();});
 $("yearSelect").addEventListener("change",renderMonthly);
 $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthRankSelect").value);renderMonthly();});
-document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click",()=>{
-  document.querySelectorAll(".rangeBtn").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  selectedRange=btn.dataset.range;
-  drawLineChart();
-}));
 </script>
 
 
@@ -1258,11 +1197,11 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     <div class="panelTitle"><h2>주요 순위 현재 커트라인</h2><span class="small">24시간 인증조회수</span></div>
     <div id="newCutGrid" class="cutGrid"></div>
   </div></section>
-  <div class="adSlot adPrimary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ①</b></div>
 
   <div class="controls">
     <div class="rankSelectWrap"><span>조회할 순위 선택</span><select id="newRankSelect"></select></div>
   </div>
+  <div id="newDayHistoryTabs" class="dayHistoryTabs" aria-label="최근 7일 기록 선택"></div>
 
   <section class="gridTop">
     <div class="panel">
@@ -1272,22 +1211,20 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
     <div class="panel">
       <div class="panelTitle"><h2 id="newSideRankTitle">200위</h2></div>
       <div class="bigStat" id="newCurrentValue">-</div>
-      <div class="statLabel">현재 24시간 인증조회수</div>
+      <div class="statLabel" id="newCurrentStatLabel">현재 24시간 인증조회수</div>
       <div class="sideStats">
-        <div class="sideRow"><div class="k">오늘 최고</div><div class="v" id="newMaxVal">-</div><div class="recordTime" id="newMaxTime">-</div></div>
-        <div class="sideRow"><div class="k">오늘 최저</div><div class="v" id="newMinVal">-</div><div class="recordTime" id="newMinTime">-</div></div>
-        <div class="sideRow"><div class="k">오늘 평균</div><div class="v" id="newAvg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
+        <div class="sideRow"><div class="k" id="newMaxLabel">오늘 최고</div><div class="v" id="newMaxVal">-</div><div class="recordTime" id="newMaxTime">-</div></div>
+        <div class="sideRow"><div class="k" id="newMinLabel">오늘 최저</div><div class="v" id="newMinVal">-</div><div class="recordTime" id="newMinTime">-</div></div>
+        <div class="sideRow"><div class="k" id="newAvgLabel">오늘 평균</div><div class="v" id="newAvg24">-</div><div class="recordTime">00:00 기준 · 오늘 누적</div></div>
         <div class="sideRow"><div class="k">최근 7일 동시간 평균</div><div class="v" id="newAvg7">데이터 부족</div></div>
-        <div class="sideRow sideWide"><div class="k">어제 같은 시간 대비</div><div class="v" id="newYdayDiff">데이터 부족</div></div>
+        <div class="sideRow sideWide"><div class="k" id="newYdayLabel">어제 같은 시간 대비</div><div class="v" id="newYdayDiff">데이터 부족</div></div>
       </div>
       <div class="todayHourlyBlock">
-        <div class="todayHourlyTitle"><b>오늘 시간별 커트</b><span id="newTodayHourlyRank" class="small">200위</span></div>
+        <div class="todayHourlyTitle"><b id="newTodayHourlyLabel">오늘 시간별 커트</b><span id="newTodayHourlyRank" class="small">200위</span></div>
         <div class="scroll todayHourlyScroll"><table id="newTodayHourlyTable" class="todayHourlyTable"></table></div>
       </div>
     </div>
   </section>
-
-  <div class="adSlot adSecondary"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 ②</b></div>
 
   <section class="panel hourlyPanel">
     <div class="panelTitle"><h2 id="newHourlyTitle">200위 시간대별 평균 커트라인</h2><span class="small">최근 기간 기준 · 시간대별 평균</span></div>
@@ -1367,8 +1304,6 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
         <div class="myCutNote">※ 현재 작품의 인증조회수를 기준으로, 각 주요 순위까지 필요한 추가 조회수입니다.</div>
       </section>
 
-      <div class="adSlot adPrimary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품 ①</b></div>
-
       <section class="panel">
         <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small" id="myChartModeLabel">투데이베스트 · 오늘</span></div>
         <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg></div>
@@ -1382,8 +1317,6 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
           <div class="myChartNote">그래프의 점을 누르면 해당 시간의 순위와 인증조회수를 확인할 수 있어요.</div>
         </div>
       </section>
-
-      <div class="adSlot adSecondary myWorkAd"><span>ADVERTISEMENT</span><b>애드센스 광고 영역 · 내 작품 ②</b></div>
     </div>
   </main>
 </section>
@@ -1649,7 +1582,7 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
 <script>
 (function(){
  const ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
- let ns=[], nr=200, newMonthlyRank=200, newHourlyRank=200, newWeekdayRank=200, range="today", hDays=7, wd=1, wdDays=7;
+ let ns=[], nr=200, newMonthlyRank=200, newHourlyRank=200, newWeekdayRank=200, range="today", hDays=7, wd=1, wdDays=7, newDayOffset=0;
  const el=id=>document.getElementById(id);
  const rawStamp=s=>String(s?.slot_at_kst||s?.captured_at_kst||"");
  // 신베는 매시 :05 슬롯. 예전 버그로 :15로 저장된 신베 기록만 화면에서 :05 기준으로 보정한다.
@@ -1674,30 +1607,28 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
  const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):null;
  const addDay=(key,n)=>{const [y,m,d]=key.split('-').map(Number),x=new Date(Date.UTC(y,m-1,d));x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)};
  const todayKey=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
- function filtered(){if(!ns.length)return[];const last=new Date(stamp(ns.at(-1)).replace(' ','T')+'+09:00'),ld=range==='today'?todayKey():dkey(ns.at(-1));if(range==='today')return ns.filter(s=>dkey(s)===ld);if(range==='24h'){const c=last.getTime()-86400000;return ns.filter(s=>new Date(stamp(s).replace(' ','T')+'+09:00').getTime()>=c)}const st=addDay(ld,range==='7d'?-6:-29);return ns.filter(s=>dkey(s)>=st&&dkey(s)<=ld)}
+ const newSelectedDay=()=>addDay(todayKey(),-newDayOffset);
+ const newDayLabel=i=>i===0?'오늘':i===1?'어제':`${i}일 전`;
+ function newDayTabs(){const box=el('newDayHistoryTabs');if(!box)return;const td=todayKey();box.innerHTML=Array.from({length:7},(_,i)=>{const k=addDay(td,-i),p=k.split('-');return `<button class="dayHistoryBtn ${i===newDayOffset?'active':''}" data-offset="${i}"><b>${newDayLabel(i)}</b>${+p[1]}/${+p[2]}</button>`}).join('');box.querySelectorAll('.dayHistoryBtn').forEach(b=>b.onclick=()=>{newDayOffset=+b.dataset.offset;render()})}
+ function filtered(){if(!ns.length)return[];const ld=newSelectedDay();return ns.filter(s=>dkey(s)===ld)}
  function sameTime(daysAgo){if(!ns.length)return null;const td=todayKey(),last=ns.filter(s=>dkey(s)===td).at(-1);if(!last)return null;const target=addDay(td,-daysAgo),hm=stamp(last).slice(11,16),tm=+hm.slice(0,2)*60 + +hm.slice(3,5);let best=null,gap=1e9;for(const s of ns){if(dkey(s)!==target)continue;const sh=stamp(s).slice(11,16),sm=+sh.slice(0,2)*60 + +sh.slice(3,5),g=Math.abs(sm-tm);if(g<gap){gap=g;best=val(s,nr)}}return gap<=90?best:null}
  function cutGrid(){const last=ns.at(-1);el('newCutGrid').innerHTML=ranks.map(r=>{const x=item(last,r);return `<div class="cut"><div class="r">${r}위</div><div class="n">${fmt(val(last,r))}</div><div class="h">${x?.hours_after_upload!=null?x.hours_after_upload+'시간':'-'}</div></div>`}).join('')}
  function chart(){
-  range="today";
   const svg=el('newChart'),raw=filtered(),pts=raw.map(s=>({s,v:val(s,nr),d:new Date(stamp(s).replace(' ','T')+'+09:00')})).filter(x=>x.v!=null);
-  el('newChartTitle').textContent=`${nr}위 오늘 추이`;el('newChartCount').textContent=pts.length+'개 기록';
-  const {W,H,L,R,T,B}=chartFrame(svg);enableChartPointTips(svg);
-  if(!pts.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">기록이 더 쌓이면 그래프가 표시됩니다</text>`;return}
-  const vs=pts.map(x=>x.v);let mn=Math.min(...vs),mx=Math.max(...vs);if(mn===mx){mn-=1;mx+=1}const pad=(mx-mn)*.15;mn=Math.max(0,mn-pad);mx+=pad;
-  const latest=new Date(stamp(ns.at(-1)).replace(' ','T')+'+09:00'),ld=todayKey();
-  const [ds,de]=fixedTimeDomain(range,latest,ld);
-  const X=d=>L+(W-L-R)*Math.max(0,Math.min(1,(d.getTime()-ds)/(de-ds))),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));
-  let out='<defs><linearGradient id="newGradLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4b8cff"/><stop offset="100%" stop-color="#745dff"/></linearGradient><linearGradient id="newGradArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4b74ff" stop-opacity=".35"/><stop offset="100%" stop-color="#4b74ff" stop-opacity="0"/></linearGradient></defs>';
-  for(let i=0;i<5;i++){const yy=T+(H-T-B)*i/4,vv=mx-(mx-mn)*i/4;out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${fmt(vv)}</text>`}
-  const path=pts.map((p,i)=>(i?'L':'M')+X(p.d)+','+Y(p.v)).join(' '),area=path+` L ${X(pts.at(-1).d)},${H-B} L ${X(pts[0].d)},${H-B} Z`;
-  out+=`<path d="${area}" fill="url(#newGradArea)"/><path d="${path}" fill="none" stroke="url(#newGradLine)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
-  pts.forEach(p=>{const tm=range==='today'?stamp(p.s).slice(11,16):stamp(p.s).slice(5,16).replace('-','/');out+=`<circle class="chartPoint" data-tip="${pointTipText(tm,nr,p.v)}" cx="${X(p.d)}" cy="${Y(p.v)}" r="4.2" fill="#3478ff"/>`});
-  const ticks=range==='today'?4:(range==='24h'?4:(range==='7d'?7:6));
-  for(let i=0;i<=ticks;i++){const d=new Date(ds+(de-ds)*(i/ticks));let t;if(range==='today')t=i===ticks?'24:00':String(i*6).padStart(2,'0')+':00';else if(range==='24h')t=(d.getMonth()+1)+'/'+d.getDate()+' '+String(d.getHours()).padStart(2,'0')+':00';else t=String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');out+=`<text x="${L+(W-L-R)*(i/ticks)}" y="${H-9}" text-anchor="${i===0?'start':i===ticks?'end':'middle'}" class="axis">${t}</text>`}
-  svg.innerHTML=out;
+  el('newChartTitle').textContent=`${nr}위 ${newDayLabel(newDayOffset)} 추이`;el('newChartCount').textContent=pts.length+'개 기록';
+  const {W,H,L,R,T,B}=chartFrame(svg);enableChartPointTips(svg);if(!pts.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">선택한 날짜의 기록이 없습니다</text>`;return}
+  const vs=pts.map(x=>x.v);let mn=Math.min(...vs),mx=Math.max(...vs);if(mn===mx){mn-=1;mx+=1}const pad=(mx-mn)*.15;mn=Math.max(0,mn-pad);mx+=pad;const ds=kstDayStartMs(newSelectedDay()),de=ds+86400000;
+  const X=d=>L+(W-L-R)*Math.max(0,Math.min(1,(d.getTime()-ds)/(de-ds))),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));let out='<defs><linearGradient id="newGradLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4b8cff"/><stop offset="100%" stop-color="#745dff"/></linearGradient><linearGradient id="newGradArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4b74ff" stop-opacity=".35"/><stop offset="100%" stop-color="#4b74ff" stop-opacity="0"/></linearGradient></defs>';
+  for(let i=0;i<5;i++){const yy=T+(H-T-B)*i/4,vv=mx-(mx-mn)*i/4;out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${fmt(vv)}</text>`}const path=pts.map((p,i)=>(i?'L':'M')+X(p.d)+','+Y(p.v)).join(' '),area=path+` L ${X(pts.at(-1).d)},${H-B} L ${X(pts[0].d)},${H-B} Z`;out+=`<path d="${area}" fill="url(#newGradArea)"/><path d="${path}" fill="none" stroke="url(#newGradLine)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;pts.forEach(p=>{const tm=stamp(p.s).slice(11,16);out+=`<circle class="chartPoint" data-tip="${pointTipText(tm,nr,p.v)}" cx="${X(p.d)}" cy="${Y(p.v)}" r="4.2" fill="#3478ff"/>`});for(let i=0;i<=4;i++){const t=i===4?'24:00':String(i*6).padStart(2,'0')+':00';out+=`<text x="${L+(W-L-R)*(i/4)}" y="${H-9}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${t}</text>`}svg.innerHTML=out;
  }
- function side(){const ld=todayKey(),todaySnaps=ns.filter(s=>dkey(s)===ld),last=todaySnaps.at(-1)||null,cur=last?val(last,nr):null,today=ns.map(s=>({s,v:val(s,nr)})).filter(x=>dkey(x.s)===ld&&x.v!=null);el('newSideRankTitle').textContent=nr+'위';el('newCurrentValue').textContent=fmt(cur);const y=sameTime(1);if(cur==null||y==null){el('newYdayDiff').textContent='데이터 부족';el('newYdayDiff').className='v same'}else{const d=cur-y;el('newYdayDiff').textContent=(d>0?'▲ ':d<0?'▼ ':'')+fmt(Math.abs(d));el('newYdayDiff').className='v '+(d>0?'up':d<0?'down':'same')}const a=[];for(let i=1;i<=7;i++){const v=sameTime(i);if(v!=null)a.push(v)}el('newAvg7').textContent=a.length?fmt(avg(a)):'데이터 부족';const vs=today.map(x=>x.v);el('newAvg24').textContent=fmt(avg(vs));if(vs.length){const mx=Math.max(...vs),mn=Math.min(...vs),mr=[...today].reverse().find(x=>x.v===mx),nr0=[...today].reverse().find(x=>x.v===mn);el('newMaxVal').textContent=fmt(mx);el('newMinVal').textContent=fmt(mn);el('newMaxTime').textContent=stamp(mr.s).slice(11,16);el('newMinTime').textContent=stamp(nr0.s).slice(11,16)}else{['newMaxVal','newMinVal','newMaxTime','newMinTime'].forEach(id=>el(id).textContent='-')}
- const by=new Map();today.forEach(x=>by.set(hour(x.s),x.v));el('newTodayHourlyRank').textContent=nr+'위';el('newTodayHourlyTable').innerHTML=by.size?`<thead><tr><th>시간</th><th>${nr}위 커트</th></tr></thead><tbody>`+[...by].sort((a,b)=>a[0]-b[0]).map(([h,v])=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>':'<tbody><tr><td colspan="2">오늘 데이터 없음</td></tr></tbody>'}
+
+ function side(){
+  const ld=newSelectedDay(),label=newDayLabel(newDayOffset),daySnaps=ns.filter(s=>dkey(s)===ld),last=daySnaps.at(-1)||null,cur=last?val(last,nr):null,today=daySnaps.map(s=>({s,v:val(s,nr)})).filter(x=>x.v!=null);el('newSideRankTitle').textContent=nr+'위 · '+label;el('newCurrentValue').textContent=fmt(cur);el('newCurrentStatLabel').textContent=newDayOffset===0?'현재 24시간 인증조회수':'선택일 마지막 24시간 인증조회수';el('newMaxLabel').textContent=label+' 최고';el('newMinLabel').textContent=label+' 최저';el('newAvgLabel').textContent=label+' 평균';el('newYdayLabel').textContent=(newDayOffset===0?'어제':'전날')+' 같은 시간 대비';
+  const vs=today.map(x=>x.v);el('newAvg24').textContent=fmt(avg(vs));if(vs.length){const mx=Math.max(...vs),mn=Math.min(...vs),mr=[...today].reverse().find(x=>x.v===mx),nr0=[...today].reverse().find(x=>x.v===mn);el('newMaxVal').textContent=fmt(mx);el('newMinVal').textContent=fmt(mn);el('newMaxTime').textContent=stamp(mr.s).slice(11,16);el('newMinTime').textContent=stamp(nr0.s).slice(11,16)}else{['newMaxVal','newMinVal','newMaxTime','newMinTime'].forEach(id=>el(id).textContent='-')}
+  if(last){const hm=stamp(last).slice(11,16),tm=+hm.slice(0,2)*60 + +hm.slice(3,5),near=day=>{let best=null,gap=1e9;for(const s of ns){if(dkey(s)!==day)continue;const sh=stamp(s).slice(11,16),sm=+sh.slice(0,2)*60 + +sh.slice(3,5),g=Math.abs(sm-tm),v=val(s,nr);if(v!=null&&g<gap){gap=g;best=v}}return gap<=90?best:null};const y=near(addDay(ld,-1));if(cur==null||y==null){el('newYdayDiff').textContent='데이터 부족';el('newYdayDiff').className='v same'}else{const d=cur-y;el('newYdayDiff').textContent=(d>0?'▲ ':d<0?'▼ ':'')+fmt(Math.abs(d));el('newYdayDiff').className='v '+(d>0?'up':d<0?'down':'same')}const a=[];for(let i=1;i<=7;i++){const v=near(addDay(ld,-i));if(v!=null)a.push(v)}el('newAvg7').textContent=a.length?fmt(avg(a)):'데이터 부족'}else{el('newYdayDiff').textContent='데이터 부족';el('newYdayDiff').className='v same';el('newAvg7').textContent='데이터 부족'}
+  const by=new Map();today.forEach(x=>by.set(hour(x.s),x.v));el('newTodayHourlyLabel').textContent=label+' 시간별 커트';el('newTodayHourlyRank').textContent=nr+'위';el('newTodayHourlyTable').innerHTML=by.size?`<thead><tr><th>시간</th><th>${nr}위 커트</th></tr></thead><tbody>`+[...by].sort((a,b)=>a[0]-b[0]).map(([h,v])=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>':`<tbody><tr><td colspan="2">${label} 데이터 없음</td></tr></tbody>`
+ }
+
  function hourly(){const last=dkey(ns.at(-1)),st=addDay(last,-(hDays-1)),dh={};for(const s of ns){const d=dkey(s),h=hour(s);if(!d||h==null||d<st||d>last)continue;if(!dh[d])dh[d]={};if(!dh[d][h])dh[d][h]=Object.fromEntries(ranks.map(r=>[r,[]]));for(const r of ranks){const v=val(s,r);if(v!=null)dh[d][h][r].push(v)}}const buckets=Array.from({length:24},()=>Object.fromEntries(ranks.map(r=>[r,[]])));for(const d of Object.keys(dh))for(const [ht,row] of Object.entries(dh[d]))for(const r of ranks){const v=avg(row[r]);if(v!=null)buckets[+ht][r].push(v)}const values=buckets.map(row=>avg(row[newHourlyRank]));let lh=null,lv=null;values.forEach((v,h)=>{if(v!=null&&(lv==null||v<lv)){lv=v;lh=h}});const pl=hDays===30?'최근 1달':`최근 ${hDays}일`;el('newHourlyTitle').textContent=`${newHourlyRank}위 시간대별 평균 커트라인`;el('newHourlyLowSummary').innerHTML=lh==null?`<b>${newHourlyRank}위 최저 컷 시간대: 데이터 없음</b>`:`<b>${newHourlyRank}위 최저 컷 시간대 · ${String(lh).padStart(2,'0')}:05 · ${fmt(lv)}</b><div class="sub">${pl} 시간대 평균 기준</div>`;drawAverageHourChart('newHourlyChart',values,newHourlyRank,5);el('newHourlyAvgTable').innerHTML=`<thead><tr><th>시간대</th><th>${newHourlyRank}위 평균 인증조회수</th></tr></thead><tbody>`+values.map((v,h)=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>';document.querySelectorAll('.newHourlyBtn').forEach(b=>b.classList.toggle('active',+b.dataset.days===hDays))}
  function weekday(){const last=dkey(ns.at(-1)),st=addDay(last,-(wdDays-1)),b=Array.from({length:24},()=>Object.fromEntries(ranks.map(r=>[r,[]]))),end=addDay(last,-1),cst=addDay(end,-(wdDays-1)),daily={};for(const s of ns){const d=dkey(s),h=hour(s);if(!d||h==null)continue;const [y,m,dd]=d.split('-').map(Number),w=new Date(Date.UTC(y,m-1,dd)).getUTCDay();if(d>=st&&d<=last&&w===wd)for(const r of ranks){const v=val(s,r);if(v!=null)b[h][r].push(v)}if(d>=cst&&d<=end){if(!daily[d])daily[d]={w,values:Object.fromEntries(ranks.map(r=>[r,[]]))};for(const r of ranks){const v=val(s,r);if(v!=null)daily[d].values[r].push(v)}}}const values=b.map(row=>avg(row[newWeekdayRank]));let slh=null,slv=null;values.forEach((v,h)=>{if(v!=null&&(slv==null||v<slv)){slv=v;slh=h}});const wda=Array.from({length:7},()=>[]);Object.values(daily).forEach(o=>{const v=avg(o.values[newWeekdayRank]);if(v!=null)wda[o.w].push(v)});let lw=null,lwv=null;for(let w=0;w<7;w++){const v=avg(wda[w]);if(v!=null&&(lwv==null||v<lwv)){lwv=v;lw=w}}const names=['일','월','화','수','목','금','토'],pl=wdDays===30?'최근 1달':`최근 ${wdDays}일`;el('newWeekdayTitle').textContent=`${newWeekdayRank}위 요일별 시간대 평균 커트라인`;el('newWeekdayLowSummary').innerHTML=lw==null?`<b>${newWeekdayRank}위 · ${pl} · 최저 요일 데이터 없음</b>`:`<b>${newWeekdayRank}위 · ${pl} · 가장 낮은 요일: ${names[lw]}요일 · 하루 평균 ${fmt(lwv)}</b><div class="sub">완료된 날짜의 KST 00:00~23:59 하루 평균을 요일별로 다시 평균</div>${slh==null?'':`<div class="sub">${names[wd]}요일 시간대 최저: ${String(slh).padStart(2,'0')}:05 · ${fmt(slv)}</div>`}`;drawAverageHourChart('newWeekdayChart',values,newWeekdayRank,5);el('newWeekdayTable').innerHTML=`<thead><tr><th>시간대</th><th>${newWeekdayRank}위 평균 인증조회수</th></tr></thead><tbody>`+values.map((v,h)=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>';document.querySelectorAll('.newWeekdayBtn').forEach(x=>x.classList.toggle('active',+x.dataset.day===wd));document.querySelectorAll('.newWeekdayRangeBtn').forEach(x=>x.classList.toggle('active',+x.dataset.days===wdDays))}
  function monthly(){
@@ -1722,9 +1653,8 @@ document.querySelectorAll(".rangeBtn").forEach(btn=>btn.addEventListener("click"
   }
   el('newMonthTable').innerHTML=`<thead><tr><th>월</th><th>${newMonthlyRank}위 평균 인증조회수</th><th>월 최고</th><th>월 최저</th><th>수집 기록 수</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${r.m}월</td><td>${fmt(r.avg)}</td><td>${fmt(r.max)}</td><td>${fmt(r.min)}</td><td>${r.count||'-'}</td></tr>`).join('')+'</tbody>';
  }
- function render(){if(!ns.length){el('newCutGrid').innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';return}const last=ns.at(-1);el('newHeaderLatest').textContent=stamp(last).slice(5,16)+' KST';el('newHeaderRank').textContent=nr+'위 커트라인';cutGrid();chart();side();hourly();weekday();monthly()}
+ function render(){newDayTabs();if(!ns.length){el('newCutGrid').innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';return}const last=ns.at(-1);el('newHeaderLatest').textContent=stamp(last).slice(5,16)+' KST';el('newHeaderRank').textContent=nr+'위 커트라인';cutGrid();chart();side();hourly();weekday();monthly()}
  window.renderNewBest=async function(){if(!ns.length){try{const r=await fetch('./data/new/latest.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const d=await r.json();{const src=(Array.isArray(d)?d:(Array.isArray(d?.snapshots)?d.snapshots:[])).filter(s=>Array.isArray(s.items));const bySlot=new Map();for(const s of src){const k=stamp(s),prev=bySlot.get(k);if(!prev||String(s?.captured_at_kst||'')>String(prev?.captured_at_kst||''))bySlot.set(k,s)}ns=[...bySlot.values()].sort((a,b)=>stamp(a).localeCompare(stamp(b)))}}}catch(e){console.error(e)}}const sel=el('newRankSelect');if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?'selected':''}>${r}위</option>`).join('');sel.onchange=()=>{nr=+sel.value;render()}}const hs=el('newHourlyRankSelect');if(!hs.options.length){hs.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newHourlyRank?'selected':''}>${r}위</option>`).join('');hs.onchange=()=>{newHourlyRank=+hs.value;hourly()}}const ws=el('newWeekdayRankSelect');if(!ws.options.length){ws.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newWeekdayRank?'selected':''}>${r}위</option>`).join('');ws.onchange=()=>{newWeekdayRank=+ws.value;weekday()}}render()};
- document.querySelectorAll('.newRangeBtn').forEach(b=>b.addEventListener('click',()=>{range=b.dataset.range;document.querySelectorAll('.newRangeBtn').forEach(x=>x.classList.toggle('active',x===b));chart()}));
  document.querySelectorAll('.newHourlyBtn').forEach(b=>b.addEventListener('click',()=>{hDays=+b.dataset.days;hourly()}));
  document.querySelectorAll('.newWeekdayBtn').forEach(b=>b.addEventListener('click',()=>{wd=+b.dataset.day;weekday()}));
  document.querySelectorAll('.newWeekdayRangeBtn').forEach(b=>b.addEventListener('click',()=>{wdDays=+b.dataset.days;weekday()}));

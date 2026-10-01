@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import math
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from urllib.parse import urljoin
@@ -279,3 +280,199 @@ print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
     f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
 )
+
+# ---------------------------------------------------------------------------
+# 내 작품 추적: 1화 '전체조회수' + 현재 최신화 정보
+#
+# - 인증조회수는 위 투베/신베 스냅샷에서만 사용한다.
+# - 여기의 first_episode_views는 문피아 작품 API의 회차별 누적 viewCount,
+#   즉 '전체조회수'이며 인증조회수로 표시하면 안 된다.
+# - 투베(today) 작업에서만 실행해 작품당 매시간 1회 정도 기록한다.
+# ---------------------------------------------------------------------------
+MUNPIA_API_BASE = "https://www.munpia.com"
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
+SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY", "")
+
+
+def _as_int(value, default=0):
+    try:
+        if value is None:
+            return default
+        if isinstance(value, str):
+            value = value.replace(",", "").strip()
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _munpia_datetime(value):
+    """문피아 createdAt(타임존 없음=KST)을 aware datetime으로 변환."""
+    if not value:
+        return None
+    text = str(value).strip().replace("Z", "").split("+")[0].split(".")[0]
+    for fmt in (
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M",
+        "%Y-%m-%d %H:%M",
+        "%Y-%m-%d",
+    ):
+        try:
+            return datetime.strptime(text, fmt).replace(tzinfo=KST)
+        except ValueError:
+            pass
+    return None
+
+
+def _munpia_chapter_page(session, novel_id, page, size=100):
+    url = f"{MUNPIA_API_BASE}/api/v1/pc/novel-detail/{novel_id}/chapters"
+    headers = {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "ko-KR,ko;q=0.9",
+        "Origin": MUNPIA_API_BASE,
+        "Referer": f"{MUNPIA_API_BASE}/novel/detail/{novel_id}",
+    }
+    resp = session.get(url, params={"page": page, "size": size}, headers=headers, timeout=30)
+    resp.raise_for_status()
+    payload = resp.json()
+    if payload.get("code") != "M000_00000":
+        raise RuntimeError(
+            f"Munpia chapter API error novel={novel_id}: "
+            f"{payload.get('code')} {payload.get('message', '')}"
+        )
+    return payload.get("result") or {}
+
+
+def _episode_summary_for_work(session, novel_id):
+    """첫 화와 최신 공개화를 찾는다. 긴 작품도 첫/끝 페이지만 요청한다."""
+    size = 100
+    first_page = _munpia_chapter_page(session, novel_id, 1, size)
+    rows = list(first_page.get("list") or [])
+    total = _as_int(first_page.get("total"), len(rows))
+    if not rows:
+        raise RuntimeError(f"No chapters found for novel={novel_id}")
+
+    last_page_no = max(1, math.ceil(total / size)) if total else 1
+    if last_page_no > 1:
+        last_page = _munpia_chapter_page(session, novel_id, last_page_no, size)
+        rows.extend(last_page.get("list") or [])
+
+    # 같은 회차가 섞여 와도 한 번만 사용.
+    unique = {}
+    for row in rows:
+        entry_id = _as_int(row.get("id"), 0)
+        key = entry_id or ("num", _as_int(row.get("num"), 0), str(row.get("createdAt") or ""))
+        unique[key] = row
+    rows = list(unique.values())
+
+    # 공지는 회차로 보지 않는다.
+    normal = [r for r in rows if not bool(r.get("notice"))]
+    if not normal:
+        normal = rows
+
+    # '1화'는 num == 1을 우선. 구작/특수작은 가장 이른 양수 회차로 대체.
+    first_candidates = [r for r in normal if _as_int(r.get("num"), 0) == 1]
+    if first_candidates:
+        first_ep = first_candidates[0]
+    else:
+        positive = [r for r in normal if _as_int(r.get("num"), 0) > 0]
+        if not positive:
+            raise RuntimeError(f"No numbered chapters found for novel={novel_id}")
+        first_ep = min(positive, key=lambda r: _as_int(r.get("num"), 10**9))
+
+    # 예약글이 목록에 포함되더라도 현재 시각보다 미래인 회차는 최신화에서 제외.
+    now = datetime.now(KST)
+    published = []
+    for row in normal:
+        dt = _munpia_datetime(row.get("createdAt"))
+        num = _as_int(row.get("num"), 0)
+        if num > 0 and (dt is None or dt <= now):
+            published.append((row, dt))
+    if not published:
+        raise RuntimeError(f"No published chapters found for novel={novel_id}")
+
+    latest_ep, latest_dt = max(
+        published,
+        key=lambda pair: (
+            _as_int(pair[0].get("num"), 0),
+            pair[1] or datetime.min.replace(tzinfo=KST),
+        ),
+    )
+
+    return {
+        "first_episode_views": _as_int(first_ep.get("viewCount"), 0),
+        "latest_episode_no": _as_int(latest_ep.get("num"), 0),
+        "latest_episode_title": clean(str(latest_ep.get("title") or "")) or None,
+        "latest_episode_published_at": latest_dt.isoformat() if latest_dt else None,
+    }
+
+
+def collect_registered_work_snapshots():
+    if MODE != "today":
+        return
+    if not SUPABASE_URL or not SUPABASE_SECRET_KEY:
+        print("Work tracking skipped: Supabase environment variables are missing.")
+        return
+
+    sb_headers = {
+        # 새 sb_secret_ 키는 JWT가 아니므로 Authorization Bearer가 아니라 apikey에 넣는다.
+        "apikey": SUPABASE_SECRET_KEY,
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    }
+
+    works_url = f"{SUPABASE_URL}/rest/v1/registered_works"
+    resp = requests.get(
+        works_url,
+        headers=sb_headers,
+        params={"select": "novel_id,novel_url", "active": "eq.true", "order": "novel_id.asc"},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    works = resp.json()
+    if not isinstance(works, list) or not works:
+        print("Work tracking: no registered works yet.")
+        return
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": HEADERS["User-Agent"]})
+    captured_at = datetime.now(timezone.utc).isoformat()
+    rows_to_insert = []
+
+    for work in works:
+        novel_id = _as_int(work.get("novel_id"), 0)
+        if novel_id <= 0:
+            continue
+        try:
+            summary = _episode_summary_for_work(session, novel_id)
+            rows_to_insert.append({
+                "novel_id": novel_id,
+                "captured_at": captured_at,
+                **summary,
+            })
+            print(
+                f"Work {novel_id}: 1화 전체조회수={summary['first_episode_views']} "
+                f"최신화={summary['latest_episode_no']}"
+            )
+        except Exception as exc:
+            # 한 작품 실패가 투베 수집 전체를 실패시키지 않게 격리한다.
+            print(f"Work tracking warning novel={novel_id}: {exc}")
+
+    if not rows_to_insert:
+        print("Work tracking: no snapshots to insert.")
+        return
+
+    insert_url = f"{SUPABASE_URL}/rest/v1/work_snapshots"
+    insert_headers = dict(sb_headers)
+    insert_headers["Prefer"] = "return=minimal"
+    resp = requests.post(
+        insert_url,
+        headers=insert_headers,
+        json=rows_to_insert,
+        timeout=30,
+    )
+    resp.raise_for_status()
+    print(f"Work tracking: inserted {len(rows_to_insert)} snapshot(s) into Supabase.")
+
+
+collect_registered_work_snapshots()

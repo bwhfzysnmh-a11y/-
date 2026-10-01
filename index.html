@@ -1349,14 +1349,14 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <small id="myLatestEpisodeTime">업로드 시각 확인 중</small>
           </div>
           <div class="myEpisodeMetric primary">
-            <span>최신화 인증조회수</span>
+            <span>직전 수집 대비</span>
             <b id="myLatestAuthViews">-</b>
-            <small id="myLatestAuthNote">투베/신베 수집 기준</small>
+            <small id="myLatestAuthNote">이전 관측과 비교</small>
           </div>
           <div class="myEpisodeMetric">
-            <span>1시간 전 인증조회수</span>
+            <span>시간당 평균 증가</span>
             <b id="myLatestAuthDelta">-</b>
-            <small id="myLatestAuthDeltaNote">현재와 차이 계산</small>
+            <small id="myLatestAuthDeltaNote">최신화 업로드 후 평균</small>
           </div>
           <div class="myEpisodeMetric">
             <span>업로드 후 경과</span>
@@ -1636,25 +1636,36 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     set("myLatestEpisodeTime",latest.latest_episode_published_at?("업로드 "+fmtKstDateTime(latest.latest_episode_published_at)):"업로드 시각 없음");
     const auth=mergedAuthRecords(todayRec,newRec,latest.latest_episode_published_at);
     const authNow=auth.at(-1)||null;
-    set("myLatestAuthViews",authNow?fmtN(authNow.views):"-");
-    set("myLatestAuthNote",authNow?("마지막 관측 "+fmtKstDateTime(authNow.d)):"베스트 관측 없음");
+    const authPrev=auth.length>=2?auth.at(-2):null;
     const pub=latest.latest_episode_published_at?new Date(latest.latest_episode_published_at):null;
-    let authPrevHour=null;
-    if(authNow){
-      const target=authNow.d.getTime()-3600000;
-      authPrevHour=[...auth]
-        .filter(r=>r.d<authNow.d)
-        .sort((a,b)=>Math.abs(a.d.getTime()-target)-Math.abs(b.d.getTime()-target))[0]||null;
-      // 정기 수집이 약간 늦어질 수 있으므로 1시간±25분 안의 기록만 전시간으로 인정
-      if(authPrevHour && Math.abs((authNow.d-authPrevHour.d)-3600000)>25*60000)authPrevHour=null;
+
+    // 현재 인증조회수 자체는 위 작품 분석 카드에 있으므로,
+    // 여기서는 직전 수집 이후 얼마나 늘었는지를 보여준다.
+    if(authNow && authPrev){
+      const diff=Number(authNow.views)-Number(authPrev.views);
+      set("myLatestAuthViews",(diff>=0?"+":"")+fmtN(diff));
+      set("myLatestAuthNote",`${fmtKstDateTime(authPrev.d)} → ${fmtKstDateTime(authNow.d)}`);
+    }else{
+      set("myLatestAuthViews","-");
+      set("myLatestAuthNote",authNow?"직전 수집 기록 없음":"베스트 관측 없음");
     }
-    if(authNow && authPrevHour){
-      const diff=Number(authNow.views)-Number(authPrevHour.views);
-      set("myLatestAuthDelta",fmtN(authPrevHour.views));
-      set("myLatestAuthDeltaNote",`현재 ${diff>=0?"+":""}${fmtN(diff)} · 1시간 전 대비`);
+
+    // 최신화 업로드 후 현재까지의 평균 인증조회수 증가 속도.
+    // 24시간이 지난 경우에는 최신화의 첫 24시간 구간만 기준으로 계산한다.
+    if(authNow && pub && !Number.isNaN(pub.getTime())){
+      const observedMs=Math.max(0,authNow.d.getTime()-pub.getTime());
+      const hours=Math.min(24,observedMs/3600000);
+      if(hours>0){
+        const avg=Number(authNow.views)/hours;
+        set("myLatestAuthDelta","+"+fmtN(Math.round(avg))+"/시간");
+        set("myLatestAuthDeltaNote",hours>=24?"업로드 후 첫 24시간 평균":`업로드 후 ${fmtElapsed(observedMs)} 평균`);
+      }else{
+        set("myLatestAuthDelta","-");
+        set("myLatestAuthDeltaNote","업로드 직후");
+      }
     }else{
       set("myLatestAuthDelta","-");
-      set("myLatestAuthDeltaNote",authNow?"1시간 전 같은 최신화 기록 없음":"베스트 관측 없음");
+      set("myLatestAuthDeltaNote","최신화 베스트 관측 후 계산");
     }
     const elapsed=pub&&!Number.isNaN(pub.getTime())?Date.now()-pub.getTime():NaN;
     set("myLatestElapsed",fmtElapsed(elapsed));

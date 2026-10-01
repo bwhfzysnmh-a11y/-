@@ -1340,9 +1340,9 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <small id="myLatestAuthNote">투베/신베 수집 기준</small>
           </div>
           <div class="myEpisodeMetric">
-            <span>1시간 증가</span>
+            <span>업로드 후 누적</span>
             <b id="myLatestAuthDelta">-</b>
-            <small id="myLatestAuthDeltaNote">이전 관측 대비</small>
+            <small id="myLatestAuthDeltaNote">최신화 기준 · 최대 24시간</small>
           </div>
           <div class="myEpisodeMetric">
             <span>업로드 후 경과</span>
@@ -1361,7 +1361,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
           <span class="small" id="myEpisodeChartCount">-</span>
         </div>
         <div class="chartWrap myEpisodeChartWrap"><svg id="myEpisodeAuthChart" viewBox="0 0 760 230" preserveAspectRatio="xMidYMid meet"></svg></div>
-        <div class="myEpisodeNotice">※ 최신화 인증조회수는 투데이/신규베스트에서 작품이 확인된 시간만 표시됩니다. 1화 신규 유입은 <b>전체조회수</b> 기준이며 인증조회수가 아닙니다.</div>
+        <div class="myEpisodeNotice">※ 최신화 인증조회수는 <b>최신화 업로드 시점부터 24시간</b> 누적으로 추적하며, 새 최신화가 올라오면 새 업로드 시각을 기준으로 자동 리셋됩니다. 투데이/신규베스트에서 작품이 확인된 시간만 표시됩니다. 1화 신규 유입은 <b>전체조회수</b> 기준이며 인증조회수가 아닙니다.</div>
       </section>
 
       <section class="panel">
@@ -1479,6 +1479,12 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       if(end && d>end)return;
       const h=Number(r.it?.hours_after_upload);
       if(Number.isFinite(h) && (h<0 || h>24))return;
+      if(pub && Number.isFinite(h)){
+        const elapsedHours=(d.getTime()-pub.getTime())/3600000;
+        // 최신화가 새로 올라오면 이전 화 기록을 즉시 제외한다.
+        // 수집/표시 시각 오차를 감안해 약 1.75시간 범위만 같은 화로 본다.
+        if(Math.abs(elapsedHours-h)>1.75)return;
+      }
       const key=d.toISOString();
       const prev=byTime.get(key);
       if(!prev || (r.views??-1)>(prev.views??-1))byTime.set(key,{...r,d});
@@ -1535,20 +1541,19 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     set("myLatestEpisodeTime",latest.latest_episode_published_at?("업로드 "+fmtKstDateTime(latest.latest_episode_published_at)):"업로드 시각 없음");
     const auth=mergedAuthRecords(todayRec,newRec,latest.latest_episode_published_at);
     const authNow=auth.at(-1)||null;
-    let authPrev=null;
-    if(authNow){
-      const target=authNow.d.getTime()-3600000;
-      authPrev=[...auth].filter(r=>r.d<authNow.d).sort((a,b)=>Math.abs(a.d.getTime()-target)-Math.abs(b.d.getTime()-target))[0]||null;
-      if(authPrev && Math.abs((authNow.d-authPrev.d)-3600000)>25*60000) authPrev=null;
-    }
     set("myLatestAuthViews",authNow?fmtN(authNow.views):"-");
     set("myLatestAuthNote",authNow?("마지막 관측 "+fmtKstDateTime(authNow.d)):"베스트 관측 없음");
-    if(authNow&&authPrev){
-      const diff=Number(authNow.views)-Number(authPrev.views);
-      set("myLatestAuthDelta",(diff>=0?"+":"")+fmtN(diff));
-      set("myLatestAuthDeltaNote",`${Math.round((authNow.d-authPrev.d)/60000)}분 전 관측 대비`);
-    }else{set("myLatestAuthDelta","-");set("myLatestAuthDeltaNote","약 1시간 전 관측 없음")}
     const pub=latest.latest_episode_published_at?new Date(latest.latest_episode_published_at):null;
+    if(authNow && pub && !Number.isNaN(pub.getTime())){
+      const elapsedAtObservation=authNow.d.getTime()-pub.getTime();
+      set("myLatestAuthDelta",fmtN(authNow.views));
+      set("myLatestAuthDeltaNote",elapsedAtObservation>=24*3600000
+        ?"최신화 업로드 후 24시간 최종 관측"
+        :`최신화 업로드 후 ${fmtElapsed(elapsedAtObservation)} 누적`);
+    }else{
+      set("myLatestAuthDelta","-");
+      set("myLatestAuthDeltaNote","최신화가 베스트에서 확인되면 누적");
+    }
     const elapsed=pub&&!Number.isNaN(pub.getTime())?Date.now()-pub.getTime():NaN;
     set("myLatestElapsed",fmtElapsed(elapsed));
     if(Number.isFinite(elapsed) && elapsed>=24*3600000){

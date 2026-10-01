@@ -1354,9 +1354,9 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <small id="myLatestAuthNote">투베/신베 수집 기준</small>
           </div>
           <div class="myEpisodeMetric">
-            <span>업로드 후 누적</span>
+            <span>1시간 전 인증조회수</span>
             <b id="myLatestAuthDelta">-</b>
-            <small id="myLatestAuthDeltaNote">최신화 기준 · 최대 24시간</small>
+            <small id="myLatestAuthDeltaNote">현재와 차이 계산</small>
           </div>
           <div class="myEpisodeMetric">
             <span>업로드 후 경과</span>
@@ -1385,7 +1385,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ 두 표 모두 <b>날짜별 마지막 수집값</b> 기준입니다. 1화 표는 <b>전체조회수</b>이며 인증조회수가 아닙니다. 최신화 표는 해당 날짜의 <b>최신화가 몇 화인지</b> 함께 표시하고, 같은 최신화가 이어지는 동안 전날 대비 인증조회수 변화를 표시합니다. 새 최신화가 올라오면 변화값은 <b>새 화</b>로 표시되고 새 업로드 시각부터 다시 추적합니다.</div>
+        <div class="myEpisodeNotice">※ 두 표 모두 <b>날짜별 마지막 수집값</b> 기준입니다. 1화 표는 <b>전체조회수</b>이며 인증조회수가 아닙니다. 최신화 표는 해당 날짜의 <b>최신화가 몇 화인지</b>와 그날 마지막으로 관측된 <b>누적 인증조회수</b>를 함께 표시하고, 같은 최신화가 이어지는 동안 전날 대비 증가량도 표시합니다. 새 최신화가 올라오면 변화값은 <b>새 화</b>로 표시되고 새 업로드 시각부터 다시 추적합니다.</div>
       </section>
 
       <section class="panel">
@@ -1605,7 +1605,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     authTable.innerHTML=
       head+
       `<tr><td class="rowLabel">최신화</td>${rows.map(r=>`<td class="episodeNo">${r.epNo?`${r.epNo}화`:"-"}</td>`).join("")}</tr>`+
-      `<tr><td class="rowLabel">인증조회수</td>${rows.map(r=>`<td class="authValue">${Number.isFinite(r.authViews)?fmtN(r.authViews):"-"}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">누적 인증조회수</td>${rows.map(r=>`<td class="authValue">${Number.isFinite(r.authViews)?fmtN(r.authViews):"-"}</td>`).join("")}</tr>`+
       `<tr><td class="rowLabel">전일 대비</td>${rows.map(r=>{
         if(r.isNewEpisode)return '<td class="newEpisodeMark">새 화</td>';
         if(r.authChange==null)return '<td>-</td>';
@@ -1639,15 +1639,22 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     set("myLatestAuthViews",authNow?fmtN(authNow.views):"-");
     set("myLatestAuthNote",authNow?("마지막 관측 "+fmtKstDateTime(authNow.d)):"베스트 관측 없음");
     const pub=latest.latest_episode_published_at?new Date(latest.latest_episode_published_at):null;
-    if(authNow && pub && !Number.isNaN(pub.getTime())){
-      const elapsedAtObservation=authNow.d.getTime()-pub.getTime();
-      set("myLatestAuthDelta",fmtN(authNow.views));
-      set("myLatestAuthDeltaNote",elapsedAtObservation>=24*3600000
-        ?"최신화 업로드 후 24시간 최종 관측"
-        :`최신화 업로드 후 ${fmtElapsed(elapsedAtObservation)} 누적`);
+    let authPrevHour=null;
+    if(authNow){
+      const target=authNow.d.getTime()-3600000;
+      authPrevHour=[...auth]
+        .filter(r=>r.d<authNow.d)
+        .sort((a,b)=>Math.abs(a.d.getTime()-target)-Math.abs(b.d.getTime()-target))[0]||null;
+      // 정기 수집이 약간 늦어질 수 있으므로 1시간±25분 안의 기록만 전시간으로 인정
+      if(authPrevHour && Math.abs((authNow.d-authPrevHour.d)-3600000)>25*60000)authPrevHour=null;
+    }
+    if(authNow && authPrevHour){
+      const diff=Number(authNow.views)-Number(authPrevHour.views);
+      set("myLatestAuthDelta",fmtN(authPrevHour.views));
+      set("myLatestAuthDeltaNote",`현재 ${diff>=0?"+":""}${fmtN(diff)} · 1시간 전 대비`);
     }else{
       set("myLatestAuthDelta","-");
-      set("myLatestAuthDeltaNote","최신화가 베스트에서 확인되면 누적");
+      set("myLatestAuthDeltaNote",authNow?"1시간 전 같은 최신화 기록 없음":"베스트 관측 없음");
     }
     const elapsed=pub&&!Number.isNaN(pub.getTime())?Date.now()-pub.getTime():NaN;
     set("myLatestElapsed",fmtElapsed(elapsed));

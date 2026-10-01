@@ -503,6 +503,7 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .myDailyEpisodeTable .episodeNo{color:#246ee9;font-weight:800}
 .myDailyEpisodeTable .inflowPlus{color:#169c62;font-weight:800}
 .myDailyEpisodeTable .newEpisodeMark{color:#246ee9;font-weight:800;white-space:nowrap}
+#myAuthDailyTable{min-width:620px} #myAuthDailyTable th,#myAuthDailyTable td{text-align:center;white-space:nowrap}
 .myDailyEpisodeTable .authValue{color:#246ee9;font-weight:800}
 @media(max-width:760px){
   .myEpisodeGrid{grid-template-columns:repeat(2,1fr)}
@@ -1379,13 +1380,13 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         </div>
 
         <div class="myEpisodeDailyHead myEpisodeDailySecond">
-          <h2>최신화 인증조회수 변화</h2>
+          <h2>최신화 날짜별 인증조회수</h2>
           <span class="small" id="myAuthDailyCount">-</span>
         </div>
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ 두 표 모두 <b>날짜별 마지막 수집값</b> 기준입니다. 1화 표는 <b>전체조회수</b>이며 인증조회수가 아닙니다. 최신화 표는 해당 날짜의 <b>최신화가 몇 화인지</b>와 그날 마지막으로 관측된 <b>누적 인증조회수</b>를 함께 표시하고, 같은 최신화가 이어지는 동안 전날 대비 증가량도 표시합니다. 새 최신화가 올라오면 변화값은 <b>새 화</b>로 표시되고 새 업로드 시각부터 다시 추적합니다.</div>
+        <div class="myEpisodeNotice">※ 두 표 모두 <b>날짜별 마지막 수집값</b> 기준입니다. 1화 표는 <b>전체조회수</b>이며 인증조회수가 아닙니다. 최신화 표는 날짜가 하루씩 행으로 쌓이며, 해당 날짜의 <b>최신화 화수</b>, 그날 마지막으로 관측된 <b>누적 인증조회수</b>, <b>전일 대비 증가량</b>을 함께 표시합니다. 새 최신화가 올라오면 변화값은 <b>새 화</b>로 표시되고 새 업로드 시각부터 다시 추적합니다.</div>
       </section>
 
       <section class="panel">
@@ -1603,14 +1604,24 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       `<tr><td class="rowLabel">전일 대비</td>${rows.map(r=>`<td class="${r.firstChange>0?'inflowPlus':''}">${r.firstChange==null?"-":((r.firstChange>=0?"+":"")+fmtN(r.firstChange))}</td>`).join("")}</tr>`;
 
     authTable.innerHTML=
-      head+
-      `<tr><td class="rowLabel">최신화</td>${rows.map(r=>`<td class="episodeNo">${r.epNo?`${r.epNo}화`:"-"}</td>`).join("")}</tr>`+
-      `<tr><td class="rowLabel">누적 인증조회수</td>${rows.map(r=>`<td class="authValue">${Number.isFinite(r.authViews)?fmtN(r.authViews):"-"}</td>`).join("")}</tr>`+
-      `<tr><td class="rowLabel">전일 대비</td>${rows.map(r=>{
-        if(r.isNewEpisode)return '<td class="newEpisodeMark">새 화</td>';
-        if(r.authChange==null)return '<td>-</td>';
-        return `<td class="${r.authChange>0?'inflowPlus':''}">${(r.authChange>=0?"+":"")+fmtN(r.authChange)}</td>`;
-      }).join("")}</tr>`;
+      `<tr><th>날짜</th><th>최신화</th><th>누적 인증조회수</th><th>전일 대비</th></tr>`+
+      rows.map(r=>{
+        let change="-";
+        let cls="";
+        if(r.isNewEpisode){
+          change="새 화";
+          cls="newEpisodeMark";
+        }else if(r.authChange!=null){
+          change=(r.authChange>=0?"+":"")+fmtN(r.authChange);
+          cls=r.authChange>0?"inflowPlus":"";
+        }
+        return `<tr>
+          <td>${shortDateLabel(r.day)}</td>
+          <td class="episodeNo">${r.epNo?`${r.epNo}화`:"-"}</td>
+          <td class="authValue">${Number.isFinite(r.authViews)?fmtN(r.authViews):"-"}</td>
+          <td class="${cls}">${change}</td>
+        </tr>`;
+      }).join("");
 
     requestAnimationFrame(()=>{
       [firstTable,authTable].forEach(table=>{

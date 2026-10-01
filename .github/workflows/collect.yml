@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MUNPIA_BEST_MODE: ${{ inputs.mode }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v4
 

@@ -480,7 +480,7 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 
 /* ===== My Work: latest episode + first-episode inflow ===== */
 .myEpisodePanel{margin-top:12px}
-.myEpisodeGrid{display:grid;grid-template-columns:1.25fr repeat(4,1fr);gap:8px}
+.myEpisodeGrid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:8px}
 .myEpisodeMetric{background:#f6f8fc;border:1px solid #e6ecf4;border-radius:11px;padding:12px;min-width:0}
 .myEpisodeMetric span,.myEpisodeMetric small{display:block;color:var(--muted);font-size:11px;line-height:1.45}
 .myEpisodeMetric b{display:block;font-size:20px;margin:5px 0;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -504,6 +504,8 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .myDailyEpisodeTable .inflowPlus{color:#169c62;font-weight:800}
 .myDailyEpisodeTable .newEpisodeMark{color:#246ee9;font-weight:800;white-space:nowrap}
 .myDailyEpisodeTable .authValue{color:#246ee9;font-weight:800}
+.myDailyEpisodeTable .fallbackValue{color:#d84b4b;font-weight:800}
+.myDailyEpisodeTable .pendingValue{color:#8a96a8;font-weight:700}
 @media(max-width:760px){
   .myEpisodeGrid{grid-template-columns:repeat(2,1fr)}
   .myEpisodeMetric:first-child{grid-column:1/-1}
@@ -1339,8 +1341,8 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
       <section class="panel myEpisodePanel">
         <div class="panelTitle">
-          <h2>최신화 성과 · 신규 유입</h2>
-          <span class="small">작품별 업로드 시각 기준</span>
+          <h2>회차별 24시간 성적</h2>
+          <span class="small">각 최신화 업로드 시각 기준</span>
         </div>
         <div class="myEpisodeGrid">
           <div class="myEpisodeMetric">
@@ -1348,44 +1350,31 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <b id="myLatestEpisode">-</b>
             <small id="myLatestEpisodeTime">업로드 시각 확인 중</small>
           </div>
-          <div class="myEpisodeMetric primary">
-            <span>직전 수집 대비</span>
-            <b id="myLatestAuthViews">-</b>
-            <small id="myLatestAuthNote">이전 관측과 비교</small>
-          </div>
           <div class="myEpisodeMetric">
-            <span>시간당 평균 증가</span>
-            <b id="myLatestAuthDelta">-</b>
-            <small id="myLatestAuthDeltaNote">최신화 업로드 후 평균</small>
-          </div>
-          <div class="myEpisodeMetric">
-            <span>업로드 후 경과</span>
+            <span>24시간 판정 시각</span>
             <b id="myLatestElapsed">-</b>
-            <small id="myLatest24hNote">24시간 추적</small>
+            <small id="myLatest24hNote">매시 :15 수집 기준</small>
+          </div>
+          <div class="myEpisodeMetric primary">
+            <span>24시간 조회수</span>
+            <b id="myLatestAuthViews">-</b>
+            <small id="myLatestAuthNote">인증조회수 우선</small>
           </div>
           <div class="myEpisodeMetric inflow">
             <span>1화 신규 유입</span>
             <b id="myFirstEpisodeInflow">-</b>
-            <small id="myFirstEpisodeInflowNote">전체조회수 기준</small>
+            <small id="myFirstEpisodeInflowNote">해당 회차 24시간 기준</small>
           </div>
         </div>
         <div class="myEpisodeMeta" id="myEpisodeMeta">작품 추적 데이터가 쌓이면 표시됩니다.</div>
         <div class="myEpisodeDailyHead">
-          <h2>1화 전체조회수 변화</h2>
-          <span class="small" id="myFirstDailyCount">-</span>
-        </div>
-        <div class="myEpisodeDailyScroll">
-          <table class="myDailyEpisodeTable" id="myFirstDailyTable"></table>
-        </div>
-
-        <div class="myEpisodeDailyHead myEpisodeDailySecond">
-          <h2>최신화 업로드 후 인증조회수</h2>
+          <h2>회차별 기록</h2>
           <span class="small" id="myAuthDailyCount">-</span>
         </div>
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ 1화 표는 날짜별 <b>전체조회수</b> 기록입니다. 최신화 인증조회수는 날짜로 끊지 않고, <b>매시 :15 수집에서 새 최신화가 처음 감지된 시점</b>부터 새로 시작합니다. 이후 :15마다 인증조회수와 직전 수집 대비 증가량을 최대 24시간 기록하며, 다음 최신화가 감지되면 자동으로 새 회차로 리셋됩니다.</div>
+        <div class="myEpisodeNotice">※ 각 회차가 올라온 뒤 <b>24시간이 지난 첫 :15 수집</b>을 판정 시점으로 사용합니다. 그 시점에 해당 회차의 투베/신베 <b>인증조회수</b>를 식별할 수 있으면 인증조회수를 표시합니다. 식별할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 1화 신규 유입은 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 차이입니다.</div>
       </section>
 
       <section class="panel">
@@ -1477,7 +1466,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
   async function getWorkSnapshots(id){
     try{
       const q=new URLSearchParams({
-        select:"captured_at,first_episode_views,latest_episode_no,latest_episode_title,latest_episode_published_at",
+        select:"captured_at,first_episode_views,latest_episode_no,latest_episode_views,latest_episode_title,latest_episode_published_at,episode_views",
         novel_id:"eq."+id,
         order:"captured_at.asc",
         limit:"1000"
@@ -1501,7 +1490,8 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       if(Number.isNaN(d.getTime()))return;
       if(pub && d<pub)return;
       if(end && d>end)return;
-      const h=Number(r.it?.hours_after_upload);
+      const rawH=r.it?.hours_after_upload;
+      const h=rawH==null?NaN:Number(rawH);
       if(Number.isFinite(h) && (h<0 || h>24))return;
       if(pub && Number.isFinite(h)){
         const elapsedHours=(d.getTime()-pub.getTime())/3600000;
@@ -1534,158 +1524,129 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const m=String(key||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
     return m?`${Number(m[2])}/${Number(m[3])}`:key;
   }
-  function renderEpisodeDailyTable(ss,todayRec,newRec){
-    const firstTable=$q("myFirstDailyTable"), authTable=$q("myAuthDailyTable");
-    const firstCount=$q("myFirstDailyCount"), authCount=$q("myAuthDailyCount");
-    if(!firstTable || !authTable)return;
+  function episodeKey(x){
+    return `${Number(x?.latest_episode_no)||0}|${String(x?.latest_episode_published_at||"")}`;
+  }
+  function episodeWholeViewsAt(snap,epNo){
+    if(!snap)return null;
+    const map=snap.episode_views;
+    if(map && typeof map==="object"){
+      const v=Number(map[String(epNo)]);
+      if(Number.isFinite(v))return v;
+    }
+    if(Number(snap.latest_episode_no)===Number(epNo)){
+      const v=Number(snap.latest_episode_views);
+      if(Number.isFinite(v))return v;
+    }
+    return null;
+  }
+  function buildEpisode24hRows(ss,todayRec,newRec){
+    const groups=[];
+    const seen=new Set();
+    for(const snap of ss){
+      const epNo=Number(snap.latest_episode_no)||0;
+      const pub=snap.latest_episode_published_at?new Date(snap.latest_episode_published_at):null;
+      if(!epNo || !pub || Number.isNaN(pub.getTime()))continue;
+      const key=episodeKey(snap);
+      if(seen.has(key))continue;
+      seen.add(key);
+      groups.push({key,epNo,pub,title:snap.latest_episode_title||""});
+    }
+    groups.sort((a,b)=>a.pub-b.pub);
+    const now=Date.now();
+    return groups.map((ep,idx)=>{
+      const target=new Date(ep.pub.getTime()+24*3600000);
+      const nextPub=groups[idx+1]?.pub||null;
+      // :15 수집이므로 24시간이 지난 뒤 첫 work snapshot을 확정 시점으로 사용.
+      const endSnap=ss.find(x=>new Date(x.captured_at)>=target)||null;
+      // 업로드 시각에 가장 가까운 1화 기준값. 가능하면 업로드 직전 값을 우선한다.
+      const before=ss.filter(x=>new Date(x.captured_at)<=ep.pub && Number.isFinite(Number(x.first_episode_views))).at(-1)||null;
+      const after=ss.find(x=>new Date(x.captured_at)>=ep.pub && Number.isFinite(Number(x.first_episode_views)))||null;
+      const baseSnap=before||after||null;
+      const endFirst=endSnap?Number(endSnap.first_episode_views):NaN;
+      const baseFirst=baseSnap?Number(baseSnap.first_episode_views):NaN;
+      const inflow=Number.isFinite(endFirst)&&Number.isFinite(baseFirst)?Math.max(0,endFirst-baseFirst):null;
+      const whole=endSnap?episodeWholeViewsAt(endSnap,ep.epNo):null;
 
-    // 1화 전체조회수는 기존대로 날짜별 마지막 수집값을 표시.
-    const byDay=new Map();
-    ss.forEach(x=>{
-      const key=kstDateKeyFromValue(x.captured_at);
-      if(!key)return;
-      const prev=byDay.get(key);
-      if(!prev || new Date(x.captured_at)>new Date(prev.captured_at))byDay.set(key,x);
+      // 24시간 판정 시점 이후 첫 랭킹 관측을 우선한다. 최대 75분까지만 허용.
+      // hours_after_upload가 있는 투베는 해당 회차와 시간대가 맞는지도 확인한다.
+      const candidates=[];
+      for(const r of [...todayRec,...newRec]){
+        const d=rankRecordDate(r); if(Number.isNaN(d.getTime()))continue;
+        const gap=d-target;
+        if(gap<0 || gap>75*60000)continue;
+        const rawH=r.it?.hours_after_upload;
+        const h=rawH==null?NaN:Number(rawH);
+        if(Number.isFinite(h)){
+          const elapsed=(d-ep.pub)/3600000;
+          if(Math.abs(elapsed-h)>1.75)continue;
+        }else if(nextPub && d>=nextPub){
+          // 모바일 신베에는 회차 경과시간이 없으므로 다음 화가 이미 올라온 뒤면 이전 화 인증조회수로 쓰지 않는다.
+          continue;
+        }
+        candidates.push({...r,d,hasHours:Number.isFinite(h)});
+      }
+      candidates.sort((a,b)=>(a.d-target)-(b.d-target) || Number(b.hasHours)-Number(a.hasHours));
+      const auth=candidates[0]||null;
+      const complete=now>=target.getTime() && !!endSnap;
+      let value=null,source="pending";
+      if(complete && auth && Number.isFinite(Number(auth.views))){value=Number(auth.views);source="auth";}
+      else if(complete && Number.isFinite(Number(whole))){value=Number(whole);source="total";}
+      return {...ep,target,endSnap,baseSnap,inflow,value,source,complete,auth};
     });
-    const days=[...byDay.keys()].sort();
-    if(firstCount)firstCount.textContent=days.length?`${days.length}일 기록`:"기록 없음";
-
-    if(!days.length){
-      firstTable.innerHTML='<tr><td class="rowLabel">날짜</td><td>수집 데이터가 쌓이면 표시됩니다.</td></tr>';
-    }else{
-      const firstRows=days.map((day,i)=>{
-        const snap=byDay.get(day);
-        const first=Number(snap.first_episode_views);
-        const prev=i?Number(byDay.get(days[i-1])?.first_episode_views):NaN;
-        const change=Number.isFinite(first)&&Number.isFinite(prev)?first-prev:null;
-        return {day,first,change};
-      });
-      firstTable.innerHTML=
-        `<tr><th class="rowLabel">날짜</th>${firstRows.map(r=>`<th>${shortDateLabel(r.day)}</th>`).join("")}</tr>`+
-        `<tr><td class="rowLabel">1화 전체조회수</td>${firstRows.map(r=>`<td>${Number.isFinite(r.first)?fmtN(r.first):"-"}</td>`).join("")}</tr>`+
-        `<tr><td class="rowLabel">전일 대비</td>${firstRows.map(r=>`<td class="${r.change>0?'inflowPlus':''}">${r.change==null?"-":((r.change>=0?"+":"")+fmtN(r.change))}</td>`).join("")}</tr>`;
-    }
-
-    // 최신화는 달력 날짜가 아니라, 새 화를 :15 수집에서 처음 감지한 순간부터 새 회차로 시작.
-    const latestSnap=ss.at(-1)||null;
-    const currentEp=Number(latestSnap?.latest_episode_no)||null;
-    const currentPub=latestSnap?.latest_episode_published_at||null;
-
-    const sameEpisodeSnaps=ss.filter(x=>
-      currentEp &&
-      Number(x.latest_episode_no)===currentEp &&
-      String(x.latest_episode_published_at||"")===String(currentPub||"")
-    ).sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at));
-
-    const detectedAt=sameEpisodeSnaps.length?new Date(sameEpisodeSnaps[0].captured_at):null;
-
-    // 해당 최신화의 인증조회수만, 최초 감지 시점부터 최대 24시간.
-    const cycle=mergedAuthRecords(todayRec,newRec,currentPub)
-      .filter(r=>!detectedAt || r.d>=detectedAt)
-      .filter(r=>!detectedAt || r.d.getTime()<=detectedAt.getTime()+24*3600000)
-      .sort((a,b)=>a.d-b.d);
-
-    if(authCount){
-      authCount.textContent=currentEp
-        ? `${currentEp}화 · ${detectedAt?fmtKstDateTime(detectedAt)+"부터":"추적 준비"}`
-        : "기록 없음";
-    }
-
-    if(!currentEp){
-      authTable.innerHTML='<tr><td class="rowLabel">시간</td><td>최신화 수집 데이터가 쌓이면 표시됩니다.</td></tr>';
-    }else if(!cycle.length){
-      authTable.innerHTML=
-        `<tr><th class="rowLabel">시간</th><th>${detectedAt?fmtKstDateTime(detectedAt):"-"}</th></tr>`+
-        `<tr><td class="rowLabel">인증조회수</td><td>-</td></tr>`+
-        `<tr><td class="rowLabel">직전 대비</td><td>시작</td></tr>`;
-    }else{
-      const timeFmt=new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
-      authTable.innerHTML=
-        `<tr><th class="rowLabel">수집 시각</th>${cycle.map(r=>`<th>${timeFmt.format(r.d)}</th>`).join("")}</tr>`+
-        `<tr><td class="rowLabel">인증조회수</td>${cycle.map(r=>`<td class="authValue">${fmtN(r.views)}</td>`).join("")}</tr>`+
-        `<tr><td class="rowLabel">직전 대비</td>${cycle.map((r,i)=>{
-          if(i===0)return '<td class="newEpisodeMark">시작</td>';
-          const diff=Number(r.views)-Number(cycle[i-1].views);
-          return `<td class="${diff>0?'inflowPlus':''}">${(diff>=0?"+":"")+fmtN(diff)}</td>`;
-        }).join("")}</tr>`;
-    }
-
-    requestAnimationFrame(()=>{
-      [firstTable,authTable].forEach(table=>{
-        const box=table.closest('.myEpisodeDailyScroll');
-        if(box)box.scrollLeft=box.scrollWidth;
-      });
-    });
+  }
+  function renderEpisode24hTable(rows){
+    const table=$q("myAuthDailyTable"),count=$q("myAuthDailyCount");
+    if(!table)return;
+    if(count)count.textContent=rows.length?`${rows.filter(x=>x.complete).length}회 확정 · ${rows.length}회 추적`:`기록 없음`;
+    if(!rows.length){table.innerHTML='<tr><td class="rowLabel">회차</td><td>수집 데이터가 쌓이면 표시됩니다.</td></tr>';return;}
+    const show=rows.slice(-12);
+    table.innerHTML=
+      `<tr><th class="rowLabel">회차</th>${show.map(r=>`<th>${r.epNo}화</th>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">업로드</td>${show.map(r=>`<td>${fmtKstDateTime(r.pub)}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">24시간 조회수</td>${show.map(r=>{
+        if(!r.complete)return '<td class="pendingValue">추적 중</td>';
+        if(r.source==="auth")return `<td class="authValue">${fmtN(r.value)}</td>`;
+        if(r.source==="total")return `<td class="fallbackValue">${fmtN(r.value)}</td>`;
+        return '<td>-</td>';
+      }).join("")}</tr>`+
+      `<tr><td class="rowLabel">기준</td>${show.map(r=>`<td class="${r.source==='total'?'fallbackValue':''}">${r.source==='auth'?'인증':r.source==='total'?'전체':r.complete?'확인 불가':'-'}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">1화 유입</td>${show.map(r=>`<td class="${r.inflow>0?'inflowPlus':''}">${r.complete&&r.inflow!=null?'+'+fmtN(r.inflow):r.complete?'-':'추적 중'}</td>`).join("")}</tr>`;
+    requestAnimationFrame(()=>{const box=table.closest('.myEpisodeDailyScroll');if(box)box.scrollLeft=box.scrollWidth;});
   }
   async function renderEpisodeMetrics(id,todayRec,newRec){
     const ss=await getWorkSnapshots(id);
     const latest=ss.at(-1)||null;
     const set=(id,v)=>{const e=$q(id);if(e)e.textContent=v};
     if(!latest){
-      set("myLatestEpisode","수집 대기");set("myLatestEpisodeTime","등록 후 매시간 수집");
-      set("myLatestAuthViews","-");set("myLatestAuthDelta","-");set("myLatestElapsed","-");set("myFirstEpisodeInflow","-");
-      set("myFirstEpisodeInflowNote","첫 스냅샷 수집 후 표시");
-      set("myEpisodeMeta","작품은 등록됐어요. 다음 투베 수집(:15)부터 1화 전체조회수와 최신화 정보를 기록합니다.");
-      renderEpisodeDailyTable([],todayRec,newRec);return;
+      set("myLatestEpisode","수집 대기");set("myLatestEpisodeTime","등록 후 매시간 :15 수집");
+      set("myLatestElapsed","-");set("myLatest24hNote","24시간 판정 대기");
+      set("myLatestAuthViews","-");set("myLatestAuthNote","인증조회수 우선");
+      set("myFirstEpisodeInflow","-");set("myFirstEpisodeInflowNote","기준값 수집 후 표시");
+      set("myEpisodeMeta","다음 투베 수집(:15)부터 회차별 전체조회수와 1화 전체조회수를 기록합니다.");
+      renderEpisode24hTable([]);return;
     }
-    const epNo=Number(latest.latest_episode_no)||null;
-    const epTitle=latest.latest_episode_title||"";
+    const rows=buildEpisode24hRows(ss,todayRec,newRec);
+    const cur=rows.at(-1)||null;
+    const epNo=Number(latest.latest_episode_no)||null,epTitle=latest.latest_episode_title||"";
     set("myLatestEpisode",epNo?`${epNo}화${epTitle?" · "+epTitle:""}`:(epTitle||"-"));
-    set("myLatestEpisodeTime",latest.latest_episode_published_at?("업로드 "+fmtKstDateTime(latest.latest_episode_published_at)):"업로드 시각 없음");
-    const auth=mergedAuthRecords(todayRec,newRec,latest.latest_episode_published_at);
-    const authNow=auth.at(-1)||null;
-    const authPrev=auth.length>=2?auth.at(-2):null;
-    const pub=latest.latest_episode_published_at?new Date(latest.latest_episode_published_at):null;
-
-    // 현재 인증조회수 자체는 위 작품 분석 카드에 있으므로,
-    // 여기서는 직전 수집 이후 얼마나 늘었는지를 보여준다.
-    if(authNow && authPrev){
-      const diff=Number(authNow.views)-Number(authPrev.views);
-      set("myLatestAuthViews",(diff>=0?"+":"")+fmtN(diff));
-      set("myLatestAuthNote",`${fmtKstDateTime(authPrev.d)} → ${fmtKstDateTime(authNow.d)}`);
-    }else{
-      set("myLatestAuthViews","-");
-      set("myLatestAuthNote",authNow?"직전 수집 기록 없음":"베스트 관측 없음");
-    }
-
-    // 최신화 업로드 후 현재까지의 평균 인증조회수 증가 속도.
-    // 24시간이 지난 경우에는 최신화의 첫 24시간 구간만 기준으로 계산한다.
-    if(authNow && pub && !Number.isNaN(pub.getTime())){
-      const observedMs=Math.max(0,authNow.d.getTime()-pub.getTime());
-      const hours=Math.min(24,observedMs/3600000);
-      if(hours>0){
-        const avg=Number(authNow.views)/hours;
-        set("myLatestAuthDelta","+"+fmtN(Math.round(avg))+"/시간");
-        set("myLatestAuthDeltaNote",hours>=24?"업로드 후 첫 24시간 평균":`업로드 후 ${fmtElapsed(observedMs)} 평균`);
+    set("myLatestEpisodeTime",latest.latest_episode_published_at?`업로드 ${fmtKstDateTime(latest.latest_episode_published_at)}`:"업로드 시각 없음");
+    if(cur){
+      set("myLatestElapsed",fmtKstDateTime(cur.target));
+      set("myLatest24hNote",cur.complete?"24시간 판정 완료":"이 시각 이후 첫 :15에 확정");
+      if(cur.complete && cur.source==="auth"){
+        set("myLatestAuthViews",fmtN(cur.value));set("myLatestAuthNote","인증조회수 · 24시간 성적");
+      }else if(cur.complete && cur.source==="total"){
+        set("myLatestAuthViews",fmtN(cur.value));set("myLatestAuthNote","전체조회수 대체 · 베스트 인증값 식별 불가");
       }else{
-        set("myLatestAuthDelta","-");
-        set("myLatestAuthDeltaNote","업로드 직후");
+        set("myLatestAuthViews","추적 중");set("myLatestAuthNote","24시간 판정 전");
       }
-    }else{
-      set("myLatestAuthDelta","-");
-      set("myLatestAuthDeltaNote","최신화 베스트 관측 후 계산");
+      set("myFirstEpisodeInflow",cur.complete&&cur.inflow!=null?`+${fmtN(cur.inflow)}명`:"추적 중");
+      set("myFirstEpisodeInflowNote",cur.complete?"해당 회차 게시 후 24시간":"24시간 판정 후 확정");
     }
-    const elapsed=pub&&!Number.isNaN(pub.getTime())?Date.now()-pub.getTime():NaN;
-    set("myLatestElapsed",fmtElapsed(elapsed));
-    if(Number.isFinite(elapsed) && elapsed>=24*3600000){
-      set("myLatest24hNote",auth.length?("24시간 내 마지막 관측 "+fmtN(auth.at(-1).views)):"24시간 내 베스트 관측 없음");
-    }else set("myLatest24hNote","업로드 후 24시간 추적 중");
     const curFirst=Number(latest.first_episode_views);
-    let inflowText="-",inflowNote="전체조회수 기준";
-    if(Number.isFinite(curFirst) && pub && !Number.isNaN(pub.getTime())){
-      const before=ss.filter(x=>new Date(x.captured_at)<=pub && Number.isFinite(Number(x.first_episode_views))).at(-1)||null;
-      if(before){
-        const delta=Math.max(0,curFirst-Number(before.first_episode_views));
-        inflowText="+"+fmtN(delta)+"명";
-        inflowNote=`업로드 직전 ${fmtN(before.first_episode_views)} → 현재 ${fmtN(curFirst)}`;
-      }else{
-        inflowText="측정 준비";
-        inflowNote=`업로드 전 기준값 없음 · 현재 1화 ${fmtN(curFirst)}`;
-      }
-    }
-    set("myFirstEpisodeInflow",inflowText);set("myFirstEpisodeInflowNote",inflowNote);
-    set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 작품별 최신화 업로드 시각을 기준으로 계산합니다.`);
-    renderEpisodeDailyTable(ss,todayRec,newRec);
+    set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 회차별 24시간 성적은 :15 수집 기준입니다.`);
+    renderEpisode24hTable(rows);
   }
 
   async function getNewSnaps(){
@@ -1759,11 +1720,12 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       {label:"일주일 전",day:addDaysToKey(latestDay,-7),color:"#169c62",dash:"5 5",width:2.4,cls:"week"}
     ].map(g=>({...g,rec:records.filter(r=>stamp(r.s).slice(0,10)===g.day)}));
     if(!groups[0].rec.length){if(oldLegend)oldLegend.remove();svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">오늘 순위 기록이 아직 없습니다.</text>`;return}
-    const min=1,max=200;
+    const min=1,observedMax=Math.max(200,...groups.flatMap(g=>g.rec.map(r=>Number(r.rank)||0))),max=Math.ceil(observedMax/20)*20;
     const x=r=>{const st=stamp(r.s),hh=Number(st.slice(11,13)),mm=Number(st.slice(14,16));return L+(W-L-R)*((hh*60+mm)/1440)};
     const y=v=>T+(H-T-B)*((v-min)/(max-min));
     let out='';
-    [1,20,40,60,80,100,120,140,160,180,200].forEach(rv=>{const yy=y(rv);out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${rv}위</text>`});
+    const tickStep=max>240?40:20,ticks=[1];for(let rv=tickStep;rv<=max;rv+=tickStep)ticks.push(rv);if(ticks.at(-1)!==max)ticks.push(max);
+    ticks.forEach(rv=>{const yy=y(rv);out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${rv}위</text>`});
     [0,6,12,18,24].forEach((h,i)=>{const xx=L+(W-L-R)*(h/24);out+=`<text x="${xx}" y="${H-9}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${String(h).padStart(2,'0')}:00</text>`});
     groups.forEach(g=>{
       if(!g.rec.length)return;
@@ -1946,7 +1908,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
 <script>
 (function(){
- const ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+ let ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
  let ns=[], nr=200, newMonthlyRank=200, newHourlyRank=200, newWeekdayRank=200, range="today", hDays=7, wd=1, wdDays=7, newDayOffset=0;
  const el=id=>document.getElementById(id);
  const rawStamp=s=>String(s?.slot_at_kst||s?.captured_at_kst||"");
@@ -1974,6 +1936,14 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
  const todayKey=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  const newSelectedDay=()=>addDay(todayKey(),-newDayOffset);
  const newDayLabel=i=>i===0?'오늘':i===1?'어제':`${i}일 전`;
+ function refreshNewRanks(){
+   const base=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+   const maxActual=Math.max(200,...ns.flatMap(s=>(s.items||[]).map(x=>Number(x.rank)||0)));
+   const extra=[];
+   for(let r=220;r<maxActual;r+=20)extra.push(r);
+   if(maxActual>200 && !extra.includes(maxActual))extra.push(maxActual);
+   ranks=[...base,...extra];
+ }
  function newDayTabs(){const box=el('newDayHistoryTabs');if(!box)return;const td=todayKey();box.innerHTML=Array.from({length:7},(_,i)=>{const k=addDay(td,-i),p=k.split('-');return `<button class="dayHistoryBtn ${i===newDayOffset?'active':''}" data-offset="${i}"><b>${newDayLabel(i)}</b>${+p[1]}/${+p[2]}</button>`}).join('');box.querySelectorAll('.dayHistoryBtn').forEach(b=>b.onclick=()=>{newDayOffset=+b.dataset.offset;render()})}
  function filtered(){if(!ns.length)return[];const ld=newSelectedDay();return ns.filter(s=>dkey(s)===ld)}
  function sameTime(daysAgo){if(!ns.length)return null;const td=todayKey(),last=ns.filter(s=>dkey(s)===td).at(-1);if(!last)return null;const target=addDay(td,-daysAgo),hm=stamp(last).slice(11,16),tm=+hm.slice(0,2)*60 + +hm.slice(3,5);let best=null,gap=1e9;for(const s of ns){if(dkey(s)!==target)continue;const sh=stamp(s).slice(11,16),sm=+sh.slice(0,2)*60 + +sh.slice(3,5),g=Math.abs(sm-tm);if(g<gap){gap=g;best=val(s,nr)}}return gap<=90?best:null}
@@ -2019,7 +1989,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
   el('newMonthTable').innerHTML=`<thead><tr><th>월</th><th>${newMonthlyRank}위 평균 인증조회수</th><th>월 최고</th><th>월 최저</th><th>수집 기록 수</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${r.m}월</td><td>${fmt(r.avg)}</td><td>${fmt(r.max)}</td><td>${fmt(r.min)}</td><td>${r.count||'-'}</td></tr>`).join('')+'</tbody>';
  }
  function render(){newDayTabs();if(!ns.length){el('newCutGrid').innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';return}const last=ns.at(-1);el('newHeaderLatest').textContent=stamp(last).slice(5,16)+' KST';el('newHeaderRank').textContent=nr+'위 커트라인';cutGrid();chart();side();hourly();weekday();monthly()}
- window.renderNewBest=async function(){if(!ns.length){try{const r=await fetch('./data/new/latest.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const d=await r.json();{const src=(Array.isArray(d)?d:(Array.isArray(d?.snapshots)?d.snapshots:[])).filter(s=>Array.isArray(s.items));const bySlot=new Map();for(const s of src){const k=stamp(s),prev=bySlot.get(k);if(!prev||String(s?.captured_at_kst||'')>String(prev?.captured_at_kst||''))bySlot.set(k,s)}ns=[...bySlot.values()].sort((a,b)=>stamp(a).localeCompare(stamp(b)))}}}catch(e){console.error(e)}}const sel=el('newRankSelect');if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?'selected':''}>${r}위</option>`).join('');sel.onchange=()=>{nr=+sel.value;render()}}const hs=el('newHourlyRankSelect');if(!hs.options.length){hs.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newHourlyRank?'selected':''}>${r}위</option>`).join('');hs.onchange=()=>{newHourlyRank=+hs.value;hourly()}}const ws=el('newWeekdayRankSelect');if(!ws.options.length){ws.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newWeekdayRank?'selected':''}>${r}위</option>`).join('');ws.onchange=()=>{newWeekdayRank=+ws.value;weekday()}}render()};
+ window.renderNewBest=async function(){if(!ns.length){try{const r=await fetch('./data/new/latest.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const d=await r.json();{const src=(Array.isArray(d)?d:(Array.isArray(d?.snapshots)?d.snapshots:[])).filter(s=>Array.isArray(s.items));const bySlot=new Map();for(const s of src){const k=stamp(s),prev=bySlot.get(k);if(!prev||String(s?.captured_at_kst||'')>String(prev?.captured_at_kst||''))bySlot.set(k,s)}ns=[...bySlot.values()].sort((a,b)=>stamp(a).localeCompare(stamp(b)))}}}catch(e){console.error(e)}}refreshNewRanks();const sel=el('newRankSelect');if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?'selected':''}>${r}위</option>`).join('');sel.onchange=()=>{nr=+sel.value;render()}}const hs=el('newHourlyRankSelect');if(!hs.options.length){hs.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newHourlyRank?'selected':''}>${r}위</option>`).join('');hs.onchange=()=>{newHourlyRank=+hs.value;hourly()}}const ws=el('newWeekdayRankSelect');if(!ws.options.length){ws.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newWeekdayRank?'selected':''}>${r}위</option>`).join('');ws.onchange=()=>{newWeekdayRank=+ws.value;weekday()}}render()};
  document.querySelectorAll('.newHourlyBtn').forEach(b=>b.addEventListener('click',()=>{hDays=+b.dataset.days;hourly()}));
  document.querySelectorAll('.newWeekdayBtn').forEach(b=>b.addEventListener('click',()=>{wd=+b.dataset.day;weekday()}));
  document.querySelectorAll('.newWeekdayRangeBtn').forEach(b=>b.addEventListener('click',()=>{wdDays=+b.dataset.days;weekday()}));

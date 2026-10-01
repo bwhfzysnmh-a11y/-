@@ -10,127 +10,94 @@ import requests
 from bs4 import BeautifulSoup
 
 TODAY_URL = "https://www.munpia.com/best/today?displayType=GRID"
-NEW_URL = "https://www.munpia.com/best/new.novel.today?displayType=LIST"
+NEW_MOBILE_URL = "https://m.munpia.com/mobile/extra/rankNovels?section=new.novel.today"
 MODE = os.getenv("MUNPIA_BEST_MODE", "today")
-URL = NEW_URL if MODE == "new" else TODAY_URL
 LEGACY_OUT = Path("data/new/latest.json") if MODE == "new" else Path("data/data.json")
 ARCHIVE_ROOT = Path("data/new/archive") if MODE == "new" else Path("data/today/archive")
 KST = timezone(timedelta(hours=9))
+HEADERS = {"User-Agent": ("Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1"),"Accept-Language":"ko-KR,ko;q=0.9,en;q=0.8"}
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) "
-        "AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1"
-    ),
-    "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-}
-
-def clean(s):
-    return re.sub(r"\s+", " ", s or "").strip()
-
+def clean(s): return re.sub(r"\s+", " ", s or "").strip()
 def parse_metrics(text):
-    text = clean(text)
-    m = re.search(r"시간\s*(\d{1,2})\s*조회\s*([\d,]+)", text)
-    if m:
-        return int(m.group(1)), int(m.group(2).replace(",", ""))
-    m = re.search(r"\s(\d{1,2})\s+([\d,]+)(?:\s+(?:NEW|[-+]?\d+))?\s*$", text)
-    if m:
-        return int(m.group(1)), int(m.group(2).replace(",", ""))
-    return None, None
-
+    text=clean(text);m=re.search(r"시간\s*(\d{1,2})\s*조회\s*([\d,]+)",text)
+    if m:return int(m.group(1)),int(m.group(2).replace(",",""))
+    m=re.search(r"\s(\d{1,2})\s+([\d,]+)(?:\s+(?:NEW|[-+]?\d+))?\s*$",text)
+    return (int(m.group(1)),int(m.group(2).replace(",",""))) if m else (None,None)
 def parse_rank(text):
-    text = clean(text)
-    m = re.search(r"\b([1-5])\s*위\b", text)
-    if m:
-        return int(m.group(1))
-    m = re.match(r"^\s*(\d{1,3})\b", text)
-    if m:
-        n = int(m.group(1))
-        if 1 <= n <= 200:
-            return n
+    text=clean(text);m=re.search(r"\b([1-5])\s*위\b",text)
+    if m:return int(m.group(1))
+    m=re.match(r"^\s*(\d{1,3})\b",text)
+    if m and 1<=int(m.group(1))<=200:return int(m.group(1))
     return None
+def _candidate_texts(a,depth=8):
+    out=[];node=a
+    for _ in range(depth):
+        if node is None:break
+        txt=clean(node.get_text(" ",strip=True))
+        if txt and txt not in out:out.append(txt)
+        node=node.parent
+    return out
 
-r = requests.get(URL, headers=HEADERS, timeout=30)
-r.raise_for_status()
-soup = BeautifulSoup(r.text, "html.parser")
+def collect_today_items():
+    r=requests.get(TODAY_URL,headers=HEADERS,timeout=30);r.raise_for_status();soup=BeautifulSoup(r.text,"html.parser")
+    items_by_rank={};seen=set()
+    for a in soup.find_all("a",href=True):
+        href=a.get("href","")
+        if "/novel/detail/" not in href:continue
+        full=urljoin(TODAY_URL,href);nid=full.rstrip("/").split("/")[-1].split("?")[0]
+        if not nid.isdigit() or nid in seen:continue
+        cand=_candidate_texts(a);rank=hours=views=None;raw=""
+        for txt in cand:
+            rr=parse_rank(txt);hh,vv=parse_metrics(txt)
+            if rr is not None and hh is not None and vv is not None:rank,hours,views,raw=rr,hh,vv,txt;break
+        if rank is None:
+            for txt in cand:
+                rr=parse_rank(txt)
+                if rr is not None:rank=rr;break
+        if hours is None or views is None:
+            for txt in cand:
+                hh,vv=parse_metrics(txt)
+                if hh is not None and vv is not None:hours,views,raw=hh,vv,txt;break
+        if rank is None:continue
+        seen.add(nid)
+        if rank not in items_by_rank:items_by_rank[rank]={"rank":rank,"novel_id":nid,"title":clean(a.get_text(" ",strip=True)) or None,"url":full,"hours_after_upload":hours,"score":views,"views_24h_verified":views,"raw":raw or clean(a.get_text(" ",strip=True))}
+    items=[items_by_rank[r] for r in sorted(items_by_rank)];parsed=sum(x["views_24h_verified"] is not None for x in items)
+    if len(items_by_rank)<190:raise RuntimeError(f"Only {len(items_by_rank)} actual Today ranks found; Munpia HTML may have changed.")
+    if parsed<190:raise RuntimeError(f"Found {len(items)} Today novels, but parsed verified views for only {parsed}.")
+    return items,items_by_rank,parsed
 
-items_by_rank = {}
-seen_novels = set()
+def _parse_mobile_new_entry(a,page_url):
+    href=a.get("href","")
+    if "/novel/detail/" not in href:return None
+    full=urljoin(page_url,href);mid=re.search(r"/novel/detail/(\d+)",full)
+    if not mid:return None
+    rank=views=None;raw="";pat=re.compile(r"(?:^|\s)(\d{1,4})(?:\s+(?:NEW|[-+]?\d+))?\s*\(([\d,]+)\)")
+    for txt in _candidate_texts(a,7):
+        m=pat.search(txt)
+        if m:rank=int(m.group(1));views=int(m.group(2).replace(",",""));raw=txt;break
+    if rank is None or views is None:return None
+    title=clean(a.get("title") or "") or clean(a.get_text(" ",strip=True)) or None
+    return {"rank":rank,"novel_id":mid.group(1),"title":title,"url":full,"hours_after_upload":None,"score":views,"views_24h_verified":views,"raw":raw or title}
 
-for a in soup.find_all("a", href=True):
-    href = a.get("href", "")
-    if "/novel/detail/" not in href:
-        continue
-    full_url = urljoin(URL, href)
-    novel_id = full_url.rstrip("/").split("/")[-1].split("?")[0]
-    if not novel_id.isdigit() or novel_id in seen_novels:
-        continue
+def collect_new_mobile_items():
+    items_by_rank={};seen=set()
+    for page in range(30):
+        page_url=f"{NEW_MOBILE_URL}&page={page}";r=requests.get(page_url,headers=HEADERS,timeout=30);r.raise_for_status();soup=BeautifulSoup(r.text,"html.parser");added=0
+        for a in soup.find_all("a",href=True):
+            item=_parse_mobile_new_entry(a,page_url)
+            if not item:continue
+            rank=item["rank"];nid=item["novel_id"]
+            if nid in seen or rank in items_by_rank:continue
+            seen.add(nid);items_by_rank[rank]=item;added+=1
+        if added==0:break
+        print(f"Mobile New Best page {page}: +{added}, max rank={max(items_by_rank)}")
+    items=[items_by_rank[r] for r in sorted(items_by_rank)];parsed=sum(x["views_24h_verified"] is not None for x in items)
+    if len(items)<25:raise RuntimeError(f"Only {len(items)} mobile New Best ranks found; mobile HTML may have changed.")
+    if parsed!=len(items):raise RuntimeError(f"Found {len(items)} mobile New Best novels, but parsed verified views for only {parsed}.")
+    return items,items_by_rank,parsed
 
-    candidates = []
-    node = a
-    for _ in range(8):
-        if node is None:
-            break
-        txt = clean(node.get_text(" ", strip=True))
-        if txt:
-            candidates.append(txt)
-        node = node.parent
-
-    rank = hours = views = None
-    raw = ""
-
-    for txt in candidates:
-        rr = parse_rank(txt)
-        hh, vv = parse_metrics(txt)
-        if rr is not None and hh is not None and vv is not None:
-            rank, hours, views, raw = rr, hh, vv, txt
-            break
-
-    if rank is None:
-        for txt in candidates:
-            rr = parse_rank(txt)
-            if rr is not None:
-                rank = rr
-                break
-
-    if hours is None or views is None:
-        for txt in candidates:
-            hh, vv = parse_metrics(txt)
-            if hh is not None and vv is not None:
-                hours, views, raw = hh, vv, txt
-                break
-
-    if rank is None:
-        continue
-
-    seen_novels.add(novel_id)
-
-    if rank not in items_by_rank:
-        items_by_rank[rank] = {
-            "rank": rank,
-            "novel_id": novel_id,
-            "title": clean(a.get_text(" ", strip=True)) or None,
-            "url": full_url,
-            "hours_after_upload": hours,
-            "score": views,
-            "views_24h_verified": views,
-            "raw": raw or clean(a.get_text(" ", strip=True)),
-        }
-
-items = [items_by_rank[r] for r in sorted(items_by_rank)]
-parsed = sum(1 for x in items if x["views_24h_verified"] is not None)
-
-# 동률 때문에 일부 순위 번호(예: 120위, 200위)가 건너뛰어질 수 있음.
-# 200위가 정확히 없어도 실제 순위가 190개 이상이면 정상 데이터로 저장.
-if len(items_by_rank) < 190:
-    raise RuntimeError(
-        f"Only {len(items_by_rank)} actual ranks found; Munpia HTML may have changed."
-    )
-
-if parsed < 190:
-    raise RuntimeError(
-        f"Found {len(items)} ranked novels, but parsed verified views for only {parsed}."
-    )
+if MODE=="new":items,items_by_rank,parsed=collect_new_mobile_items()
+else:items,items_by_rank,parsed=collect_today_items()
 
 now_kst = datetime.now(KST)
 stamp = now_kst.strftime("%Y-%m-%d %H:%M:%S")
@@ -269,16 +236,12 @@ LEGACY_OUT.write_text(
     encoding="utf-8",
 )
 
+max_rank = max(items_by_rank) if items_by_rank else 0
 rank200 = items_by_rank.get(200)
-rank200_text = (
-    str(rank200["views_24h_verified"])
-    if rank200 and rank200["views_24h_verified"] is not None
-    else "skipped"
-)
-
+rank200_text = str(rank200["views_24h_verified"]) if rank200 and rank200["views_24h_verified"] is not None else "skipped"
 print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
-    f"(rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
+    f"(max rank={max_rank}, rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
 )
 
 # ---------------------------------------------------------------------------
@@ -399,11 +362,19 @@ def _episode_summary_for_work(session, novel_id):
         ),
     )
 
+    episode_views = {}
+    for row in normal:
+        num = _as_int(row.get("num"), 0)
+        if num > 0:
+            episode_views[str(num)] = _as_int(row.get("viewCount"), 0)
+
     return {
         "first_episode_views": _as_int(first_ep.get("viewCount"), 0),
         "latest_episode_no": _as_int(latest_ep.get("num"), 0),
+        "latest_episode_views": _as_int(latest_ep.get("viewCount"), 0),
         "latest_episode_title": clean(str(latest_ep.get("title") or "")) or None,
         "latest_episode_published_at": latest_dt.isoformat() if latest_dt else None,
+        "episode_views": episode_views,
     }
 
 
@@ -421,13 +392,7 @@ def collect_registered_work_snapshots():
         "Content-Type": "application/json",
     }
 
-    # SUPABASE_URL에 프로젝트 URL(https://...supabase.co)을 넣어도 되고,
-    # Data API URL(https://...supabase.co/rest/v1)을 넣어도 중복 경로가 생기지 않게 정규화.
-    sb_base = SUPABASE_URL.rstrip("/")
-    if not sb_base.endswith("/rest/v1"):
-        sb_base += "/rest/v1"
-
-    works_url = f"{sb_base}/registered_works"
+    works_url = f"{SUPABASE_URL}/rest/v1/registered_works"
     resp = requests.get(
         works_url,
         headers=sb_headers,
@@ -458,7 +423,7 @@ def collect_registered_work_snapshots():
             })
             print(
                 f"Work {novel_id}: 1화 전체조회수={summary['first_episode_views']} "
-                f"최신화={summary['latest_episode_no']}"
+                f"최신화={summary['latest_episode_no']} 전체조회수={summary['latest_episode_views']}"
             )
         except Exception as exc:
             # 한 작품 실패가 투베 수집 전체를 실패시키지 않게 격리한다.
@@ -468,7 +433,7 @@ def collect_registered_work_snapshots():
         print("Work tracking: no snapshots to insert.")
         return
 
-    insert_url = f"{sb_base}/work_snapshots"
+    insert_url = f"{SUPABASE_URL}/rest/v1/work_snapshots"
     insert_headers = dict(sb_headers)
     insert_headers["Prefer"] = "return=minimal"
     resp = requests.post(
@@ -481,8 +446,4 @@ def collect_registered_work_snapshots():
     print(f"Work tracking: inserted {len(rows_to_insert)} snapshot(s) into Supabase.")
 
 
-# 작품 추적 장애가 기존 투베/신베 수집 전체를 실패시키지 않게 격리.
-try:
-    collect_registered_work_snapshots()
-except Exception as exc:
-    print(f"Work tracking warning: {type(exc).__name__}: {exc}")
+collect_registered_work_snapshots()

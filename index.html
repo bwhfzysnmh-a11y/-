@@ -1586,13 +1586,49 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     ss.forEach(s=>{const it=itemFor(s,id);if(it)out.push({s,it,rank:Number(it.rank),views:Number(it.views_24h_verified??it.score)})});
     return out;
   }
+  function isPlaceholderTitle(title,id){
+    const t=String(title||"").trim();
+    return !t || t==="제목 불러오는 중…" || t==="제목 불러오는 중..." || t==="내 작품" || t===`작품 ${id}`;
+  }
+  function saveKnownTitle(id,title,list){
+    const t=String(title||"").trim();
+    if(!t || isPlaceholderTitle(t,id))return;
+    const x=list.find(x=>String(x.id)===String(id));
+    if(x){x.title=t;saveList(list)}
+    localStorage.setItem("tubecut_title_"+id,t);
+  }
   function bestKnownTitle(id,todayRec,newRec,list){
     const found=[...todayRec,...newRec].reverse().find(r=>r.it?.title);
-    const title=found?.it?.title || list.find(x=>String(x.id)===String(id))?.title || "제목 불러오는 중…";
-    if(found?.it?.title){
-      const x=list.find(x=>String(x.id)===String(id)); if(x){x.title=found.it.title;saveList(list)}
-    }
+    const stored=list.find(x=>String(x.id)===String(id))?.title;
+    const cached=localStorage.getItem("tubecut_title_"+id);
+    const title=found?.it?.title || (!isPlaceholderTitle(stored,id)?stored:null) || cached || `작품 ${id}`;
+    if(found?.it?.title)saveKnownTitle(id,found.it.title,list);
     return title;
+  }
+  async function resolveNovelTitle(id,todayRec,newRec,list){
+    const known=bestKnownTitle(id,todayRec,newRec,list);
+    if(!isPlaceholderTitle(known,id))return known;
+    try{
+      const detail="https://www.munpia.com/novel/detail/"+encodeURIComponent(id);
+      const proxy="https://api.allorigins.win/raw?url="+encodeURIComponent(detail);
+      const r=await fetch(proxy,{cache:"no-store"});
+      if(!r.ok)throw new Error("title fetch failed");
+      const html=await r.text(),doc=new DOMParser().parseFromString(html,"text/html");
+      let title=(doc.querySelector('meta[property="og:title"]')?.content ||
+                 doc.querySelector('meta[name="twitter:title"]')?.content ||
+                 doc.querySelector('h2.detail-title')?.textContent ||
+                 doc.querySelector('h1')?.textContent ||
+                 doc.querySelector('title')?.textContent || "").trim();
+      title=title.replace(/\s*[|｜]\s*문피아.*$/i,"")
+                 .replace(/\s*[-–—]\s*(?:웹소설\s*)?문피아.*$/i,"")
+                 .replace(/\s*::\s*문피아.*$/i,"")
+                 .trim();
+      if(title && !/^문피아$/i.test(title)){
+        saveKnownTitle(id,title,list);
+        return title;
+      }
+    }catch(e){console.warn("작품 제목 조회 실패",e)}
+    return `작품 ${id}`;
   }
 
   function drawMyChart(records){
@@ -1659,7 +1695,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
   function renderTabs(list,id){
     const box=$q("novelTabs"); if(!box)return;
-    box.innerHTML=list.map(x=>`<button class="novelTab ${String(x.id)===String(id)?"active":""}" data-id="${x.id}" title="${x.title||""}">${((x.title && !/^작품 \d+$/.test(x.title))?x.title:"제목 불러오는 중…")}</button>`).join("")+
+    box.innerHTML=list.map(x=>{const label=isPlaceholderTitle(x.title,x.id)?`작품 ${x.id}`:x.title;return `<button class="novelTab ${String(x.id)===String(id)?"active":""}" data-id="${x.id}" title="${label}">${label}</button>`}).join("")+
       '<button class="novelTab addTab" id="focusAddNovel">＋ 작품 추가</button>';
     box.querySelectorAll(".novelTab[data-id]").forEach(b=>b.onclick=()=>{localStorage.setItem(ACTIVE,b.dataset.id);renderMyWork()});
     $q("focusAddNovel").onclick=()=>{$q("novelUrlInput").focus();$q("novelUrlInput").scrollIntoView({behavior:"smooth",block:"center"})};
@@ -1698,9 +1734,12 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     try{await ensureServerWork(id)}catch(e){console.warn(e)}
     const todaySnaps=getTodaySnaps(), newSnaps=await getNewSnaps();
     const todayRec=recordsFor(todaySnaps,id), newRec=recordsFor(newSnaps,id);
-    const title=bestKnownTitle(id,todayRec,newRec,list);
-    renderTabs(list,id);
+    let title=bestKnownTitle(id,todayRec,newRec,list);
     $q("myNovelName").textContent=title;$q("myNovelId").textContent="무료연재 · 작품번호 "+id;
+    renderTabs(list,id);
+    title=await resolveNovelTitle(id,todayRec,newRec,list);
+    $q("myNovelName").textContent=title;
+    renderTabs(list,id);
     showNovelCover(id,title,todayRec,newRec);
 
     document.querySelectorAll(".myCompareBtn").forEach(b=>{
@@ -1768,7 +1807,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     if(!id){$q("registerMsg").textContent="문피아 작품 URL 또는 작품번호를 확인해줘.";return}
     const btn=$q("saveNovelBtn"); if(btn){btn.disabled=true;btn.textContent="등록 중…"}
     const list=getList();
-    if(!list.some(x=>String(x.id)===String(id)))list.push({id:String(id),title:"제목 불러오는 중…"});
+    if(!list.some(x=>String(x.id)===String(id)))list.push({id:String(id),title:`작품 ${id}`});
     saveList(list);localStorage.setItem(ACTIVE,String(id));$q("novelUrlInput").value="";
     try{
       await ensureServerWork(id);

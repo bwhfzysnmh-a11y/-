@@ -477,6 +477,25 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .dayHistoryBtn.active b{color:#fff}
 @media(max-width:560px){.dayHistoryBtn{min-width:72px;padding:8px 9px}}
 
+
+/* ===== My Work: latest episode + first-episode inflow ===== */
+.myEpisodePanel{margin-top:12px}
+.myEpisodeGrid{display:grid;grid-template-columns:1.25fr repeat(4,1fr);gap:8px}
+.myEpisodeMetric{background:#f6f8fc;border:1px solid #e6ecf4;border-radius:11px;padding:12px;min-width:0}
+.myEpisodeMetric span,.myEpisodeMetric small{display:block;color:var(--muted);font-size:11px;line-height:1.45}
+.myEpisodeMetric b{display:block;font-size:20px;margin:5px 0;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.myEpisodeMetric.primary b{color:#246ee9}
+.myEpisodeMetric.inflow b{color:#169c62}
+.myEpisodeMeta{margin-top:10px;color:var(--muted);font-size:11px;line-height:1.55}
+.myEpisodeChartWrap{height:230px;margin-top:14px}
+.myEpisodeChartWrap svg{width:100%;height:230px}
+.myEpisodeNotice{margin-top:10px;padding:10px 12px;border-radius:10px;background:#f2f7ff;border:1px solid #d6e5fb;color:#5a6f89;font-size:11px;line-height:1.55}
+@media(max-width:760px){
+  .myEpisodeGrid{grid-template-columns:repeat(2,1fr)}
+  .myEpisodeMetric:first-child{grid-column:1/-1}
+  .myEpisodeChartWrap,.myEpisodeChartWrap svg{height:210px}
+}
+
 </style>
 </head>
 <body>
@@ -1271,7 +1290,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     <section class="panel myRegister">
       <div class="panelTitle"><h2>작품 관리</h2><span class="small">여러 작품 등록 가능</span></div>
       <div class="urlRow"><input id="novelUrlInput" type="url" placeholder="문피아 작품 URL 또는 작품번호"><button id="saveNovelBtn">등록</button></div>
-      <div id="registerMsg" class="registerMsg">등록 정보는 현재 기기의 브라우저에만 저장됩니다.</div><div id="novelTabs" class="novelTabs"></div>
+      <div id="registerMsg" class="registerMsg">작품 목록은 현재 기기에 저장되고, 자동 조회수 추적을 위해 작품번호가 투베컷 수집 서버에 등록됩니다.</div><div id="novelTabs" class="novelTabs"></div>
     </section>
     <section id="myEmpty" class="panel myEmpty">
       <div class="emptyIcon">✍️</div><h2>등록된 작품이 없어요</h2><p>위에 작품 URL을 넣으면 투베 기록을 찾아볼게요.</p>
@@ -1304,6 +1323,47 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         <div class="myCutNote">※ 현재 작품의 인증조회수를 기준으로, 각 주요 순위까지 필요한 추가 조회수입니다.</div>
       </section>
 
+      <section class="panel myEpisodePanel">
+        <div class="panelTitle">
+          <h2>최신화 성과 · 신규 유입</h2>
+          <span class="small">작품별 업로드 시각 기준</span>
+        </div>
+        <div class="myEpisodeGrid">
+          <div class="myEpisodeMetric">
+            <span>현재 최신화</span>
+            <b id="myLatestEpisode">-</b>
+            <small id="myLatestEpisodeTime">업로드 시각 확인 중</small>
+          </div>
+          <div class="myEpisodeMetric primary">
+            <span>최신화 인증조회수</span>
+            <b id="myLatestAuthViews">-</b>
+            <small id="myLatestAuthNote">투베/신베 수집 기준</small>
+          </div>
+          <div class="myEpisodeMetric">
+            <span>1시간 증가</span>
+            <b id="myLatestAuthDelta">-</b>
+            <small id="myLatestAuthDeltaNote">이전 관측 대비</small>
+          </div>
+          <div class="myEpisodeMetric">
+            <span>업로드 후 경과</span>
+            <b id="myLatestElapsed">-</b>
+            <small id="myLatest24hNote">24시간 추적</small>
+          </div>
+          <div class="myEpisodeMetric inflow">
+            <span>1화 신규 유입</span>
+            <b id="myFirstEpisodeInflow">-</b>
+            <small id="myFirstEpisodeInflowNote">전체조회수 기준</small>
+          </div>
+        </div>
+        <div class="myEpisodeMeta" id="myEpisodeMeta">작품 추적 데이터가 쌓이면 표시됩니다.</div>
+        <div class="panelTitle" style="margin-top:14px;margin-bottom:4px">
+          <h2 style="font-size:14px">최신화 업로드 후 24시간 인증조회수 추이</h2>
+          <span class="small" id="myEpisodeChartCount">-</span>
+        </div>
+        <div class="chartWrap myEpisodeChartWrap"><svg id="myEpisodeAuthChart" viewBox="0 0 760 230" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="myEpisodeNotice">※ 최신화 인증조회수는 투데이/신규베스트에서 작품이 확인된 시간만 표시됩니다. 1화 신규 유입은 <b>전체조회수</b> 기준이며 인증조회수가 아닙니다.</div>
+      </section>
+
       <section class="panel">
         <div class="panelTitle"><h2>내 작품 순위 변화</h2><span class="small" id="myChartModeLabel">투데이베스트 · 오늘</span></div>
         <div class="chartWrap"><svg id="myRankChart" viewBox="0 0 760 310" preserveAspectRatio="xMidYMid meet"></svg></div>
@@ -1323,7 +1383,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 <section id="guideView" class="siteView">
  <main class="wrap"><section class="panel guideStandalone"><h1>이용안내</h1><p>투베컷은 문피아 무료 투데이베스트의 인증조회수와 순위 변화를 정기적으로 기록해 보기 쉽게 정리하는 비공식 분석 서비스입니다.</p>
  <div class="infoGrid"><div><b>집계 기준</b><span>최근 24시간 인증조회수</span></div><div><b>업데이트</b><span>매시간 정기 수집</span></div><div><b>시간 기준</b><span>대한민국 표준시(KST)</span></div></div>
- <p class="guideNote">내 작품 등록 정보는 회원 서버가 아니라 사용 중인 브라우저의 로컬 저장공간에 저장됩니다.</p></section></main>
+ <p class="guideNote">내 작품 목록은 사용 중인 브라우저에 저장됩니다. 자동 통계 수집을 위해 등록한 문피아 작품번호와 공개 작품 URL은 투베컷 데이터 수집 서버에도 등록됩니다.</p></section></main>
 </section>
 
 
@@ -1331,6 +1391,9 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 (function(){
   const $q=id=>document.getElementById(id);
   const STORE="tubecut_my_novels", ACTIVE="tubecut_my_active", VIEW_STORE="tubecut_active_view";
+  const SUPABASE_BASE="https://ytkxgxhnqfnzwtaiytcq.supabase.co/rest/v1";
+  const SUPABASE_PUBLISHABLE_KEY="sb_publishable_cIN3Ybt1ndpJch4q_VN2kQ_6qmtGEU6";
+  const SB_HEADERS={"apikey":SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json","Accept":"application/json"};
   let myCompareMode="today";
   function switchView(name){
     if(!["analysis","newbest","mywork","guide"].includes(name)) name="analysis";
@@ -1372,6 +1435,141 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
     const get=t=>parts.find(x=>x.type===t)?.value||"";
     return `${get("year")}-${get("month")}-${get("day")}`;
+  }
+
+
+  function canonicalNovelUrl(id){return "https://www.munpia.com/novel/detail/"+encodeURIComponent(id)}
+  async function ensureServerWork(id){
+    const key="tubecut_sb_registered_"+id;
+    if(localStorage.getItem(key)==="1")return true;
+    const r=await fetch(SUPABASE_BASE+"/rpc/register_tubecut_work",{
+      method:"POST",headers:SB_HEADERS,
+      body:JSON.stringify({p_novel_id:Number(id),p_novel_url:canonicalNovelUrl(id)})
+    });
+    if(!r.ok)throw new Error("작품 자동 추적 등록 실패 ("+r.status+")");
+    localStorage.setItem(key,"1");
+    return true;
+  }
+  async function getWorkSnapshots(id){
+    try{
+      const q=new URLSearchParams({
+        select:"captured_at,first_episode_views,latest_episode_no,latest_episode_title,latest_episode_published_at",
+        novel_id:"eq."+id,
+        order:"captured_at.asc",
+        limit:"1000"
+      });
+      const r=await fetch(SUPABASE_BASE+"/work_snapshots?"+q.toString(),{headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Accept":"application/json"},cache:"no-store"});
+      if(!r.ok)throw new Error("snapshot fetch "+r.status);
+      const data=await r.json();
+      return Array.isArray(data)?data:[];
+    }catch(e){console.warn("work snapshot load failed",e);return[]}
+  }
+  function rankRecordDate(r){
+    const s=stamp(r.s);
+    return new Date(s.replace(" ","T")+"+09:00");
+  }
+  function mergedAuthRecords(todayRec,newRec,publishedAt){
+    const pub=publishedAt?new Date(publishedAt):null;
+    const end=pub&&!Number.isNaN(pub.getTime())?new Date(pub.getTime()+24*3600000):null;
+    const byTime=new Map();
+    [...newRec,...todayRec].forEach(r=>{
+      const d=rankRecordDate(r);
+      if(Number.isNaN(d.getTime()))return;
+      if(pub && d<pub)return;
+      if(end && d>end)return;
+      const h=Number(r.it?.hours_after_upload);
+      if(Number.isFinite(h) && (h<0 || h>24))return;
+      const key=d.toISOString();
+      const prev=byTime.get(key);
+      if(!prev || (r.views??-1)>(prev.views??-1))byTime.set(key,{...r,d});
+    });
+    return [...byTime.values()].sort((a,b)=>a.d-b.d);
+  }
+  function fmtElapsed(ms){
+    if(!Number.isFinite(ms)||ms<0)return "-";
+    const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);
+    return h>=24?`${Math.floor(h/24)}일 ${h%24}시간`:`${h}시간 ${m}분`;
+  }
+  function fmtKstDateTime(value){
+    const d=new Date(value); if(Number.isNaN(d.getTime()))return "-";
+    return new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}).format(d);
+  }
+  function drawEpisodeAuthChart(records,publishedAt){
+    const svg=$q("myEpisodeAuthChart"); if(!svg)return;
+    const count=$q("myEpisodeChartCount");
+    if(count)count.textContent=records.length?records.length+"개 관측":"관측 없음";
+    const {W,H,L,R,T,B}=chartFrame(svg); enableChartPointTips(svg);
+    if(!publishedAt || !records.length){
+      svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">최신화가 베스트에서 확인되면 인증조회수 추이가 표시됩니다.</text>`;
+      return;
+    }
+    const pub=new Date(publishedAt),end=new Date(pub.getTime()+24*3600000);
+    const vals=records.map(r=>Number(r.views)).filter(Number.isFinite);
+    if(!vals.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">인증조회수 관측 데이터가 없습니다.</text>`;return}
+    let min=Math.min(...vals),max=Math.max(...vals); if(min===max){min=Math.max(0,min-1);max+=1}
+    const pad=(max-min)*.12;min=Math.max(0,min-pad);max+=pad;
+    const x=d=>L+(W-L-R)*Math.max(0,Math.min(1,(d-pub)/(end-pub)));
+    const y=v=>T+(H-T-B)*(1-(v-min)/(max-min));
+    let out='';
+    for(let i=0;i<4;i++){const yy=T+(H-T-B)*i/3,v=max-(max-min)*i/3;out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${fmtN(Math.round(v))}</text>`}
+    [0,6,12,18,24].forEach((h,i)=>{const xx=L+(W-L-R)*h/24;out+=`<text x="${xx}" y="${H-8}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${h}h</text>`});
+    const path=records.map((r,i)=>(i?'L':'M')+x(r.d)+','+y(Number(r.views))).join(' ');
+    out+=`<path d="${path}" fill="none" stroke="#3478ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+    records.forEach(r=>{const elapsed=Math.max(0,(r.d-pub)/3600000);out+=`<circle class="chartPoint" data-tip="업로드 후 ${elapsed.toFixed(1)}시간 · 인증조회수 ${fmtN(r.views)}" cx="${x(r.d)}" cy="${y(Number(r.views))}" r="4" fill="#3478ff"/>`});
+    svg.innerHTML=out;
+  }
+  async function renderEpisodeMetrics(id,todayRec,newRec){
+    const ss=await getWorkSnapshots(id);
+    const latest=ss.at(-1)||null;
+    const set=(id,v)=>{const e=$q(id);if(e)e.textContent=v};
+    if(!latest){
+      set("myLatestEpisode","수집 대기");set("myLatestEpisodeTime","등록 후 매시간 수집");
+      set("myLatestAuthViews","-");set("myLatestAuthDelta","-");set("myLatestElapsed","-");set("myFirstEpisodeInflow","-");
+      set("myFirstEpisodeInflowNote","첫 스냅샷 수집 후 표시");
+      set("myEpisodeMeta","작품은 등록됐어요. 다음 투베 수집(:15)부터 1화 전체조회수와 최신화 정보를 기록합니다.");
+      drawEpisodeAuthChart([],null);return;
+    }
+    const epNo=Number(latest.latest_episode_no)||null;
+    const epTitle=latest.latest_episode_title||"";
+    set("myLatestEpisode",epNo?`${epNo}화${epTitle?" · "+epTitle:""}`:(epTitle||"-"));
+    set("myLatestEpisodeTime",latest.latest_episode_published_at?("업로드 "+fmtKstDateTime(latest.latest_episode_published_at)):"업로드 시각 없음");
+    const auth=mergedAuthRecords(todayRec,newRec,latest.latest_episode_published_at);
+    const authNow=auth.at(-1)||null;
+    let authPrev=null;
+    if(authNow){
+      const target=authNow.d.getTime()-3600000;
+      authPrev=[...auth].filter(r=>r.d<authNow.d).sort((a,b)=>Math.abs(a.d.getTime()-target)-Math.abs(b.d.getTime()-target))[0]||null;
+      if(authPrev && Math.abs((authNow.d-authPrev.d)-3600000)>25*60000) authPrev=null;
+    }
+    set("myLatestAuthViews",authNow?fmtN(authNow.views):"-");
+    set("myLatestAuthNote",authNow?("마지막 관측 "+fmtKstDateTime(authNow.d)):"베스트 관측 없음");
+    if(authNow&&authPrev){
+      const diff=Number(authNow.views)-Number(authPrev.views);
+      set("myLatestAuthDelta",(diff>=0?"+":"")+fmtN(diff));
+      set("myLatestAuthDeltaNote",`${Math.round((authNow.d-authPrev.d)/60000)}분 전 관측 대비`);
+    }else{set("myLatestAuthDelta","-");set("myLatestAuthDeltaNote","약 1시간 전 관측 없음")}
+    const pub=latest.latest_episode_published_at?new Date(latest.latest_episode_published_at):null;
+    const elapsed=pub&&!Number.isNaN(pub.getTime())?Date.now()-pub.getTime():NaN;
+    set("myLatestElapsed",fmtElapsed(elapsed));
+    if(Number.isFinite(elapsed) && elapsed>=24*3600000){
+      set("myLatest24hNote",auth.length?("24시간 내 마지막 관측 "+fmtN(auth.at(-1).views)):"24시간 내 베스트 관측 없음");
+    }else set("myLatest24hNote","업로드 후 24시간 추적 중");
+    const curFirst=Number(latest.first_episode_views);
+    let inflowText="-",inflowNote="전체조회수 기준";
+    if(Number.isFinite(curFirst) && pub && !Number.isNaN(pub.getTime())){
+      const before=ss.filter(x=>new Date(x.captured_at)<=pub && Number.isFinite(Number(x.first_episode_views))).at(-1)||null;
+      if(before){
+        const delta=Math.max(0,curFirst-Number(before.first_episode_views));
+        inflowText="+"+fmtN(delta)+"명";
+        inflowNote=`업로드 직전 ${fmtN(before.first_episode_views)} → 현재 ${fmtN(curFirst)}`;
+      }else{
+        inflowText="측정 준비";
+        inflowNote=`업로드 전 기준값 없음 · 현재 1화 ${fmtN(curFirst)}`;
+      }
+    }
+    set("myFirstEpisodeInflow",inflowText);set("myFirstEpisodeInflowNote",inflowNote);
+    set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 작품별 최신화 업로드 시각을 기준으로 계산합니다.`);
+    drawEpisodeAuthChart(auth,latest.latest_episode_published_at);
   }
 
   async function getNewSnaps(){
@@ -1497,6 +1695,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     $q("myEmpty").style.display=id?"none":"block";$q("myDashboard").style.display=id?"block":"none";
     if(!id)return;
 
+    try{await ensureServerWork(id)}catch(e){console.warn(e)}
     const todaySnaps=getTodaySnaps(), newSnaps=await getNewSnaps();
     const todayRec=recordsFor(todaySnaps,id), newRec=recordsFor(newSnaps,id);
     const title=bestKnownTitle(id,todayRec,newRec,list);
@@ -1561,15 +1760,26 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
     drawMyChart(records);
     renderMyHourlyTable(records,isNew);
+    await renderEpisodeMetrics(id,todayRec,newRec);
   };
 
-  $q("saveNovelBtn")?.addEventListener("click",()=>{
+  $q("saveNovelBtn")?.addEventListener("click",async()=>{
     const id=novelIdFromInput($q("novelUrlInput").value);
     if(!id){$q("registerMsg").textContent="문피아 작품 URL 또는 작품번호를 확인해줘.";return}
+    const btn=$q("saveNovelBtn"); if(btn){btn.disabled=true;btn.textContent="등록 중…"}
     const list=getList();
     if(!list.some(x=>String(x.id)===String(id)))list.push({id:String(id),title:"제목 불러오는 중…"});
     saveList(list);localStorage.setItem(ACTIVE,String(id));$q("novelUrlInput").value="";
-    $q("registerMsg").textContent="작품 추가 완료! 수집 데이터에 작품이 확인되면 제목으로 자동 표시돼.";renderMyWork();
+    try{
+      await ensureServerWork(id);
+      $q("registerMsg").textContent="작품 추가 완료! 자동 조회수 추적도 등록됐어. 다음 투베 수집(:15)부터 작품 데이터가 쌓여.";
+    }catch(e){
+      console.error(e);
+      $q("registerMsg").textContent="작품은 이 기기에 저장됐지만 자동 추적 등록에 실패했어. 잠시 후 다시 등록해줘.";
+    }finally{
+      if(btn){btn.disabled=false;btn.textContent="등록"}
+      renderMyWork();
+    }
   });
   $q("removeNovelBtn")?.addEventListener("click",()=>{
     const list=getList(),id=activeId(list),next=list.filter(x=>String(x.id)!==String(id));saveList(next);

@@ -421,7 +421,13 @@ def collect_registered_work_snapshots():
         "Content-Type": "application/json",
     }
 
-    works_url = f"{SUPABASE_URL}/rest/v1/registered_works"
+    # SUPABASE_URL에 프로젝트 URL(https://...supabase.co)을 넣어도 되고,
+    # Data API URL(https://...supabase.co/rest/v1)을 넣어도 중복 경로가 생기지 않게 정규화.
+    sb_base = SUPABASE_URL.rstrip("/")
+    if not sb_base.endswith("/rest/v1"):
+        sb_base += "/rest/v1"
+
+    works_url = f"{sb_base}/registered_works"
     resp = requests.get(
         works_url,
         headers=sb_headers,
@@ -462,7 +468,7 @@ def collect_registered_work_snapshots():
         print("Work tracking: no snapshots to insert.")
         return
 
-    insert_url = f"{SUPABASE_URL}/rest/v1/work_snapshots"
+    insert_url = f"{sb_base}/work_snapshots"
     insert_headers = dict(sb_headers)
     insert_headers["Prefer"] = "return=minimal"
     resp = requests.post(
@@ -475,4 +481,8 @@ def collect_registered_work_snapshots():
     print(f"Work tracking: inserted {len(rows_to_insert)} snapshot(s) into Supabase.")
 
 
-collect_registered_work_snapshots()
+# 작품 추적 장애가 기존 투베/신베 수집 전체를 실패시키지 않게 격리.
+try:
+    collect_registered_work_snapshots()
+except Exception as exc:
+    print(f"Work tracking warning: {type(exc).__name__}: {exc}")

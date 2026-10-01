@@ -503,7 +503,6 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .myDailyEpisodeTable .episodeNo{color:#246ee9;font-weight:800}
 .myDailyEpisodeTable .inflowPlus{color:#169c62;font-weight:800}
 .myDailyEpisodeTable .newEpisodeMark{color:#246ee9;font-weight:800;white-space:nowrap}
-#myAuthDailyTable{min-width:620px} #myAuthDailyTable th,#myAuthDailyTable td{text-align:center;white-space:nowrap}
 .myDailyEpisodeTable .authValue{color:#246ee9;font-weight:800}
 @media(max-width:760px){
   .myEpisodeGrid{grid-template-columns:repeat(2,1fr)}
@@ -1380,13 +1379,13 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         </div>
 
         <div class="myEpisodeDailyHead myEpisodeDailySecond">
-          <h2>최신화 날짜별 인증조회수</h2>
+          <h2>최신화 업로드 후 인증조회수</h2>
           <span class="small" id="myAuthDailyCount">-</span>
         </div>
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ 두 표 모두 <b>날짜별 마지막 수집값</b> 기준입니다. 1화 표는 <b>전체조회수</b>이며 인증조회수가 아닙니다. 최신화 표는 날짜가 하루씩 행으로 쌓이며, 해당 날짜의 <b>최신화 화수</b>, 그날 마지막으로 관측된 <b>누적 인증조회수</b>, <b>전일 대비 증가량</b>을 함께 표시합니다. 새 최신화가 올라오면 변화값은 <b>새 화</b>로 표시되고 새 업로드 시각부터 다시 추적합니다.</div>
+        <div class="myEpisodeNotice">※ 1화 표는 날짜별 <b>전체조회수</b> 기록입니다. 최신화 인증조회수는 날짜로 끊지 않고, <b>매시 :15 수집에서 새 최신화가 처음 감지된 시점</b>부터 새로 시작합니다. 이후 :15마다 인증조회수와 직전 수집 대비 증가량을 최대 24시간 기록하며, 다음 최신화가 감지되면 자동으로 새 회차로 리셋됩니다.</div>
       </section>
 
       <section class="panel">
@@ -1540,6 +1539,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const firstCount=$q("myFirstDailyCount"), authCount=$q("myAuthDailyCount");
     if(!firstTable || !authTable)return;
 
+    // 1화 전체조회수는 기존대로 날짜별 마지막 수집값을 표시.
     const byDay=new Map();
     ss.forEach(x=>{
       const key=kstDateKeyFromValue(x.captured_at);
@@ -1547,81 +1547,68 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       const prev=byDay.get(key);
       if(!prev || new Date(x.captured_at)>new Date(prev.captured_at))byDay.set(key,x);
     });
-
     const days=[...byDay.keys()].sort();
-    const countText=days.length?`${days.length}일 기록`:"기록 없음";
-    if(firstCount)firstCount.textContent=countText;
-    if(authCount)authCount.textContent=countText;
+    if(firstCount)firstCount.textContent=days.length?`${days.length}일 기록`:"기록 없음";
 
     if(!days.length){
-      const empty='<tr><td class="rowLabel">날짜</td><td>수집 데이터가 쌓이면 표시됩니다.</td></tr>';
-      firstTable.innerHTML=empty;
-      authTable.innerHTML=empty;
-      return;
+      firstTable.innerHTML='<tr><td class="rowLabel">날짜</td><td>수집 데이터가 쌓이면 표시됩니다.</td></tr>';
+    }else{
+      const firstRows=days.map((day,i)=>{
+        const snap=byDay.get(day);
+        const first=Number(snap.first_episode_views);
+        const prev=i?Number(byDay.get(days[i-1])?.first_episode_views):NaN;
+        const change=Number.isFinite(first)&&Number.isFinite(prev)?first-prev:null;
+        return {day,first,change};
+      });
+      firstTable.innerHTML=
+        `<tr><th class="rowLabel">날짜</th>${firstRows.map(r=>`<th>${shortDateLabel(r.day)}</th>`).join("")}</tr>`+
+        `<tr><td class="rowLabel">1화 전체조회수</td>${firstRows.map(r=>`<td>${Number.isFinite(r.first)?fmtN(r.first):"-"}</td>`).join("")}</tr>`+
+        `<tr><td class="rowLabel">전일 대비</td>${firstRows.map(r=>`<td class="${r.change>0?'inflowPlus':''}">${r.change==null?"-":((r.change>=0?"+":"")+fmtN(r.change))}</td>`).join("")}</tr>`;
     }
 
-    const rows=days.map((day,i)=>{
-      const snap=byDay.get(day);
-      const first=Number(snap.first_episode_views);
+    // 최신화는 달력 날짜가 아니라, 새 화를 :15 수집에서 처음 감지한 순간부터 새 회차로 시작.
+    const latestSnap=ss.at(-1)||null;
+    const currentEp=Number(latestSnap?.latest_episode_no)||null;
+    const currentPub=latestSnap?.latest_episode_published_at||null;
 
-      const prevSnap=i>0?byDay.get(days[i-1]):null;
-      const prevFirst=prevSnap?Number(prevSnap.first_episode_views):NaN;
-      const firstChange=Number.isFinite(first)&&Number.isFinite(prevFirst)?first-prevFirst:null;
+    const sameEpisodeSnaps=ss.filter(x=>
+      currentEp &&
+      Number(x.latest_episode_no)===currentEp &&
+      String(x.latest_episode_published_at||"")===String(currentPub||"")
+    ).sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at));
 
-      const epNo=Number(snap.latest_episode_no)||null;
-      const pub=snap.latest_episode_published_at||null;
-      const auth=mergedAuthRecords(todayRec,newRec,pub);
-      const sameDayAuth=auth.filter(r=>kstDateKeyFromValue(r.d)===day);
-      const authLast=sameDayAuth.at(-1)||null;
-      const authViews=authLast?Number(authLast.views):null;
+    const detectedAt=sameEpisodeSnaps.length?new Date(sameEpisodeSnaps[0].captured_at):null;
 
-      return {day,first,firstChange,epNo,pub,authViews};
-    });
+    // 해당 최신화의 인증조회수만, 최초 감지 시점부터 최대 24시간.
+    const cycle=mergedAuthRecords(todayRec,newRec,currentPub)
+      .filter(r=>!detectedAt || r.d>=detectedAt)
+      .filter(r=>!detectedAt || r.d.getTime()<=detectedAt.getTime()+24*3600000)
+      .sort((a,b)=>a.d-b.d);
 
-    // 최신화 인증조회수 변화는 같은 화가 이어질 때만 전날 마지막 값과 비교한다.
-    rows.forEach((r,i)=>{
-      r.authChange=null;
-      r.isNewEpisode=false;
-      if(i===0)return;
-      const p=rows[i-1];
-      const sameEpisode=!!r.epNo && !!p.epNo &&
-        Number(r.epNo)===Number(p.epNo) &&
-        String(r.pub||"")===String(p.pub||"");
-      if(!sameEpisode){
-        if(r.epNo && p.epNo && Number(r.epNo)!==Number(p.epNo))r.isNewEpisode=true;
-        return;
-      }
-      if(Number.isFinite(r.authViews) && Number.isFinite(p.authViews)){
-        r.authChange=r.authViews-p.authViews;
-      }
-    });
+    if(authCount){
+      authCount.textContent=currentEp
+        ? `${currentEp}화 · ${detectedAt?fmtKstDateTime(detectedAt)+"부터":"추적 준비"}`
+        : "기록 없음";
+    }
 
-    const head=`<tr><th class="rowLabel">날짜</th>${rows.map(r=>`<th>${shortDateLabel(r.day)}</th>`).join("")}</tr>`;
-
-    firstTable.innerHTML=
-      head+
-      `<tr><td class="rowLabel">1화 전체조회수</td>${rows.map(r=>`<td>${Number.isFinite(r.first)?fmtN(r.first):"-"}</td>`).join("")}</tr>`+
-      `<tr><td class="rowLabel">전일 대비</td>${rows.map(r=>`<td class="${r.firstChange>0?'inflowPlus':''}">${r.firstChange==null?"-":((r.firstChange>=0?"+":"")+fmtN(r.firstChange))}</td>`).join("")}</tr>`;
-
-    authTable.innerHTML=
-      `<tr><th>날짜</th><th>최신화</th><th>누적 인증조회수</th><th>전일 대비</th></tr>`+
-      rows.map(r=>{
-        let change="-";
-        let cls="";
-        if(r.isNewEpisode){
-          change="새 화";
-          cls="newEpisodeMark";
-        }else if(r.authChange!=null){
-          change=(r.authChange>=0?"+":"")+fmtN(r.authChange);
-          cls=r.authChange>0?"inflowPlus":"";
-        }
-        return `<tr>
-          <td>${shortDateLabel(r.day)}</td>
-          <td class="episodeNo">${r.epNo?`${r.epNo}화`:"-"}</td>
-          <td class="authValue">${Number.isFinite(r.authViews)?fmtN(r.authViews):"-"}</td>
-          <td class="${cls}">${change}</td>
-        </tr>`;
-      }).join("");
+    if(!currentEp){
+      authTable.innerHTML='<tr><td class="rowLabel">시간</td><td>최신화 수집 데이터가 쌓이면 표시됩니다.</td></tr>';
+    }else if(!cycle.length){
+      authTable.innerHTML=
+        `<tr><th class="rowLabel">시간</th><th>${detectedAt?fmtKstDateTime(detectedAt):"-"}</th></tr>`+
+        `<tr><td class="rowLabel">인증조회수</td><td>-</td></tr>`+
+        `<tr><td class="rowLabel">직전 대비</td><td>시작</td></tr>`;
+    }else{
+      const timeFmt=new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+      authTable.innerHTML=
+        `<tr><th class="rowLabel">수집 시각</th>${cycle.map(r=>`<th>${timeFmt.format(r.d)}</th>`).join("")}</tr>`+
+        `<tr><td class="rowLabel">인증조회수</td>${cycle.map(r=>`<td class="authValue">${fmtN(r.views)}</td>`).join("")}</tr>`+
+        `<tr><td class="rowLabel">직전 대비</td>${cycle.map((r,i)=>{
+          if(i===0)return '<td class="newEpisodeMark">시작</td>';
+          const diff=Number(r.views)-Number(cycle[i-1].views);
+          return `<td class="${diff>0?'inflowPlus':''}">${(diff>=0?"+":"")+fmtN(diff)}</td>`;
+        }).join("")}</tr>`;
+    }
 
     requestAnimationFrame(()=>{
       [firstTable,authTable].forEach(table=>{

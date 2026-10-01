@@ -490,6 +490,20 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .myEpisodeChartWrap{height:230px;margin-top:14px}
 .myEpisodeChartWrap svg{width:100%;height:230px}
 .myEpisodeNotice{margin-top:10px;padding:10px 12px;border-radius:10px;background:#f2f7ff;border:1px solid #d6e5fb;color:#5a6f89;font-size:11px;line-height:1.55}
+.myEpisodeDailyHead{margin-top:16px;display:flex;align-items:end;justify-content:space-between;gap:10px}
+.myEpisodeDailyHead h2{font-size:14px;margin:0}
+.myEpisodeDailySecond{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.myEpisodeDailyScroll{margin-top:8px;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff;-webkit-overflow-scrolling:touch}
+.myDailyEpisodeTable{border-collapse:collapse;width:max-content;min-width:100%;table-layout:fixed;font-size:11px}
+.myDailyEpisodeTable th,.myDailyEpisodeTable td{min-width:92px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 7px;text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
+.myDailyEpisodeTable tr:last-child td{border-bottom:0}
+.myDailyEpisodeTable th:last-child,.myDailyEpisodeTable td:last-child{border-right:0}
+.myDailyEpisodeTable th{background:#f7f9fc;color:var(--muted);font-weight:700}
+.myDailyEpisodeTable .rowLabel{position:sticky;left:0;z-index:2;min-width:105px;width:105px;background:#f7f9fc;color:var(--muted);font-weight:700;box-shadow:1px 0 0 var(--line)}
+.myDailyEpisodeTable .episodeNo{color:#246ee9;font-weight:800}
+.myDailyEpisodeTable .inflowPlus{color:#169c62;font-weight:800}
+.myDailyEpisodeTable .newEpisodeMark{color:#246ee9;font-weight:800;white-space:nowrap}
+.myDailyEpisodeTable .authValue{color:#246ee9;font-weight:800}
 @media(max-width:760px){
   .myEpisodeGrid{grid-template-columns:repeat(2,1fr)}
   .myEpisodeMetric:first-child{grid-column:1/-1}
@@ -1356,12 +1370,22 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
           </div>
         </div>
         <div class="myEpisodeMeta" id="myEpisodeMeta">작품 추적 데이터가 쌓이면 표시됩니다.</div>
-        <div class="panelTitle" style="margin-top:14px;margin-bottom:4px">
-          <h2 style="font-size:14px">최신화 업로드 후 24시간 인증조회수 추이</h2>
-          <span class="small" id="myEpisodeChartCount">-</span>
+        <div class="myEpisodeDailyHead">
+          <h2>1화 전체조회수 변화</h2>
+          <span class="small" id="myFirstDailyCount">-</span>
         </div>
-        <div class="chartWrap myEpisodeChartWrap"><svg id="myEpisodeAuthChart" viewBox="0 0 760 230" preserveAspectRatio="xMidYMid meet"></svg></div>
-        <div class="myEpisodeNotice">※ 최신화 인증조회수는 <b>최신화 업로드 시점부터 24시간</b> 누적으로 추적하며, 새 최신화가 올라오면 새 업로드 시각을 기준으로 자동 리셋됩니다. 투데이/신규베스트에서 작품이 확인된 시간만 표시됩니다. 1화 신규 유입은 <b>전체조회수</b> 기준이며 인증조회수가 아닙니다.</div>
+        <div class="myEpisodeDailyScroll">
+          <table class="myDailyEpisodeTable" id="myFirstDailyTable"></table>
+        </div>
+
+        <div class="myEpisodeDailyHead myEpisodeDailySecond">
+          <h2>최신화 인증조회수 변화</h2>
+          <span class="small" id="myAuthDailyCount">-</span>
+        </div>
+        <div class="myEpisodeDailyScroll">
+          <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
+        </div>
+        <div class="myEpisodeNotice">※ 두 표 모두 <b>날짜별 마지막 수집값</b> 기준입니다. 1화 표는 <b>전체조회수</b>이며 인증조회수가 아닙니다. 최신화 표는 해당 날짜의 <b>최신화가 몇 화인지</b> 함께 표시하고, 같은 최신화가 이어지는 동안 전날 대비 인증조회수 변화를 표시합니다. 새 최신화가 올라오면 변화값은 <b>새 화</b>로 표시되고 새 업로드 시각부터 다시 추적합니다.</div>
       </section>
 
       <section class="panel">
@@ -1500,29 +1524,100 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const d=new Date(value); if(Number.isNaN(d.getTime()))return "-";
     return new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}).format(d);
   }
-  function drawEpisodeAuthChart(records,publishedAt){
-    const svg=$q("myEpisodeAuthChart"); if(!svg)return;
-    const count=$q("myEpisodeChartCount");
-    if(count)count.textContent=records.length?records.length+"개 관측":"관측 없음";
-    const {W,H,L,R,T,B}=chartFrame(svg); enableChartPointTips(svg);
-    if(!publishedAt || !records.length){
-      svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">최신화가 베스트에서 확인되면 인증조회수 추이가 표시됩니다.</text>`;
+  function kstDateKeyFromValue(value){
+    const d=new Date(value); if(Number.isNaN(d.getTime()))return "";
+    const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(d);
+    const get=t=>parts.find(x=>x.type===t)?.value||"";
+    return `${get("year")}-${get("month")}-${get("day")}`;
+  }
+  function shortDateLabel(key){
+    const m=String(key||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    return m?`${Number(m[2])}/${Number(m[3])}`:key;
+  }
+  function renderEpisodeDailyTable(ss,todayRec,newRec){
+    const firstTable=$q("myFirstDailyTable"), authTable=$q("myAuthDailyTable");
+    const firstCount=$q("myFirstDailyCount"), authCount=$q("myAuthDailyCount");
+    if(!firstTable || !authTable)return;
+
+    const byDay=new Map();
+    ss.forEach(x=>{
+      const key=kstDateKeyFromValue(x.captured_at);
+      if(!key)return;
+      const prev=byDay.get(key);
+      if(!prev || new Date(x.captured_at)>new Date(prev.captured_at))byDay.set(key,x);
+    });
+
+    const days=[...byDay.keys()].sort();
+    const countText=days.length?`${days.length}일 기록`:"기록 없음";
+    if(firstCount)firstCount.textContent=countText;
+    if(authCount)authCount.textContent=countText;
+
+    if(!days.length){
+      const empty='<tr><td class="rowLabel">날짜</td><td>수집 데이터가 쌓이면 표시됩니다.</td></tr>';
+      firstTable.innerHTML=empty;
+      authTable.innerHTML=empty;
       return;
     }
-    const pub=new Date(publishedAt),end=new Date(pub.getTime()+24*3600000);
-    const vals=records.map(r=>Number(r.views)).filter(Number.isFinite);
-    if(!vals.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="axis">인증조회수 관측 데이터가 없습니다.</text>`;return}
-    let min=Math.min(...vals),max=Math.max(...vals); if(min===max){min=Math.max(0,min-1);max+=1}
-    const pad=(max-min)*.12;min=Math.max(0,min-pad);max+=pad;
-    const x=d=>L+(W-L-R)*Math.max(0,Math.min(1,(d-pub)/(end-pub)));
-    const y=v=>T+(H-T-B)*(1-(v-min)/(max-min));
-    let out='';
-    for(let i=0;i<4;i++){const yy=T+(H-T-B)*i/3,v=max-(max-min)*i/3;out+=`<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="gridline"/><text x="${L-8}" y="${yy+4}" text-anchor="end" class="axis">${fmtN(Math.round(v))}</text>`}
-    [0,6,12,18,24].forEach((h,i)=>{const xx=L+(W-L-R)*h/24;out+=`<text x="${xx}" y="${H-8}" text-anchor="${i===0?'start':i===4?'end':'middle'}" class="axis">${h}h</text>`});
-    const path=records.map((r,i)=>(i?'L':'M')+x(r.d)+','+y(Number(r.views))).join(' ');
-    out+=`<path d="${path}" fill="none" stroke="#3478ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
-    records.forEach(r=>{const elapsed=Math.max(0,(r.d-pub)/3600000);out+=`<circle class="chartPoint" data-tip="업로드 후 ${elapsed.toFixed(1)}시간 · 인증조회수 ${fmtN(r.views)}" cx="${x(r.d)}" cy="${y(Number(r.views))}" r="4" fill="#3478ff"/>`});
-    svg.innerHTML=out;
+
+    const rows=days.map((day,i)=>{
+      const snap=byDay.get(day);
+      const first=Number(snap.first_episode_views);
+
+      const prevSnap=i>0?byDay.get(days[i-1]):null;
+      const prevFirst=prevSnap?Number(prevSnap.first_episode_views):NaN;
+      const firstChange=Number.isFinite(first)&&Number.isFinite(prevFirst)?first-prevFirst:null;
+
+      const epNo=Number(snap.latest_episode_no)||null;
+      const pub=snap.latest_episode_published_at||null;
+      const auth=mergedAuthRecords(todayRec,newRec,pub);
+      const sameDayAuth=auth.filter(r=>kstDateKeyFromValue(r.d)===day);
+      const authLast=sameDayAuth.at(-1)||null;
+      const authViews=authLast?Number(authLast.views):null;
+
+      return {day,first,firstChange,epNo,pub,authViews};
+    });
+
+    // 최신화 인증조회수 변화는 같은 화가 이어질 때만 전날 마지막 값과 비교한다.
+    rows.forEach((r,i)=>{
+      r.authChange=null;
+      r.isNewEpisode=false;
+      if(i===0)return;
+      const p=rows[i-1];
+      const sameEpisode=!!r.epNo && !!p.epNo &&
+        Number(r.epNo)===Number(p.epNo) &&
+        String(r.pub||"")===String(p.pub||"");
+      if(!sameEpisode){
+        if(r.epNo && p.epNo && Number(r.epNo)!==Number(p.epNo))r.isNewEpisode=true;
+        return;
+      }
+      if(Number.isFinite(r.authViews) && Number.isFinite(p.authViews)){
+        r.authChange=r.authViews-p.authViews;
+      }
+    });
+
+    const head=`<tr><th class="rowLabel">날짜</th>${rows.map(r=>`<th>${shortDateLabel(r.day)}</th>`).join("")}</tr>`;
+
+    firstTable.innerHTML=
+      head+
+      `<tr><td class="rowLabel">1화 전체조회수</td>${rows.map(r=>`<td>${Number.isFinite(r.first)?fmtN(r.first):"-"}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">전일 대비</td>${rows.map(r=>`<td class="${r.firstChange>0?'inflowPlus':''}">${r.firstChange==null?"-":((r.firstChange>=0?"+":"")+fmtN(r.firstChange))}</td>`).join("")}</tr>`;
+
+    authTable.innerHTML=
+      head+
+      `<tr><td class="rowLabel">최신화</td>${rows.map(r=>`<td class="episodeNo">${r.epNo?`${r.epNo}화`:"-"}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">인증조회수</td>${rows.map(r=>`<td class="authValue">${Number.isFinite(r.authViews)?fmtN(r.authViews):"-"}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">전일 대비</td>${rows.map(r=>{
+        if(r.isNewEpisode)return '<td class="newEpisodeMark">새 화</td>';
+        if(r.authChange==null)return '<td>-</td>';
+        return `<td class="${r.authChange>0?'inflowPlus':''}">${(r.authChange>=0?"+":"")+fmtN(r.authChange)}</td>`;
+      }).join("")}</tr>`;
+
+    requestAnimationFrame(()=>{
+      [firstTable,authTable].forEach(table=>{
+        const box=table.closest('.myEpisodeDailyScroll');
+        if(box)box.scrollLeft=box.scrollWidth;
+      });
+    });
   }
   async function renderEpisodeMetrics(id,todayRec,newRec){
     const ss=await getWorkSnapshots(id);
@@ -1533,7 +1628,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       set("myLatestAuthViews","-");set("myLatestAuthDelta","-");set("myLatestElapsed","-");set("myFirstEpisodeInflow","-");
       set("myFirstEpisodeInflowNote","첫 스냅샷 수집 후 표시");
       set("myEpisodeMeta","작품은 등록됐어요. 다음 투베 수집(:15)부터 1화 전체조회수와 최신화 정보를 기록합니다.");
-      drawEpisodeAuthChart([],null);return;
+      renderEpisodeDailyTable([],todayRec,newRec);return;
     }
     const epNo=Number(latest.latest_episode_no)||null;
     const epTitle=latest.latest_episode_title||"";
@@ -1574,7 +1669,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     }
     set("myFirstEpisodeInflow",inflowText);set("myFirstEpisodeInflowNote",inflowNote);
     set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 작품별 최신화 업로드 시각을 기준으로 계산합니다.`);
-    drawEpisodeAuthChart(auth,latest.latest_episode_published_at);
+    renderEpisodeDailyTable(ss,todayRec,newRec);
   }
 
   async function getNewSnaps(){

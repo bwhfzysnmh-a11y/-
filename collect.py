@@ -253,7 +253,10 @@ print(
 # - 투베(today) 작업에서만 실행해 작품당 매시간 1회 정도 기록한다.
 # ---------------------------------------------------------------------------
 MUNPIA_API_BASE = "https://www.munpia.com"
-SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").strip().rstrip("/")
+# GitHub Secret에 프로젝트 URL 또는 Data API URL(/rest/v1) 어느 쪽을 넣어도 동작하게 정규화.
+if SUPABASE_URL.endswith("/rest/v1"):
+    SUPABASE_URL = SUPABASE_URL[:-8].rstrip("/")
 SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY", "")
 
 

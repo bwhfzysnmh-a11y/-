@@ -486,6 +486,8 @@ button.active,.rangeBtn.active,.hourlyBtn.active,.rankBtn.active,.weekdayRangeBt
 .myEpisodeMetric b{display:block;font-size:20px;margin:5px 0;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .myEpisodeMetric.primary b{color:#246ee9}
 .myEpisodeMetric.inflow b{color:#169c62}
+.myEpisodeMetric.currentGrowth b{color:#7b61d1}
+.myEpisodeMetric.currentGrowth.fallback b{color:#d84b4b}
 .myEpisodeMeta{margin-top:10px;color:var(--muted);font-size:11px;line-height:1.55}
 .myEpisodeChartWrap{height:230px;margin-top:14px}
 .myEpisodeChartWrap svg{width:100%;height:230px}
@@ -1365,6 +1367,11 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <b id="myFirstEpisodeInflow">-</b>
             <small id="myFirstEpisodeInflowNote">해당 회차 24시간 기준</small>
           </div>
+          <div class="myEpisodeMetric currentGrowth">
+            <span>업로드 후 현재</span>
+            <b id="myCurrentEpisodeViews">-</b>
+            <small id="myCurrentEpisodeViewsNote">투베 → 신베 → 전체조회수 순</small>
+          </div>
         </div>
         <div class="myEpisodeMeta" id="myEpisodeMeta">작품 추적 데이터가 쌓이면 표시됩니다.</div>
         <div class="myEpisodeDailyHead">
@@ -1374,7 +1381,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ 각 회차가 올라온 뒤 <b>24시간이 지난 첫 :15 수집</b>을 판정 시점으로 사용합니다. 그 시점에 해당 회차의 투베/신베 <b>인증조회수</b>를 식별할 수 있으면 인증조회수를 표시합니다. 식별할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 1화 신규 유입은 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 차이입니다.</div>
+        <div class="myEpisodeNotice">※ 조회수는 <b>투베 인증조회수 → 모바일 신베 인증조회수 → 전체조회수</b> 순으로 확인합니다. 각 회차가 올라온 뒤 <b>24시간이 지난 첫 :15 수집</b>을 판정 시점으로 사용하며, 투베에 없으면 :05에 수집한 모바일 신베 인증조회수를 확인합니다. 둘 다 확인할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 1화 신규 유입은 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 차이입니다.</div>
       </section>
 
       <section class="panel">
@@ -1590,22 +1597,31 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       // 24시간 판정 시점 이후 첫 랭킹 관측을 우선한다. 최대 75분까지만 허용.
       // hours_after_upload가 있는 투베는 해당 회차와 시간대가 맞는지도 확인한다.
       const candidates=[];
-      for(const r of [...todayRec,...newRec]){
-        const d=rankRecordDate(r); if(Number.isNaN(d.getTime()))continue;
-        const gap=d-decisionAt;
-        if(gap<0 || gap>20*60000)continue;
-        const rawH=r.it?.hours_after_upload;
-        const h=rawH==null?NaN:Number(rawH);
-        if(Number.isFinite(h)){
-          const elapsed=(d-ep.pub)/3600000;
-          if(Math.abs(elapsed-h)>1.75)continue;
-        }else if(nextPub && d>=nextPub){
-          // 모바일 신베에는 회차 경과시간이 없으므로 다음 화가 이미 올라온 뒤면 이전 화 인증조회수로 쓰지 않는다.
-          continue;
+      for(const [source,list] of [["today",todayRec],["new",newRec]]){
+        for(const r of list){
+          const d=rankRecordDate(r); if(Number.isNaN(d.getTime()))continue;
+          const gap=d-decisionAt;
+          if(source==="today"){
+            if(gap<0 || gap>20*60000)continue;
+          }else{
+            // 신베는 :05 수집. :15 판정시각과 가장 가까운 -10분 값을 보조 인증값으로 사용.
+            if(gap < -15*60000 || gap > 15*60000)continue;
+          }
+          const rawH=r.it?.hours_after_upload;
+          const h=rawH==null?NaN:Number(rawH);
+          if(Number.isFinite(h)){
+            const elapsed=(d-ep.pub)/3600000;
+            if(Math.abs(elapsed-h)>1.75)continue;
+          }else if(nextPub && d>=nextPub){
+            continue;
+          }
+          candidates.push({...r,d,source,hasHours:Number.isFinite(h)});
         }
-        candidates.push({...r,d,hasHours:Number.isFinite(h)});
       }
-      candidates.sort((a,b)=>(a.d-decisionAt)-(b.d-decisionAt) || Number(b.hasHours)-Number(a.hasHours));
+      candidates.sort((a,b)=>{
+        const sp=x=>x.source==="today"?0:1;
+        return sp(a)-sp(b) || Math.abs(a.d-decisionAt)-Math.abs(b.d-decisionAt);
+      });
       const auth=candidates[0]||null;
       const complete=now>=decisionAt.getTime() && !!endSnap;
       let value=null,source="pending";
@@ -1633,6 +1649,43 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       `<tr><td class="rowLabel">1화 유입</td>${show.map(r=>`<td class="${r.inflow>0?'inflowPlus':''}">${r.complete&&r.inflow!=null?'+'+fmtN(r.inflow):r.complete?'-':'추적 중'}</td>`).join("")}</tr>`;
     requestAnimationFrame(()=>{const box=table.closest('.myEpisodeDailyScroll');if(box)box.scrollLeft=box.scrollWidth;});
   }
+  function currentEpisodeProgress(id,latest,todaySnaps,newSnaps){
+    const pub=latest?.latest_episode_published_at?new Date(latest.latest_episode_published_at):null;
+    if(!pub || Number.isNaN(pub.getTime()))return {value:null,source:"none",note:"업로드 시각 없음"};
+    const elapsed=Date.now()-pub.getTime();
+    if(elapsed<0)return {value:null,source:"none",note:"업로드 전"};
+    if(elapsed>24*3600000)return {value:null,source:"done",note:"24시간 판정 완료"};
+
+    const latestToday=todaySnaps.at(-1)||null;
+    const latestNew=newSnaps.at(-1)||null;
+    const todayItem=latestToday?itemFor(latestToday,id):null;
+    const newItem=latestNew?itemFor(latestNew,id):null;
+
+    if(todayItem){
+      const h=Number(todayItem.hours_after_upload);
+      const d=new Date(stamp(latestToday).replace(" ","T")+"+09:00");
+      const realH=(d-pub)/3600000;
+      const v=Number(todayItem.views_24h_verified??todayItem.score);
+      if(Number.isFinite(v) && (!Number.isFinite(h) || Math.abs(realH-h)<=1.75)){
+        return {value:v,source:"today",note:"투베 인증조회수 · 현재까지"};
+      }
+    }
+
+    if(newItem){
+      const d=new Date(stamp(latestNew).replace(" ","T")+"+09:00");
+      const v=Number(newItem.views_24h_verified??newItem.score);
+      if(d>=pub && Number.isFinite(v)){
+        return {value:v,source:"new",note:"모바일 신베 인증조회수 · 투베 미진입"};
+      }
+    }
+
+    const whole=episodeWholeViewsAt(latest,Number(latest.latest_episode_no));
+    if(whole!==null && Number.isFinite(Number(whole))){
+      return {value:Number(whole),source:"total",note:"전체조회수 대체 · 투베/신베 미진입"};
+    }
+    return {value:null,source:"none",note:"조회수 수집 대기"};
+  }
+
   async function renderEpisodeMetrics(id,todayRec,newRec){
     const ss=await getWorkSnapshots(id);
     const latest=ss.at(-1)||null;
@@ -1642,6 +1695,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       set("myLatestElapsed","-");set("myLatest24hNote","24시간 판정 대기");
       set("myLatestAuthViews","-");set("myLatestAuthNote","인증조회수 우선");
       set("myFirstEpisodeInflow","-");set("myFirstEpisodeInflowNote","기준값 수집 후 표시");
+      set("myCurrentEpisodeViews","-");set("myCurrentEpisodeViewsNote","조회수 수집 대기");
       set("myEpisodeMeta","다음 투베 수집(:15)부터 회차별 전체조회수와 1화 전체조회수를 기록합니다.");
       renderEpisode24hTable([]);return;
     }
@@ -1663,6 +1717,22 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       set("myFirstEpisodeInflow",cur.complete&&cur.inflow!=null?`+${fmtN(cur.inflow)}명`:"추적 중");
       set("myFirstEpisodeInflowNote",cur.complete?"해당 회차 게시 후 24시간":"24시간 판정 후 확정");
     }
+    const todaySnaps=getTodaySnaps();
+    const newSnaps=await getNewSnaps();
+    const progress=currentEpisodeProgress(id,latest,todaySnaps,newSnaps);
+    const progressCard=$q("myCurrentEpisodeViews")?.closest(".myEpisodeMetric");
+    if(progressCard)progressCard.classList.toggle("fallback",progress.source==="total");
+    if(progress.source==="done"){
+      set("myCurrentEpisodeViews","24시간 완료");
+      set("myCurrentEpisodeViewsNote","위 24시간 조회수에서 확정값 확인");
+    }else if(progress.value!=null){
+      set("myCurrentEpisodeViews","+"+fmtN(progress.value));
+      set("myCurrentEpisodeViewsNote",progress.note);
+    }else{
+      set("myCurrentEpisodeViews","-");
+      set("myCurrentEpisodeViewsNote",progress.note);
+    }
+
     const curFirst=Number(latest.first_episode_views);
     set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 회차별 24시간 성적은 :15 수집 기준입니다.`);
     renderEpisode24hTable(rows);

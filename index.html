@@ -1531,14 +1531,32 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     if(!snap)return null;
     const map=snap.episode_views;
     if(map && typeof map==="object"){
-      const v=Number(map[String(epNo)]);
-      if(Number.isFinite(v))return v;
+      const raw=map[String(epNo)];
+      if(raw!==null && raw!==undefined && raw!==""){
+        const v=Number(raw);
+        if(Number.isFinite(v))return v;
+      }
     }
     if(Number(snap.latest_episode_no)===Number(epNo)){
-      const v=Number(snap.latest_episode_views);
-      if(Number.isFinite(v))return v;
+      const raw=snap.latest_episode_views;
+      if(raw!==null && raw!==undefined && raw!==""){
+        const v=Number(raw);
+        if(Number.isFinite(v))return v;
+      }
     }
     return null;
+  }
+  function firstHourly15AtOrAfter(value){
+    const d=new Date(value); if(Number.isNaN(d.getTime()))return null;
+    // KST는 DST가 없으므로 +9시간으로 옮겨 UTC 필드를 KST처럼 계산한다.
+    const k=new Date(d.getTime()+9*3600000);
+    const m=k.getUTCMinutes(), sec=k.getUTCSeconds(), ms=k.getUTCMilliseconds();
+    if(m<15 || (m===15 && sec===0 && ms===0)){
+      k.setUTCMinutes(15,0,0);
+    }else{
+      k.setUTCHours(k.getUTCHours()+1,15,0,0);
+    }
+    return new Date(k.getTime()-9*3600000);
   }
   function buildEpisode24hRows(ss,todayRec,newRec){
     const groups=[];
@@ -1556,9 +1574,10 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const now=Date.now();
     return groups.map((ep,idx)=>{
       const target=new Date(ep.pub.getTime()+24*3600000);
+      const decisionAt=firstHourly15AtOrAfter(target) || target;
       const nextPub=groups[idx+1]?.pub||null;
-      // :15 수집이므로 24시간이 지난 뒤 첫 work snapshot을 확정 시점으로 사용.
-      const endSnap=ss.find(x=>new Date(x.captured_at)>=target)||null;
+      // 24시간이 지난 뒤 처음 오는 매시 :15 수집을 확정 시점으로 사용.
+      const endSnap=ss.find(x=>new Date(x.captured_at)>=decisionAt)||null;
       // 업로드 시각에 가장 가까운 1화 기준값. 가능하면 업로드 직전 값을 우선한다.
       const before=ss.filter(x=>new Date(x.captured_at)<=ep.pub && Number.isFinite(Number(x.first_episode_views))).at(-1)||null;
       const after=ss.find(x=>new Date(x.captured_at)>=ep.pub && Number.isFinite(Number(x.first_episode_views)))||null;
@@ -1573,8 +1592,8 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
       const candidates=[];
       for(const r of [...todayRec,...newRec]){
         const d=rankRecordDate(r); if(Number.isNaN(d.getTime()))continue;
-        const gap=d-target;
-        if(gap<0 || gap>75*60000)continue;
+        const gap=d-decisionAt;
+        if(gap<0 || gap>20*60000)continue;
         const rawH=r.it?.hours_after_upload;
         const h=rawH==null?NaN:Number(rawH);
         if(Number.isFinite(h)){
@@ -1586,13 +1605,13 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         }
         candidates.push({...r,d,hasHours:Number.isFinite(h)});
       }
-      candidates.sort((a,b)=>(a.d-target)-(b.d-target) || Number(b.hasHours)-Number(a.hasHours));
+      candidates.sort((a,b)=>(a.d-decisionAt)-(b.d-decisionAt) || Number(b.hasHours)-Number(a.hasHours));
       const auth=candidates[0]||null;
-      const complete=now>=target.getTime() && !!endSnap;
+      const complete=now>=decisionAt.getTime() && !!endSnap;
       let value=null,source="pending";
-      if(complete && auth && Number.isFinite(Number(auth.views))){value=Number(auth.views);source="auth";}
-      else if(complete && Number.isFinite(Number(whole))){value=Number(whole);source="total";}
-      return {...ep,target,endSnap,baseSnap,inflow,value,source,complete,auth};
+      if(complete && auth && auth.views!==null && auth.views!==undefined && auth.views!=="" && Number.isFinite(Number(auth.views))){value=Number(auth.views);source="auth";}
+      else if(complete && whole!==null && whole!==undefined && whole!=="" && Number.isFinite(Number(whole))){value=Number(whole);source="total";}
+      return {...ep,target,decisionAt,endSnap,baseSnap,inflow,value,source,complete,auth};
     });
   }
   function renderEpisode24hTable(rows){
@@ -1608,9 +1627,9 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         if(!r.complete)return '<td class="pendingValue">추적 중</td>';
         if(r.source==="auth")return `<td class="authValue">${fmtN(r.value)}</td>`;
         if(r.source==="total")return `<td class="fallbackValue">${fmtN(r.value)}</td>`;
-        return '<td>-</td>';
+        return '<td class="missingValue">기록 없음</td>';
       }).join("")}</tr>`+
-      `<tr><td class="rowLabel">기준</td>${show.map(r=>`<td class="${r.source==='total'?'fallbackValue':''}">${r.source==='auth'?'인증':r.source==='total'?'전체':r.complete?'확인 불가':'-'}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">기준</td>${show.map(r=>`<td class="${r.source==='total'?'fallbackValue':''}">${r.source==='auth'?'인증':r.source==='total'?'전체':r.complete?'기록 없음':'-'}</td>`).join("")}</tr>`+
       `<tr><td class="rowLabel">1화 유입</td>${show.map(r=>`<td class="${r.inflow>0?'inflowPlus':''}">${r.complete&&r.inflow!=null?'+'+fmtN(r.inflow):r.complete?'-':'추적 중'}</td>`).join("")}</tr>`;
     requestAnimationFrame(()=>{const box=table.closest('.myEpisodeDailyScroll');if(box)box.scrollLeft=box.scrollWidth;});
   }
@@ -1632,7 +1651,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     set("myLatestEpisode",epNo?`${epNo}화${epTitle?" · "+epTitle:""}`:(epTitle||"-"));
     set("myLatestEpisodeTime",latest.latest_episode_published_at?`업로드 ${fmtKstDateTime(latest.latest_episode_published_at)}`:"업로드 시각 없음");
     if(cur){
-      set("myLatestElapsed",fmtKstDateTime(cur.target));
+      set("myLatestElapsed",fmtKstDateTime(cur.decisionAt||cur.target));
       set("myLatest24hNote",cur.complete?"24시간 판정 완료":"이 시각 이후 첫 :15에 확정");
       if(cur.complete && cur.source==="auth"){
         set("myLatestAuthViews",fmtN(cur.value));set("myLatestAuthNote","인증조회수 · 24시간 성적");

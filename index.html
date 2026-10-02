@@ -1333,7 +1333,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <div class="mySummary"><span>오늘</span><b id="myCurrentRank">-</b><small id="myRankChange">최근 기록 기준</small></div>
             <div class="mySummary"><span>어제 (동시간)</span><b id="myYesterdayRank">-</b><small id="myYesterdayTime">전일 같은 시간대</small></div>
             <div class="mySummary"><span>최고</span><b id="myBestToday">-</b><small id="myFirstToday">전체 기록</small></div>
-            <div class="mySummary"><span>현재 인증조회수</span><b id="myViews">-</b><small>최근 24시간</small></div>
+            <div class="mySummary"><span>현재 조회수</span><b id="myViews">-</b><small id="myViewsNote">투베 → 신베 → 전체조회수</small></div>
           </div>
         </div>
         <div class="myCutHead"><h3>베스트 커트라인까지 필요한 인증 조회수</h3><span id="myCutBasis">-</span></div>
@@ -1949,13 +1949,34 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     $q("myCurrentRank").textContent=currentRecord?(currentRecord.rank+"위"):(isNew?"해당사항 없음":"미진입");
     $q("myYesterdayRank").textContent=yRec?yRec.rank+"위":"-";
     if($q("myYesterdayTime")) $q("myYesterdayTime").textContent=yRec?("전일 "+stamp(yRec.s).slice(11,16)+" 기준"):("전일 "+currentHM+" 기록 없음");
-    $q("myViews").textContent=currentRecord?fmtN(currentRecord.views):"-";
+    // 현재 조회수는 탭과 무관하게 투베 인증 → 모바일 신베 인증 → 최신화 전체조회수 순으로 확인.
+    const todayCurrentSnap=todaySnaps.filter(s=>kstDateKeyFromValue(stamp(s))===todayKey).at(-1)||todaySnaps.at(-1)||null;
+    const newCurrentSnap=newSnaps.filter(s=>kstDateKeyFromValue(stamp(s))===todayKey).at(-1)||newSnaps.at(-1)||null;
+    const todayCurrentItem=todayCurrentSnap?itemFor(todayCurrentSnap,id):null;
+    const newCurrentItem=newCurrentSnap?itemFor(newCurrentSnap,id):null;
+    const workSs=await getWorkSnapshots(id);
+    const workLatest=workSs.at(-1)||null;
+    const latestWhole=workLatest?episodeWholeViewsAt(workLatest,Number(workLatest.latest_episode_no)):null;
+
+    if(todayCurrentItem){
+      $q("myViews").textContent=fmtN(todayCurrentItem.views_24h_verified??todayCurrentItem.score);
+      $q("myViewsNote").textContent="투베 인증조회수";
+    }else if(newCurrentItem){
+      $q("myViews").textContent=fmtN(newCurrentItem.views_24h_verified??newCurrentItem.score);
+      $q("myViewsNote").textContent=`모바일 신베 인증조회수 · ${newCurrentItem.rank}위`;
+    }else if(latestWhole!==null && Number.isFinite(Number(latestWhole))){
+      $q("myViews").textContent=fmtN(latestWhole);
+      $q("myViewsNote").textContent="전체조회수 대체 · 투베/신베 미진입";
+    }else{
+      $q("myViews").textContent="-";
+      $q("myViewsNote").textContent="조회수 수집 대기";
+    }
     $q("myRankChange").textContent=currentRecord?(shortName+" 현재"):(isNew?"신베 해당사항 없음":"투베 미진입");
     $q("myBestToday").textContent=bestRank!=null?(bestRank+"위"):"-";
     $q("myFirstToday").textContent=todayRecords.length?("오늘 "+todayRecords.length+"회 기록"):("오늘 기록 없음");
 
     $q("myCutBasis").textContent=latest?("기준: "+stamp(latest).slice(5,16)):"오늘 기준 데이터 없음";
-    const ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+    const ranks=isNew?[4,8,10,20,40,60,80,100,120,140,160,180,200,250,330]:[4,8,10,20,40,60,80,100,120,140,160,180,200];
     $q("myCutNeedGrid").innerHTML=ranks.map(r=>{
       if(!latest || !currentRecord)return `<div class="myCutCell"><span>${r}위</span><b class="blue">${isNew?'해당사항 없음':'-'}</b></div>`;
       const cv=Number(valAt(latest,r));
@@ -1997,7 +2018,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
 <script>
 (function(){
- let ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+ let ranks=[4,8,10,20,40,60,80,100,120,140,160,180,200,250,330];
  let ns=[], nr=200, newMonthlyRank=200, newHourlyRank=200, newWeekdayRank=200, range="today", hDays=7, wd=1, wdDays=7, newDayOffset=0;
  const el=id=>document.getElementById(id);
  const rawStamp=s=>String(s?.slot_at_kst||s?.captured_at_kst||"");
@@ -2026,11 +2047,10 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
  const newSelectedDay=()=>addDay(todayKey(),-newDayOffset);
  const newDayLabel=i=>i===0?'오늘':i===1?'어제':`${i}일 전`;
  function refreshNewRanks(){
-   const base=[4,8,10,20,40,60,80,100,120,140,160,180,200];
+   const base=[4,8,10,20,40,60,80,100,120,140,160,180,200,250,330];
    const maxActual=Math.max(200,...ns.flatMap(s=>(s.items||[]).map(x=>Number(x.rank)||0)));
    const extra=[];
-   for(let r=220;r<maxActual;r+=20)extra.push(r);
-   if(maxActual>200 && !extra.includes(maxActual))extra.push(maxActual);
+   if(maxActual>330 && !base.includes(maxActual))extra.push(maxActual);
    ranks=[...base,...extra];
  }
  function newDayTabs(){const box=el('newDayHistoryTabs');if(!box)return;const td=todayKey();box.innerHTML=Array.from({length:7},(_,i)=>{const k=addDay(td,-i),p=k.split('-');return `<button class="dayHistoryBtn ${i===newDayOffset?'active':''}" data-offset="${i}"><b>${newDayLabel(i)}</b>${+p[1]}/${+p[2]}</button>`}).join('');box.querySelectorAll('.dayHistoryBtn').forEach(b=>b.onclick=()=>{newDayOffset=+b.dataset.offset;render()})}

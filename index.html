@@ -1336,7 +1336,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             <div class="mySummary"><span>오늘</span><b id="myCurrentRank">-</b><small id="myRankChange">최근 기록 기준</small></div>
             <div class="mySummary"><span>어제 (동시간)</span><b id="myYesterdayRank">-</b><small id="myYesterdayTime">전일 같은 시간대</small></div>
             <div class="mySummary"><span>최고</span><b id="myBestToday">-</b><small id="myFirstToday">전체 기록</small></div>
-            <div class="mySummary"><span>현재 조회수</span><b id="myViews">-</b><small id="myViewsNote">투베 → 신베 → 전체조회수</small></div>
+            <div class="mySummary"><span>현재 조회수</span><b id="myViews">-</b><small id="myViewsNote">내 작품: 투베 → 신베 330위 → 전체</small></div>
           </div>
         </div>
         <div class="myCutHead"><h3>베스트 커트라인까지 필요한 인증 조회수</h3><span id="myCutBasis">-</span></div>
@@ -1373,7 +1373,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
           <div class="myEpisodeMetric currentGrowth">
             <span>업로드 후 현재</span>
             <b id="myCurrentEpisodeViews">-</b>
-            <small id="myCurrentEpisodeViewsNote">투베 → 신베 → 전체조회수 순</small>
+            <small id="myCurrentEpisodeViewsNote">투베 → 신베 330위 → 전체 순</small>
           </div>
         </div>
         <div class="myEpisodeMeta" id="myEpisodeMeta">작품 추적 데이터가 쌓이면 표시됩니다.</div>
@@ -1384,7 +1384,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ 조회수는 <b>투베 인증조회수 → 모바일 신베 인증조회수 → 전체조회수</b> 순으로 확인합니다. 각 회차가 올라온 뒤 <b>24시간이 지난 첫 :15 수집</b>을 판정 시점으로 사용하며, 투베에 없으면 :05에 수집한 모바일 신베 인증조회수를 확인합니다. 둘 다 확인할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 1화 신규 유입은 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 차이입니다.</div>
+        <div class="myEpisodeNotice">※ <b>내 작품 조회수</b>는 <b>투베 인증조회수 → 모바일 신베 330위 이내 인증조회수 → 전체조회수</b> 순으로 확인합니다. 각 회차가 올라온 뒤 <b>24시간이 지난 첫 :15 수집</b>을 판정 시점으로 사용하며, 투베에 없으면 :05에 수집한 모바일 신베 인증조회수를 확인합니다. 둘 다 확인할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 1화 신규 유입은 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 차이입니다.</div>
       </section>
 
       <section class="panel">
@@ -1610,6 +1610,10 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             // 신베는 :05 수집. :15 판정시각과 가장 가까운 -10분 값을 보조 인증값으로 사용.
             if(gap < -15*60000 || gap > 15*60000)continue;
           }
+          if(source==="new"){
+            const nr=Number(r.rank ?? r.it?.rank);
+            if(!Number.isFinite(nr) || nr>330)continue;
+          }
           const rawH=r.it?.hours_after_upload;
           const h=rawH==null?NaN:Number(rawH);
           if(Number.isFinite(h)){
@@ -1648,7 +1652,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         if(r.source==="total")return `<td class="fallbackValue">${fmtN(r.value)}</td>`;
         return '<td class="missingValue">기록 없음</td>';
       }).join("")}</tr>`+
-      `<tr><td class="rowLabel">기준</td>${show.map(r=>`<td class="${r.source==='total'?'fallbackValue':''}">${r.source==='auth'?'인증':r.source==='total'?'전체':r.complete?'기록 없음':'-'}</td>`).join("")}</tr>`+
+      `<tr><td class="rowLabel">기준</td>${show.map(r=>`<td class="${r.source==='total'?'fallbackValue':''}">${r.source==='auth'?(r.auth?.source==='new'?'신베 인증':'투베 인증'):r.source==='total'?'전체':r.complete?'기록 없음':'-'}</td>`).join("")}</tr>`+
       `<tr><td class="rowLabel">1화 유입</td>${show.map(r=>`<td class="${r.inflow>0?'inflowPlus':''}">${r.complete&&r.inflow!=null?'+'+fmtN(r.inflow):r.complete?'-':'추적 중'}</td>`).join("")}</tr>`;
     requestAnimationFrame(()=>{const box=table.closest('.myEpisodeDailyScroll');if(box)box.scrollLeft=box.scrollWidth;});
   }
@@ -1677,8 +1681,9 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     if(newItem){
       const d=new Date(stamp(latestNew).replace(" ","T")+"+09:00");
       const v=Number(newItem.views_24h_verified??newItem.score);
-      if(d>=pub && Number.isFinite(v)){
-        return {value:v,source:"new",note:"모바일 신베 인증조회수 · 투베 미진입"};
+      const rank=Number(newItem.rank);
+      if(d>=pub && Number.isFinite(v) && Number.isFinite(rank) && rank<=330){
+        return {value:v,source:"new",note:`모바일 신베 인증조회수 · ${rank}위`};
       }
     }
 
@@ -1964,7 +1969,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     if(todayCurrentItem){
       $q("myViews").textContent=fmtN(todayCurrentItem.views_24h_verified??todayCurrentItem.score);
       $q("myViewsNote").textContent="투베 인증조회수";
-    }else if(newCurrentItem){
+    }else if(newCurrentItem && Number.isFinite(Number(newCurrentItem.rank)) && Number(newCurrentItem.rank)<=330){
       $q("myViews").textContent=fmtN(newCurrentItem.views_24h_verified??newCurrentItem.score);
       $q("myViewsNote").textContent=`모바일 신베 인증조회수 · ${newCurrentItem.rank}위`;
     }else if(latestWhole!==null && Number.isFinite(Number(latestWhole))){
@@ -2041,7 +2046,15 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
  };
  const dkey=s=>stamp(s).slice(0,10);
  const hour=s=>{const h=Number(stamp(s).slice(11,13));return Number.isFinite(h)?h:null};
- const item=(s,r)=>{const a=s?.items||[],e=a.find(x=>+x.rank===+r);if(e)return e;return [...a].filter(x=>Number.isFinite(+x.rank)).sort((x,y)=>Math.abs(+x.rank-r)-Math.abs(+y.rank-r)||+x.rank-+y.rank)[0]||null};
+ const item=(s,r)=>{
+   const a=(s?.items||[]).filter(x=>Number.isFinite(+x.rank));
+   const e=a.find(x=>+x.rank===+r);if(e)return e;
+   if(!a.length)return null;
+   const min=Math.min(...a.map(x=>+x.rank)),max=Math.max(...a.map(x=>+x.rank));
+   // 실제 수집된 마지막 순위보다 아래는 200위 값을 복사하지 않는다.
+   if(+r<min || +r>max)return null;
+   return [...a].sort((x,y)=>Math.abs(+x.rank-r)-Math.abs(+y.rank-r)||+x.rank-+y.rank)[0]||null;
+ };
  const val=(s,r)=>{const x=item(s,r);const v=x?.views_24h_verified??x?.score;return v==null?null:Number(v)};
  const fmt=v=>v==null||Number.isNaN(Number(v))?"-":Math.round(v).toLocaleString("ko-KR");
  const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):null;

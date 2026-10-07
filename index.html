@@ -1384,7 +1384,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         <div class="myEpisodeDailyScroll">
           <table class="myDailyEpisodeTable" id="myAuthDailyTable"></table>
         </div>
-        <div class="myEpisodeNotice">※ <b>내 작품 조회수</b>는 <b>투베 인증조회수 → 모바일 신베에서 실제 제공되는 인증조회수 → 전체조회수</b> 순으로 확인합니다. 각 회차가 올라온 뒤 <b>24시간이 지난 첫 :15 수집</b>을 판정 시점으로 사용하며, 투베에 없으면 :05에 수집한 모바일 신베 인증조회수를 확인합니다. 현재 문피아 모바일 신규 베스트는 25개씩 8페이지, 200위까지 제공됩니다. 둘 다 확인할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 다음 회차가 판정용 :15보다 먼저 올라온 경우에는 새 회차 값과 섞이지 않도록 24시간에 가장 가까운 직전 동일 회차 인증조회수를 사용합니다. 1화 신규 유입은 인증조회수가 아니라, 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 1화 전체조회수 차이입니다. 추적 중에는 현재 최신화와 직전 회차의 같은 업로드 경과시간을 비교해 증감을 함께 표시합니다.</div>
+        <div class="myEpisodeNotice">※ <b>내 작품 조회수</b>는 <b>투베 인증조회수 → 모바일 신베에서 실제 제공되는 인증조회수 → 전체조회수</b> 순으로 확인합니다. 각 회차의 <b>업로드 시각 + 정확히 24시간</b>을 목표로 작품별 추적을 하며, 5분 간격 실행으로 목표시각에 가장 가까운 값을 사용합니다. 투베에 없으면 모바일 신베 인증조회수를 확인합니다. 현재 문피아 모바일 신규 베스트는 25개씩 8페이지, 200위까지 제공됩니다. 둘 다 확인할 수 없으면 해당 회차의 <b>전체조회수</b>를 대신 표시하고 <b style="color:#d84b4b">붉은색 · 전체</b>로 구분합니다. 다음 회차가 같은 시각에 올라와도 새 회차 값과 섞이지 않도록 24시간 목표 직전의 동일 회차 인증조회수를 우선 사용합니다. 1화 신규 유입은 인증조회수가 아니라, 해당 회차 업로드 무렵의 1화 전체조회수와 24시간 판정 시점의 1화 전체조회수 차이입니다. 추적 중에는 현재 최신화와 직전 회차의 같은 업로드 경과시간을 비교해 증감을 함께 표시합니다.</div>
       </section>
 
       <section class="panel">
@@ -1476,7 +1476,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
   async function getWorkSnapshots(id){
     try{
       const q=new URLSearchParams({
-        select:"captured_at,first_episode_views,latest_episode_no,latest_episode_views,latest_episode_title,latest_episode_published_at,episode_views",
+        select:"captured_at,first_episode_views,latest_episode_no,latest_episode_views,latest_episode_title,latest_episode_published_at,episode_views,auth_views,auth_source,auth_rank,auth_observed_at",
         novel_id:"eq."+id,
         order:"captured_at.asc",
         limit:"1000"
@@ -1556,17 +1556,32 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     }
     return null;
   }
-  function firstHourly15AtOrAfter(value){
-    const d=new Date(value); if(Number.isNaN(d.getTime()))return null;
-    // KST는 DST가 없으므로 +9시간으로 옮겨 UTC 필드를 KST처럼 계산한다.
-    const k=new Date(d.getTime()+9*3600000);
-    const m=k.getUTCMinutes(), sec=k.getUTCSeconds(), ms=k.getUTCMilliseconds();
-    if(m<15 || (m===15 && sec===0 && ms===0)){
-      k.setUTCMinutes(15,0,0);
-    }else{
-      k.setUTCHours(k.getUTCHours()+1,15,0,0);
-    }
-    return new Date(k.getTime()-9*3600000);
+  function workAuthNear(ss,epNo,target,nextPub){
+    const cand=ss.filter(x=>{
+      if(Number(x.latest_episode_no)!==Number(epNo))return false;
+      const v=Number(x.auth_views); if(!Number.isFinite(v))return false;
+      const d=new Date(x.auth_observed_at||x.captured_at); if(Number.isNaN(d.getTime()))return false;
+      if(nextPub && d>=nextPub)return false;
+      const gap=d-target;
+      return gap>=-20*60000 && gap<=10*60000;
+    }).map(x=>({
+      value:Number(x.auth_views),source:x.auth_source||"today",rank:Number(x.auth_rank),
+      d:new Date(x.auth_observed_at||x.captured_at),snap:x
+    }));
+    cand.sort((a,b)=>{
+      const sp=x=>x.source==="today"?0:1;
+      return sp(a)-sp(b) || Math.abs(a.d-target)-Math.abs(b.d-target);
+    });
+    return cand[0]||null;
+  }
+  function snapshotNear24h(ss,target){
+    const after=ss.find(x=>{const d=new Date(x.captured_at);return !Number.isNaN(d.getTime())&&d>=target&&d-target<=10*60000;});
+    if(after)return after;
+    const before=snapAtOrBefore(ss,target,10*60000);
+    if(before)return before;
+    // 예전 :15 수집 기록도 기존 회차 표가 사라지지 않도록 호환한다.
+    const oldAfter=ss.find(x=>{const d=new Date(x.captured_at);return !Number.isNaN(d.getTime())&&d>=target&&d-target<=75*60000;});
+    return oldAfter||snapAtOrBefore(ss,target,75*60000)||null;
   }
   function buildEpisode24hRows(ss,todayRec,newRec){
     const groups=[];
@@ -1584,10 +1599,11 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const now=Date.now();
     return groups.map((ep,idx)=>{
       const target=new Date(ep.pub.getTime()+24*3600000);
-      const decisionAt=firstHourly15AtOrAfter(target) || target;
+      // 작품별 업로드 시각 + 정확히 24시간을 목표시각으로 사용한다.
+      const decisionAt=target;
       const nextPub=groups[idx+1]?.pub||null;
-      // 24시간이 지난 뒤 처음 오는 매시 :15 수집을 확정 시점으로 사용.
-      const endSnap=ss.find(x=>new Date(x.captured_at)>=decisionAt)||null;
+      // 새 5분 추적값은 목표시각 ±10분 안에서 사용하고, 과거 기록만 75분 호환.
+      const endSnap=snapshotNear24h(ss,target);
       // 업로드 시각에 가장 가까운 1화 기준값. 가능하면 업로드 직전 값을 우선한다.
       const before=ss.filter(x=>new Date(x.captured_at)<=ep.pub && Number.isFinite(Number(x.first_episode_views))).at(-1)||null;
       const after=ss.find(x=>new Date(x.captured_at)>=ep.pub && Number.isFinite(Number(x.first_episode_views)))||null;
@@ -1599,7 +1615,9 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
       // 24시간 판정 시점 이후 첫 랭킹 관측을 우선한다. 최대 75분까지만 허용.
       // hours_after_upload가 있는 투베는 해당 회차와 시간대가 맞는지도 확인한다.
+      const workAuth=workAuthNear(ss,ep.epNo,target,nextPub);
       const candidates=[];
+      if(workAuth)candidates.push({...workAuth,hasHours:false});
       for(const [source,list] of [["today",todayRec],["new",newRec]]){
         for(const r of list){
           const d=rankRecordDate(r); if(Number.isNaN(d.getTime()))continue;
@@ -1613,11 +1631,11 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
             const beforeTarget=target-d;
             // 투베 :15 / 신베 :05 중 목표 24시간에 가장 가까운 이전 관측만 허용.
             if(beforeTarget<0 || beforeTarget>75*60000)continue;
-          }else if(source==="today"){
-            if(gap<0 || gap>20*60000)continue;
           }else{
-            // 신베는 :05 수집. :15 판정시각과 가장 가까운 -10분 값을 보조 인증값으로 사용.
-            if(gap < -15*60000 || gap > 15*60000)continue;
+            // 새 작품별 5분 추적값이 없던 과거 기록은 기존 시간별 랭킹 중
+            // 정확한 24시간 목표에 가장 가까운 ±60분 값을 호환용으로 사용한다.
+            if(gap < -60*60000 || gap > 60*60000)continue;
+            if(nextPub && d>=nextPub)continue;
           }
           if(source==="new"){
             const nr=Number(r.rank ?? r.it?.rank);
@@ -1640,7 +1658,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
         return sp(a)-sp(b) || Math.abs(a.d-anchor)-Math.abs(b.d-anchor);
       });
       const auth=candidates[0]||null;
-      const complete=now>=decisionAt.getTime() && !!endSnap;
+      const complete=now>=target.getTime() && !!endSnap;
       let value=null,source="pending";
       if(complete && auth && auth.views!==null && auth.views!==undefined && auth.views!=="" && Number.isFinite(Number(auth.views))){value=Number(auth.views);source="auth";}
       else if(complete && whole!==null && whole!==undefined && whole!=="" && Number.isFinite(Number(whole))){value=Number(whole);source="total";}
@@ -1774,12 +1792,12 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const latest=ss.at(-1)||null;
     const set=(id,v)=>{const e=$q(id);if(e)e.textContent=v};
     if(!latest){
-      set("myLatestEpisode","수집 대기");set("myLatestEpisodeTime","등록 후 매시간 :15 수집");
+      set("myLatestEpisode","수집 대기");set("myLatestEpisodeTime","등록 후 작품별 5분 추적");
       set("myLatestElapsed","-");set("myLatest24hNote","24시간 판정 대기");
       set("myLatestAuthViews","-");set("myLatestAuthNote","인증조회수 우선");
       set("myFirstEpisodeInflow","-");set("myFirstEpisodeInflowNote","기준값 수집 후 표시");
       set("myCurrentEpisodeViews","-");set("myCurrentEpisodeViewsNote","조회수 수집 대기");
-      set("myEpisodeMeta","다음 투베 수집(:15)부터 회차별 전체조회수와 1화 전체조회수를 기록합니다.");
+      set("myEpisodeMeta","작품별 추적이 업로드 직후와 24시간 목표시각 근처의 값을 기록합니다.");
       renderEpisode24hTable([]);return;
     }
     const rows=buildEpisode24hRows(ss,todayRec,newRec);
@@ -1808,7 +1826,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
     if(cur){
       set("myLatestElapsed",fmtKstDateTime(cur.decisionAt||cur.target));
-      set("myLatest24hNote",cur.complete?"24시간 판정 완료":"이 시각 이후 첫 :15에 확정");
+      set("myLatest24hNote",cur.complete?"24시간 판정 완료":"업로드 +24시간 · 5분 추적");
       if(cur.complete && cur.source==="auth"){
         set("myLatestAuthViews",fmtN(cur.value));set("myLatestAuthNote","인증조회수 · 24시간 성적");
       }else if(cur.complete && cur.source==="total"){
@@ -1848,7 +1866,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     }
 
     const curFirst=Number(latest.first_episode_views);
-    set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 회차별 24시간 성적은 :15 수집 기준입니다.`);
+    set("myEpisodeMeta",`최신 수집 ${fmtKstDateTime(latest.captured_at)} · 1화 현재 전체조회수 ${Number.isFinite(curFirst)?fmtN(curFirst):"-"} · 회차별 24시간 성적은 업로드 시각 +24시간 기준(5분 추적)입니다.`);
     renderEpisode24hTable(rows);
   }
 

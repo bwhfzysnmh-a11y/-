@@ -82,7 +82,12 @@ def _parse_mobile_new_entry(a,page_url):
 def collect_new_mobile_items():
     items_by_rank={};seen=set()
     for page in range(30):
-        page_url=f"{NEW_MOBILE_URL}&page={page}";r=requests.get(page_url,headers=HEADERS,timeout=30);r.raise_for_status();soup=BeautifulSoup(r.text,"html.parser");added=0
+        page_url=f"{NEW_MOBILE_URL}&page={page}"
+        r=requests.get(page_url,headers=HEADERS,timeout=30)
+        if r.status_code in (400,404) and items_by_rank:
+            break
+        r.raise_for_status()
+        soup=BeautifulSoup(r.text,"html.parser");added=0
         for a in soup.find_all("a",href=True):
             item=_parse_mobile_new_entry(a,page_url)
             if not item:continue
@@ -243,6 +248,67 @@ print(
     f"Saved {len(items)} actual ranks / {parsed} verified views "
     f"(max rank={max_rank}, rank 200={rank200_text}) captured={stamp} slot={snapshot['slot_at_kst']} archive={archive_file}"
 )
+
+# ---------------------------------------------------------------------------
+# 통계용 경량 파일
+# - 원본 archive는 그대로 보존한다.
+# - data/stats/archive/YYYY/MM.json : 월별 평생 보관
+# - data/stats/recent.json          : 최근 45일만 모은 작은 분석용 파일
+# ---------------------------------------------------------------------------
+STAT_RANKS = [4, 8, 10, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
+STATS_ROOT = Path("data/stats")
+STATS_ARCHIVE = STATS_ROOT / "archive" / slot.strftime("%Y") / f"{slot.strftime('%m')}.json"
+STATS_RECENT = STATS_ROOT / "recent.json"
+
+compact = {
+    "mode": MODE,
+    "slot_at_kst": snapshot["slot_at_kst"],
+    "captured_at_kst": snapshot["captured_at_kst"],
+    "cuts": {
+        str(rank): (
+            items_by_rank.get(rank, {}).get("views_24h_verified")
+            if items_by_rank.get(rank) else None
+        )
+        for rank in STAT_RANKS
+    },
+}
+
+STATS_ARCHIVE.parent.mkdir(parents=True, exist_ok=True)
+try:
+    stats_month = json.loads(STATS_ARCHIVE.read_text(encoding="utf-8"))
+    if not isinstance(stats_month, list):
+        stats_month = []
+except Exception:
+    stats_month = []
+
+# 같은 mode + 같은 논리 슬롯은 최신 실행값 하나만 유지한다.
+stat_key = (compact["mode"], compact["slot_at_kst"])
+stats_month = [
+    x for x in stats_month
+    if (x.get("mode"), x.get("slot_at_kst")) != stat_key
+]
+stats_month.append(compact)
+stats_month.sort(key=lambda x: (x.get("slot_at_kst") or "", x.get("mode") or ""))
+STATS_ARCHIVE.write_text(json.dumps(stats_month, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+# 최근 45일 분석본을 모든 월별 stats archive에서 재구성한다.
+cutoff = now_kst - timedelta(days=45)
+recent = []
+for spath in sorted((STATS_ROOT / "archive").glob("*/*.json")):
+    try:
+        arr = json.loads(spath.read_text(encoding="utf-8"))
+    except Exception:
+        continue
+    if not isinstance(arr, list):
+        continue
+    for x in arr:
+        d = parse_kst(x.get("slot_at_kst") or "")
+        if d and d >= cutoff:
+            recent.append(x)
+recent.sort(key=lambda x: (x.get("slot_at_kst") or "", x.get("mode") or ""))
+STATS_ROOT.mkdir(parents=True, exist_ok=True)
+STATS_RECENT.write_text(json.dumps(recent, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+print(f"Compact stats: {STATS_ARCHIVE} / recent={len(recent)} snapshots")
 
 # ---------------------------------------------------------------------------
 # 내 작품 추적: 1화 '전체조회수' + 현재 최신화 정보

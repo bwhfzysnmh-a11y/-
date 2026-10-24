@@ -1876908,5 +1876908,2013 @@
         "raw": "200 NEW (33) 현대판타지 , 퓨전 UP 해고당한 감독이 케데헌급 애니를 만듦 RUT 총 6 화 341 2026.10.23"
       }
     ]
+  },
+  {
+    "captured_at_kst": "2026-10-24 11:05:55",
+    "slot_at_kst": "2026-10-24 11:05:00",
+    "count": 200,
+    "metric": "free_new_verified_views_24h",
+    "items": [
+      {
+        "rank": 1,
+        "novel_id": "609891",
+        "title": "1 (5,006) 현대판타지 UP 퇴사후 잭팟터져서 힐링하는데 경영천재로 착각당했다 도마뱀작가 총 20 화 23.2만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609891",
+        "hours_after_upload": null,
+        "score": 5006,
+        "views_24h_verified": 5006,
+        "raw": "1 (5,006) 현대판타지 UP 퇴사후 잭팟터져서 힐링하는데 경영천재로 착각당했다 도마뱀작가 총 20 화 23.2만 2026.10.23"
+      },
+      {
+        "rank": 2,
+        "novel_id": "612837",
+        "title": "2 3 (2,907) 현대판타지 , 전쟁·밀리터리 UP 전쟁이 싫어서 국방력에 올인했더니 전 세계가 벌벌 떰 고락 총 11 화 5.9만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612837",
+        "hours_after_upload": null,
+        "score": 2907,
+        "views_24h_verified": 2907,
+        "raw": "2 3 (2,907) 현대판타지 , 전쟁·밀리터리 UP 전쟁이 싫어서 국방력에 올인했더니 전 세계가 벌벌 떰 고락 총 11 화 5.9만 2026.10.23"
+      },
+      {
+        "rank": 3,
+        "novel_id": "607997",
+        "title": "3 1 (2,788) 현대판타지 , 판타지 UP 해고당한 짐꾼은 S급 버퍼였다 소래담 총 20 화 23.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/607997",
+        "hours_after_upload": null,
+        "score": 2788,
+        "views_24h_verified": 2788,
+        "raw": "3 1 (2,788) 현대판타지 , 판타지 UP 해고당한 짐꾼은 S급 버퍼였다 소래담 총 20 화 23.7만 2026.10.23"
+      },
+      {
+        "rank": 4,
+        "novel_id": "610537",
+        "title": "4 (2,506) 현대판타지 , 판타지 UP LAPD 괴물 경찰한테 정보기관들이 집착함 선우(仙宇) 총 18 화 10.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610537",
+        "hours_after_upload": null,
+        "score": 2506,
+        "views_24h_verified": 2506,
+        "raw": "4 (2,506) 현대판타지 , 판타지 UP LAPD 괴물 경찰한테 정보기관들이 집착함 선우(仙宇) 총 18 화 10.5만 2026.10.23"
+      },
+      {
+        "rank": 5,
+        "novel_id": "610327",
+        "title": "5 1 (2,375) 현대판타지 UP 반도체 수율의 핵심을 나만 알고 있는데 해고당함 황금꼬미 총 19 화 13.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610327",
+        "hours_after_upload": null,
+        "score": 2375,
+        "views_24h_verified": 2375,
+        "raw": "5 1 (2,375) 현대판타지 UP 반도체 수율의 핵심을 나만 알고 있는데 해고당함 황금꼬미 총 19 화 13.5만 2026.10.23"
+      },
+      {
+        "rank": 6,
+        "novel_id": "609766",
+        "title": "6 1 (2,339) 퓨전 , 현대판타지 UP 망한 한국에서 나혼자 탑등반함 쪼레벨 총 19 화 12.8만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609766",
+        "hours_after_upload": null,
+        "score": 2339,
+        "views_24h_verified": 2339,
+        "raw": "6 1 (2,339) 퓨전 , 현대판타지 UP 망한 한국에서 나혼자 탑등반함 쪼레벨 총 19 화 12.8만 2026.10.23"
+      },
+      {
+        "rank": 7,
+        "novel_id": "610450",
+        "title": "7 4 (2,174) 현대판타지 , 퓨전 UP 2조 4천억 복권 당첨되었지만 공무원 계속 합니다 나이막 총 18 화 12.9만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610450",
+        "hours_after_upload": null,
+        "score": 2174,
+        "views_24h_verified": 2174,
+        "raw": "7 4 (2,174) 현대판타지 , 퓨전 UP 2조 4천억 복권 당첨되었지만 공무원 계속 합니다 나이막 총 18 화 12.9만 2026.10.23"
+      },
+      {
+        "rank": 8,
+        "novel_id": "608696",
+        "title": "8 (1,931) 현대판타지 , 드라마 UP 해고당했더니 공장이 안 돌아감 진주냉면 총 20 화 16.8만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/608696",
+        "hours_after_upload": null,
+        "score": 1931,
+        "views_24h_verified": 1931,
+        "raw": "8 (1,931) 현대판타지 , 드라마 UP 해고당했더니 공장이 안 돌아감 진주냉면 총 20 화 16.8만 2026.10.23"
+      },
+      {
+        "rank": 9,
+        "novel_id": "610555",
+        "title": "9 1 (1,660) 현대판타지 UP 쫓겨난 방송작가가 자꾸 잘됨 김한가 총 18 화 6.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610555",
+        "hours_after_upload": null,
+        "score": 1660,
+        "views_24h_verified": 1660,
+        "raw": "9 1 (1,660) 현대판타지 UP 쫓겨난 방송작가가 자꾸 잘됨 김한가 총 18 화 6.0만 2026.10.23"
+      },
+      {
+        "rank": 10,
+        "novel_id": "607688",
+        "title": "10 1 (1,555) 현대판타지 UP 이혼했더니 자산이 미친듯 늘어남 차원의방 총 20 화 12.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/607688",
+        "hours_after_upload": null,
+        "score": 1555,
+        "views_24h_verified": 1555,
+        "raw": "10 1 (1,555) 현대판타지 UP 이혼했더니 자산이 미친듯 늘어남 차원의방 총 20 화 12.0만 2026.10.23"
+      },
+      {
+        "rank": 11,
+        "novel_id": "610846",
+        "title": "11 (1,337) 현대판타지 UP 할아버지 일을 물려받았더니 거물들이 몰려옴 네딸아빠 총 17 화 5.3만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610846",
+        "hours_after_upload": null,
+        "score": 1337,
+        "views_24h_verified": 1337,
+        "raw": "11 (1,337) 현대판타지 UP 할아버지 일을 물려받았더니 거물들이 몰려옴 네딸아빠 총 17 화 5.3만 2026.10.23"
+      },
+      {
+        "rank": 12,
+        "novel_id": "610623",
+        "title": "12 1 (1,252) 스포츠 , 현대판타지 UP 해고당한 천재 코치가 너무 잘 가르침 정예 총 18 화 5.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610623",
+        "hours_after_upload": null,
+        "score": 1252,
+        "views_24h_verified": 1252,
+        "raw": "12 1 (1,252) 스포츠 , 현대판타지 UP 해고당한 천재 코치가 너무 잘 가르침 정예 총 18 화 5.5만 2026.10.23"
+      },
+      {
+        "rank": 13,
+        "novel_id": "610256",
+        "title": "13 1 (1,214) 현대판타지 UP 해고당한 주방장이 너무 유능함 긍은긍은 총 19 화 6.3만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610256",
+        "hours_after_upload": null,
+        "score": 1214,
+        "views_24h_verified": 1214,
+        "raw": "13 1 (1,214) 현대판타지 UP 해고당한 주방장이 너무 유능함 긍은긍은 총 19 화 6.3만 2026.10.23"
+      },
+      {
+        "rank": 14,
+        "novel_id": "610682",
+        "title": "14 (1,027) 현대판타지 UP 해고당한 힐러가 차린 온천이 너무 잘됨 힐링화원 총 18 화 4.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610682",
+        "hours_after_upload": null,
+        "score": 1027,
+        "views_24h_verified": 1027,
+        "raw": "14 (1,027) 현대판타지 UP 해고당한 힐러가 차린 온천이 너무 잘됨 힐링화원 총 18 화 4.5만 2026.10.23"
+      },
+      {
+        "rank": 15,
+        "novel_id": "612705",
+        "title": "15 1 (1,001) 현대판타지 , 판타지 UP 700억 생기고 망한 휴게소가 대박남 야간커피 총 11 화 1.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612705",
+        "hours_after_upload": null,
+        "score": 1001,
+        "views_24h_verified": 1001,
+        "raw": "15 1 (1,001) 현대판타지 , 판타지 UP 700억 생기고 망한 휴게소가 대박남 야간커피 총 11 화 1.7만 2026.10.23"
+      },
+      {
+        "rank": 16,
+        "novel_id": "613544",
+        "title": "16 1 (967) 현대판타지 , 퓨전 UP S급 헌터들이 내 소환수인 걸 모르고 버림받음. 제로필터 총 8 화 1.8만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613544",
+        "hours_after_upload": null,
+        "score": 967,
+        "views_24h_verified": 967,
+        "raw": "16 1 (967) 현대판타지 , 퓨전 UP S급 헌터들이 내 소환수인 걸 모르고 버림받음. 제로필터 총 8 화 1.8만 2026.10.23"
+      },
+      {
+        "rank": 17,
+        "novel_id": "612551",
+        "title": "17 2 (856) 현대판타지 UP 재무팀 핵심 에이스가 해고당하자 회사가 파산 위기 웹소툰 총 12 화 3.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612551",
+        "hours_after_upload": null,
+        "score": 856,
+        "views_24h_verified": 856,
+        "raw": "17 2 (856) 현대판타지 UP 재무팀 핵심 에이스가 해고당하자 회사가 파산 위기 웹소툰 총 12 화 3.7만 2026.10.23"
+      },
+      {
+        "rank": 18,
+        "novel_id": "611487",
+        "title": "18 2 (851) 현대판타지 , 판타지 UP 몬스터 해체 9년차는 한 칼에 끝냄 런타임 총 15 화 3.2만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611487",
+        "hours_after_upload": null,
+        "score": 851,
+        "views_24h_verified": 851,
+        "raw": "18 2 (851) 현대판타지 , 판타지 UP 몬스터 해체 9년차는 한 칼에 끝냄 런타임 총 15 화 3.2만 2026.10.23"
+      },
+      {
+        "rank": 19,
+        "novel_id": "612096",
+        "title": "19 5 (850) 현대판타지 UP 280만 유튜버 만들어줬더니 해고당함 새벽감자 총 13 화 2.6만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612096",
+        "hours_after_upload": null,
+        "score": 850,
+        "views_24h_verified": 850,
+        "raw": "19 5 (850) 현대판타지 UP 280만 유튜버 만들어줬더니 해고당함 새벽감자 총 13 화 2.6만 2026.10.23"
+      },
+      {
+        "rank": 20,
+        "novel_id": "609865",
+        "title": "20 2 (755) 판타지 UP 마법 먹는 마법사 수박복숭아 총 15 화 4.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609865",
+        "hours_after_upload": null,
+        "score": 755,
+        "views_24h_verified": 755,
+        "raw": "20 2 (755) 판타지 UP 마법 먹는 마법사 수박복숭아 총 15 화 4.0만 2026.10.23"
+      },
+      {
+        "rank": 21,
+        "novel_id": "610935",
+        "title": "21 (720) 현대판타지 UP 국정원 막내는 세계 최고 해커 광산김가 총 17 화 5.9만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610935",
+        "hours_after_upload": null,
+        "score": 720,
+        "views_24h_verified": 720,
+        "raw": "21 (720) 현대판타지 UP 국정원 막내는 세계 최고 해커 광산김가 총 17 화 5.9만 2026.10.23"
+      },
+      {
+        "rank": 22,
+        "novel_id": "612364",
+        "title": "22 (691) 현대판타지 UP 만년 대리 정서민은 로또 1등이라 퇴사합니다 유우리 총 12 화 2.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612364",
+        "hours_after_upload": null,
+        "score": 691,
+        "views_24h_verified": 691,
+        "raw": "22 (691) 현대판타지 UP 만년 대리 정서민은 로또 1등이라 퇴사합니다 유우리 총 12 화 2.5만 2026.10.23"
+      },
+      {
+        "rank": 23,
+        "novel_id": "609590",
+        "title": "23 2 (593) 현대판타지 UP 해고당한 김과장이 회장님의 혼외자였다 어나인 총 18 화 10.3만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609590",
+        "hours_after_upload": null,
+        "score": 593,
+        "views_24h_verified": 593,
+        "raw": "23 2 (593) 현대판타지 UP 해고당한 김과장이 회장님의 혼외자였다 어나인 총 18 화 10.3만 2026.10.23"
+      },
+      {
+        "rank": 24,
+        "novel_id": "611893",
+        "title": "24 2 (574) 현대판타지 , 퓨전 UP 귀환한 삼촌의 드래곤이 귀엽다 바바루 총 13 화 2.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611893",
+        "hours_after_upload": null,
+        "score": 574,
+        "views_24h_verified": 574,
+        "raw": "24 2 (574) 현대판타지 , 퓨전 UP 귀환한 삼촌의 드래곤이 귀엽다 바바루 총 13 화 2.0만 2026.10.23"
+      },
+      {
+        "rank": 25,
+        "novel_id": "613000",
+        "title": "25 10 (542) 현대판타지 UP 미국 노숙자인데 딸이 생김 용린龍鱗 총 12 화 1.2만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613000",
+        "hours_after_upload": null,
+        "score": 542,
+        "views_24h_verified": 542,
+        "raw": "25 10 (542) 현대판타지 UP 미국 노숙자인데 딸이 생김 용린龍鱗 총 12 화 1.2만 2026.10.23"
+      },
+      {
+        "rank": 26,
+        "novel_id": "608741",
+        "title": "26 8 (516) 현대판타지 , 판타지 UP 망한 재벌이 국가권력급 신기술을 독점함 유수流水 총 9 화 7,694 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/608741",
+        "hours_after_upload": null,
+        "score": 516,
+        "views_24h_verified": 516,
+        "raw": "26 8 (516) 현대판타지 , 판타지 UP 망한 재벌이 국가권력급 신기술을 독점함 유수流水 총 9 화 7,694 2026.10.23"
+      },
+      {
+        "rank": 27,
+        "novel_id": "611507",
+        "title": "27 1 (501) 현대판타지 , 퓨전 UP 구멍 파기가 사기 스킬인 줄 나도 몰랐음 BBing 총 15 화 2.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611507",
+        "hours_after_upload": null,
+        "score": 501,
+        "views_24h_verified": 501,
+        "raw": "27 1 (501) 현대판타지 , 퓨전 UP 구멍 파기가 사기 스킬인 줄 나도 몰랐음 BBing 총 15 화 2.7만 2026.10.23"
+      },
+      {
+        "rank": 28,
+        "novel_id": "610796",
+        "title": "28 5 (471) 현대판타지 , 판타지 UP 아포쉘터 쫓겨나고 주상복합 각성함 순살키친 총 17 화 2.2만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610796",
+        "hours_after_upload": null,
+        "score": 471,
+        "views_24h_verified": 471,
+        "raw": "28 5 (471) 현대판타지 , 판타지 UP 아포쉘터 쫓겨나고 주상복합 각성함 순살키친 총 17 화 2.2만 2026.10.23"
+      },
+      {
+        "rank": 29,
+        "novel_id": "611366",
+        "title": "29 2 (469) 현대판타지 , 판타지 UP 김 대리가 퇴사하자 거래처가 뒤집어졌다 맛있는글s 총 18 화 3.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611366",
+        "hours_after_upload": null,
+        "score": 469,
+        "views_24h_verified": 469,
+        "raw": "29 2 (469) 현대판타지 , 판타지 UP 김 대리가 퇴사하자 거래처가 뒤집어졌다 맛있는글s 총 18 화 3.0만 2026.10.23"
+      },
+      {
+        "rank": 30,
+        "novel_id": "610835",
+        "title": "30 (454) 현대판타지 , 퓨전 UP 해고당한 탱커는 업계 최고 산타클라스 총 17 화 3.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610835",
+        "hours_after_upload": null,
+        "score": 454,
+        "views_24h_verified": 454,
+        "raw": "30 (454) 현대판타지 , 퓨전 UP 해고당한 탱커는 업계 최고 산타클라스 총 17 화 3.0만 2026.10.23"
+      },
+      {
+        "rank": 31,
+        "novel_id": "613256",
+        "title": "31 (448) 스포츠 UP 군면제 박탈당한 스트라이커는 귀화하기로 했다 볼랑말랑 총 10 화 1.6만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613256",
+        "hours_after_upload": null,
+        "score": 448,
+        "views_24h_verified": 448,
+        "raw": "31 (448) 스포츠 UP 군면제 박탈당한 스트라이커는 귀화하기로 했다 볼랑말랑 총 10 화 1.6만 2026.10.23"
+      },
+      {
+        "rank": 32,
+        "novel_id": "610629",
+        "title": "32 3 (438) 현대판타지 UP 귀환한 검신이 요리로 힐링함 치즈케이끼 총 18 화 3.2만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610629",
+        "hours_after_upload": null,
+        "score": 438,
+        "views_24h_verified": 438,
+        "raw": "32 3 (438) 현대판타지 UP 귀환한 검신이 요리로 힐링함 치즈케이끼 총 18 화 3.2만 2026.10.23"
+      },
+      {
+        "rank": 33,
+        "novel_id": "612883",
+        "title": "33 4 (421) 현대판타지 , 판타지 UP 국가한테 해고 당하고 EX급 농사꾼으로 각성함 나는뉴비 총 11 화 1.3만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612883",
+        "hours_after_upload": null,
+        "score": 421,
+        "views_24h_verified": 421,
+        "raw": "33 4 (421) 현대판타지 , 판타지 UP 국가한테 해고 당하고 EX급 농사꾼으로 각성함 나는뉴비 총 11 화 1.3만 2026.10.23"
+      },
+      {
+        "rank": 34,
+        "novel_id": "614016",
+        "title": "34 10 (409) 현대판타지 , 퓨전 UP 미국에서 은퇴당한 헌터가 귀촌 후 개꿀빱니다 테르치 총 7 화 5,583 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614016",
+        "hours_after_upload": null,
+        "score": 409,
+        "views_24h_verified": 409,
+        "raw": "34 10 (409) 현대판타지 , 퓨전 UP 미국에서 은퇴당한 헌터가 귀촌 후 개꿀빱니다 테르치 총 7 화 5,583 2026.10.23"
+      },
+      {
+        "rank": 35,
+        "novel_id": "610265",
+        "title": "35 1 (386) 현대판타지 UP 아포칼립스 세계에서 등대가 너무 안전함 힐링화원 총 19 화 2.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610265",
+        "hours_after_upload": null,
+        "score": 386,
+        "views_24h_verified": 386,
+        "raw": "35 1 (386) 현대판타지 UP 아포칼립스 세계에서 등대가 너무 안전함 힐링화원 총 19 화 2.5만 2026.10.23"
+      },
+      {
+        "rank": 36,
+        "novel_id": "610470",
+        "title": "36 19 (378) 현대판타지 , 판타지 UP 멸망 1년 전, 나 혼자 예언서로 독식함 싱글레어 총 15 화 1.2만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610470",
+        "hours_after_upload": null,
+        "score": 378,
+        "views_24h_verified": 378,
+        "raw": "36 19 (378) 현대판타지 , 판타지 UP 멸망 1년 전, 나 혼자 예언서로 독식함 싱글레어 총 15 화 1.2만 2026.10.23"
+      },
+      {
+        "rank": 37,
+        "novel_id": "612941",
+        "title": "37 2 (377) 현대판타지 , 드라마 UP 군필 여배우는 로코 여주가 싫다 필드스틱 총 11 화 8,684 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612941",
+        "hours_after_upload": null,
+        "score": 377,
+        "views_24h_verified": 377,
+        "raw": "37 2 (377) 현대판타지 , 드라마 UP 군필 여배우는 로코 여주가 싫다 필드스틱 총 11 화 8,684 2026.10.23"
+      },
+      {
+        "rank": 38,
+        "novel_id": "613941",
+        "title": "38 14 (375) 현대판타지 UP 나를 해고하자 1조짜리 공장이 멈췄다 배출구 총 8 화 1.5만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613941",
+        "hours_after_upload": null,
+        "score": 375,
+        "views_24h_verified": 375,
+        "raw": "38 14 (375) 현대판타지 UP 나를 해고하자 1조짜리 공장이 멈췄다 배출구 총 8 화 1.5만 2026.10.24"
+      },
+      {
+        "rank": 39,
+        "novel_id": "610660",
+        "title": "39 7 (365) 현대판타지 , 판타지 UP 해고당한 유물 감정사에게 회장님들이 줄섬 원일더 총 18 화 2.0만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610660",
+        "hours_after_upload": null,
+        "score": 365,
+        "views_24h_verified": 365,
+        "raw": "39 7 (365) 현대판타지 , 판타지 UP 해고당한 유물 감정사에게 회장님들이 줄섬 원일더 총 18 화 2.0만 2026.10.23"
+      },
+      {
+        "rank": 40,
+        "novel_id": "610501",
+        "title": "40 7 (362) 현대판타지 , SF UP 배신당할 줄 알고 특허를 숨김 골방개발자 총 19 화 2.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610501",
+        "hours_after_upload": null,
+        "score": 362,
+        "views_24h_verified": 362,
+        "raw": "40 7 (362) 현대판타지 , SF UP 배신당할 줄 알고 특허를 숨김 골방개발자 총 19 화 2.7만 2026.10.23"
+      },
+      {
+        "rank": 41,
+        "novel_id": "610284",
+        "title": "41 1 (343) 현대판타지 , 퓨전 UP 해고 후 퇴직금으로 SS급 능력을 받았다 기획자K 총 19 화 4.9만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610284",
+        "hours_after_upload": null,
+        "score": 343,
+        "views_24h_verified": 343,
+        "raw": "41 1 (343) 현대판타지 , 퓨전 UP 해고 후 퇴직금으로 SS급 능력을 받았다 기획자K 총 19 화 4.9만 2026.10.23"
+      },
+      {
+        "rank": 42,
+        "novel_id": "610112",
+        "title": "42 1 (341) 현대판타지 UP 인생 훈수 방송으로 초대박 바람빛 총 19 화 2.4만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610112",
+        "hours_after_upload": null,
+        "score": 341,
+        "views_24h_verified": 341,
+        "raw": "42 1 (341) 현대판타지 UP 인생 훈수 방송으로 초대박 바람빛 총 19 화 2.4만 2026.10.23"
+      },
+      {
+        "rank": 43,
+        "novel_id": "607137",
+        "title": "43 8 (324) 현대판타지 UP 해고당하고 미국 동물원을 샀는데 사자가 말을 걸었다 운향림 총 13 화 9,565 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/607137",
+        "hours_after_upload": null,
+        "score": 324,
+        "views_24h_verified": 324,
+        "raw": "43 8 (324) 현대판타지 UP 해고당하고 미국 동물원을 샀는데 사자가 말을 걸었다 운향림 총 13 화 9,565 2026.10.23"
+      },
+      {
+        "rank": 44,
+        "novel_id": "614226",
+        "title": "44 33 (320) 현대판타지 , 드라마 UP 7천억 물려받은 줄 모르고 퇴사당함 무한와규 총 6 화 2,610 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614226",
+        "hours_after_upload": null,
+        "score": 320,
+        "views_24h_verified": 320,
+        "raw": "44 33 (320) 현대판타지 , 드라마 UP 7천억 물려받은 줄 모르고 퇴사당함 무한와규 총 6 화 2,610 2026.10.23"
+      },
+      {
+        "rank": 45,
+        "novel_id": "609889",
+        "title": "45 3 (312) 무협 , 퓨전 UP 선협에서 괴이를 사냥함 길마 총 20 화 1.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609889",
+        "hours_after_upload": null,
+        "score": 312,
+        "views_24h_verified": 312,
+        "raw": "45 3 (312) 무협 , 퓨전 UP 선협에서 괴이를 사냥함 길마 총 20 화 1.7만 2026.10.23"
+      },
+      {
+        "rank": 46,
+        "novel_id": "611330",
+        "title": "46 8 (293) 현대판타지 UP 해고당하고 귀농했더니 내 밭이 역세권이 됐다 농어촌작가 총 17 화 2.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611330",
+        "hours_after_upload": null,
+        "score": 293,
+        "views_24h_verified": 293,
+        "raw": "46 8 (293) 현대판타지 UP 해고당하고 귀농했더니 내 밭이 역세권이 됐다 농어촌작가 총 17 화 2.7만 2026.10.23"
+      },
+      {
+        "rank": 47,
+        "novel_id": "613776",
+        "title": "47 3 (291) 현대판타지 , 판타지 UP 협회야 배신 고맙다. 탑에서 잘먹고 잘 살게. 우노. 총 8 화 6,923 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613776",
+        "hours_after_upload": null,
+        "score": 291,
+        "views_24h_verified": 291,
+        "raw": "47 3 (291) 현대판타지 , 판타지 UP 협회야 배신 고맙다. 탑에서 잘먹고 잘 살게. 우노. 총 8 화 6,923 2026.10.23"
+      },
+      {
+        "rank": 48,
+        "novel_id": "610602",
+        "title": "48 6 (285) 현대판타지 , 판타지 UP 쫓겨난 경찰이 사법고시를 패스함 조선생님 총 19 화 6.1만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/610602",
+        "hours_after_upload": null,
+        "score": 285,
+        "views_24h_verified": 285,
+        "raw": "48 6 (285) 현대판타지 , 판타지 UP 쫓겨난 경찰이 사법고시를 패스함 조선생님 총 19 화 6.1만 2026.10.24"
+      },
+      {
+        "rank": 49,
+        "novel_id": "612139",
+        "title": "49 15 (281) 스포츠 , 현대판타지 UP 20살에 은퇴한 금메달리스트가 메이저리그를 씹어먹음 페디아 총 11 화 7,441 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612139",
+        "hours_after_upload": null,
+        "score": 281,
+        "views_24h_verified": 281,
+        "raw": "49 15 (281) 스포츠 , 현대판타지 UP 20살에 은퇴한 금메달리스트가 메이저리그를 씹어먹음 페디아 총 11 화 7,441 2026.10.23"
+      },
+      {
+        "rank": 50,
+        "novel_id": "604482",
+        "title": "50 3 (263) 무협 , 퓨전 UP 수선 천재가 기연을 독식하는 법 글청 총 18 화 1.3만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/604482",
+        "hours_after_upload": null,
+        "score": 263,
+        "views_24h_verified": 263,
+        "raw": "50 3 (263) 무협 , 퓨전 UP 수선 천재가 기연을 독식하는 법 글청 총 18 화 1.3만 2026.10.23"
+      },
+      {
+        "rank": 51,
+        "novel_id": "612972",
+        "title": "51 16 (263) 현대판타지 UP 김과장 해고하자 나라망함 .로튼애플. 총 11 화 6,659 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612972",
+        "hours_after_upload": null,
+        "score": 263,
+        "views_24h_verified": 263,
+        "raw": "51 16 (263) 현대판타지 UP 김과장 해고하자 나라망함 .로튼애플. 총 11 화 6,659 2026.10.23"
+      },
+      {
+        "rank": 52,
+        "novel_id": "611945",
+        "title": "52 9 (246) 현대판타지 , 퓨전 UP 풍수지리 봐줬더니 돈이 쏟아짐 글밥 총 13 화 5,895 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611945",
+        "hours_after_upload": null,
+        "score": 246,
+        "views_24h_verified": 246,
+        "raw": "52 9 (246) 현대판타지 , 퓨전 UP 풍수지리 봐줬더니 돈이 쏟아짐 글밥 총 13 화 5,895 2026.10.23"
+      },
+      {
+        "rank": 53,
+        "novel_id": "609740",
+        "title": "53 10 (243) 판타지 , 퓨전 UP 소드마스터에 올랐는데 가문에서 쫓겨났다 크림뽕 총 20 화 4.4만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609740",
+        "hours_after_upload": null,
+        "score": 243,
+        "views_24h_verified": 243,
+        "raw": "53 10 (243) 판타지 , 퓨전 UP 소드마스터에 올랐는데 가문에서 쫓겨났다 크림뽕 총 20 화 4.4만 2026.10.23"
+      },
+      {
+        "rank": 54,
+        "novel_id": "611971",
+        "title": "54 (226) 대체역사 , 판타지 UP 내 프랑스에 폭동은 없다 브리스트 총 13 화 6,499 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611971",
+        "hours_after_upload": null,
+        "score": 226,
+        "views_24h_verified": 226,
+        "raw": "54 (226) 대체역사 , 판타지 UP 내 프랑스에 폭동은 없다 브리스트 총 13 화 6,499 2026.10.23"
+      },
+      {
+        "rank": 55,
+        "novel_id": "614041",
+        "title": "55 5 (190) 현대판타지 , 퓨전 UP 나 혼자 즉사기 딜러인데 해고당함 백수천 총 12 화 6,464 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614041",
+        "hours_after_upload": null,
+        "score": 190,
+        "views_24h_verified": 190,
+        "raw": "55 5 (190) 현대판타지 , 퓨전 UP 나 혼자 즉사기 딜러인데 해고당함 백수천 총 12 화 6,464 2026.10.23"
+      },
+      {
+        "rank": 56,
+        "novel_id": "614031",
+        "title": "56 15 (181) 현대판타지 , 퓨전 UP 좌천당한 김대리가 재앙급 귀환자 펜리힐드 총 5 화 1,443 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614031",
+        "hours_after_upload": null,
+        "score": 181,
+        "views_24h_verified": 181,
+        "raw": "56 15 (181) 현대판타지 , 퓨전 UP 좌천당한 김대리가 재앙급 귀환자 펜리힐드 총 5 화 1,443 2026.10.23"
+      },
+      {
+        "rank": 57,
+        "novel_id": "610440",
+        "title": "57 6 (167) 현대판타지 UP 퇴사한 김 과장에 전세계 화학업계가 집착함 MaUna 총 19 화 2.7만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/610440",
+        "hours_after_upload": null,
+        "score": 167,
+        "views_24h_verified": 167,
+        "raw": "57 6 (167) 현대판타지 UP 퇴사한 김 과장에 전세계 화학업계가 집착함 MaUna 총 19 화 2.7만 2026.10.24"
+      },
+      {
+        "rank": 58,
+        "novel_id": "611538",
+        "title": "58 1 (165) 현대판타지 UP 천재 외과 의사가 손만 대면 다 살림 설흔(說痕) 총 15 화 9,009 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611538",
+        "hours_after_upload": null,
+        "score": 165,
+        "views_24h_verified": 165,
+        "raw": "58 1 (165) 현대판타지 UP 천재 외과 의사가 손만 대면 다 살림 설흔(說痕) 총 15 화 9,009 2026.10.23"
+      },
+      {
+        "rank": 59,
+        "novel_id": "609431",
+        "title": "59 3 (162) 현대판타지 , 퓨전 UP SSS급 아이템으로 인생역전 limkun 총 19 화 1.8만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/609431",
+        "hours_after_upload": null,
+        "score": 162,
+        "views_24h_verified": 162,
+        "raw": "59 3 (162) 현대판타지 , 퓨전 UP SSS급 아이템으로 인생역전 limkun 총 19 화 1.8만 2026.10.24"
+      },
+      {
+        "rank": 60,
+        "novel_id": "612061",
+        "title": "60 11 (157) 현대판타지 UP 해고당한 날부터 돈이 쏟아진다 신수목 총 14 화 1.3만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612061",
+        "hours_after_upload": null,
+        "score": 157,
+        "views_24h_verified": 157,
+        "raw": "60 11 (157) 현대판타지 UP 해고당한 날부터 돈이 쏟아진다 신수목 총 14 화 1.3만 2026.10.24"
+      },
+      {
+        "rank": 61,
+        "novel_id": "608769",
+        "title": "61 5 (155) 현대판타지 , 퓨전 UP 1997, 미래시로 사업했더니 1조 달러 재벌이 되었다 빈명 총 20 화 3.9만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/608769",
+        "hours_after_upload": null,
+        "score": 155,
+        "views_24h_verified": 155,
+        "raw": "61 5 (155) 현대판타지 , 퓨전 UP 1997, 미래시로 사업했더니 1조 달러 재벌이 되었다 빈명 총 20 화 3.9만 2026.10.24"
+      },
+      {
+        "rank": 62,
+        "novel_id": "612354",
+        "title": "62 27 (155) 현대판타지 UP (귀)신들린 연기자 burn8 총 14 화 9,449 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612354",
+        "hours_after_upload": null,
+        "score": 155,
+        "views_24h_verified": 155,
+        "raw": "62 27 (155) 현대판타지 UP (귀)신들린 연기자 burn8 총 14 화 9,449 2026.10.24"
+      },
+      {
+        "rank": 63,
+        "novel_id": "610672",
+        "title": "63 6 (154) 현대판타지 , 판타지 UP 낙하산 윤대리는 회장님이 숨겼던 전용 풍수사였다 글로또 총 18 화 2.5만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610672",
+        "hours_after_upload": null,
+        "score": 154,
+        "views_24h_verified": 154,
+        "raw": "63 6 (154) 현대판타지 , 판타지 UP 낙하산 윤대리는 회장님이 숨겼던 전용 풍수사였다 글로또 총 18 화 2.5만 2026.10.23"
+      },
+      {
+        "rank": 64,
+        "novel_id": "612199",
+        "title": "64 5 (152) 현대판타지 , 판타지 UP 궁합 보는 프로듀서 글로운 총 13 화 4,574 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612199",
+        "hours_after_upload": null,
+        "score": 152,
+        "views_24h_verified": 152,
+        "raw": "64 5 (152) 현대판타지 , 판타지 UP 궁합 보는 프로듀서 글로운 총 13 화 4,574 2026.10.23"
+      },
+      {
+        "rank": 65,
+        "novel_id": "611753",
+        "title": "65 28 (129) 현대판타지 UP 5조 들고 귀향했더니 마을이 떡상함 비엔나작가 총 12 화 5,062 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611753",
+        "hours_after_upload": null,
+        "score": 129,
+        "views_24h_verified": 129,
+        "raw": "65 28 (129) 현대판타지 UP 5조 들고 귀향했더니 마을이 떡상함 비엔나작가 총 12 화 5,062 2026.10.23"
+      },
+      {
+        "rank": 66,
+        "novel_id": "613173",
+        "title": "66 76 (124) 현대판타지 UP 통나무 들어준 줄도 모르고 협회에서 해고당함 붉은냥이 총 11 화 6,470 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613173",
+        "hours_after_upload": null,
+        "score": 124,
+        "views_24h_verified": 124,
+        "raw": "66 76 (124) 현대판타지 UP 통나무 들어준 줄도 모르고 협회에서 해고당함 붉은냥이 총 11 화 6,470 2026.10.24"
+      },
+      {
+        "rank": 67,
+        "novel_id": "609932",
+        "title": "67 8 (123) 현대판타지 , 판타지 UP 2차 각성한 줄 모르고 해고당함 헌앙 총 19 화 1.7만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609932",
+        "hours_after_upload": null,
+        "score": 123,
+        "views_24h_verified": 123,
+        "raw": "67 8 (123) 현대판타지 , 판타지 UP 2차 각성한 줄 모르고 해고당함 헌앙 총 19 화 1.7만 2026.10.23"
+      },
+      {
+        "rank": 68,
+        "novel_id": "613994",
+        "title": "68 5 (121) 현대판타지 , 판타지 UP 헌터협회가 배신했다. 이제 한국은 탑에 못들어와 데포르메 총 7 화 2,025 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613994",
+        "hours_after_upload": null,
+        "score": 121,
+        "views_24h_verified": 121,
+        "raw": "68 5 (121) 현대판타지 , 판타지 UP 헌터협회가 배신했다. 이제 한국은 탑에 못들어와 데포르메 총 7 화 2,025 2026.10.23"
+      },
+      {
+        "rank": 69,
+        "novel_id": "612660",
+        "title": "69 3 (120) 현대판타지 , 대체역사 UP 좌천당했는데 주식 차트의 목소리가 들려 만슬라 총 14 화 7,041 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612660",
+        "hours_after_upload": null,
+        "score": 120,
+        "views_24h_verified": 120,
+        "raw": "69 3 (120) 현대판타지 , 대체역사 UP 좌천당했는데 주식 차트의 목소리가 들려 만슬라 총 14 화 7,041 2026.10.24"
+      },
+      {
+        "rank": 70,
+        "novel_id": "609696",
+        "title": "70 2 (115) 현대판타지 UP EX급 방치형 영주가 되었다 영구리94 총 19 화 1.1만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609696",
+        "hours_after_upload": null,
+        "score": 115,
+        "views_24h_verified": 115,
+        "raw": "70 2 (115) 현대판타지 UP EX급 방치형 영주가 되었다 영구리94 총 19 화 1.1만 2026.10.23"
+      },
+      {
+        "rank": 71,
+        "novel_id": "606073",
+        "title": "71 35 (114) 현대판타지 , 판타지 UP 천재 변호사가 방송계를 극락 보냄 5스타 총 14 화 6,035 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/606073",
+        "hours_after_upload": null,
+        "score": 114,
+        "views_24h_verified": 114,
+        "raw": "71 35 (114) 현대판타지 , 판타지 UP 천재 변호사가 방송계를 극락 보냄 5스타 총 14 화 6,035 2026.10.23"
+      },
+      {
+        "rank": 72,
+        "novel_id": "609612",
+        "title": "72 9 (114) 현대판타지 UP 양산형 장비 시장에서 나 혼자 맞춤 제작함 샤이텔하우 총 18 화 8,032 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609612",
+        "hours_after_upload": null,
+        "score": 114,
+        "views_24h_verified": 114,
+        "raw": "72 9 (114) 현대판타지 UP 양산형 장비 시장에서 나 혼자 맞춤 제작함 샤이텔하우 총 18 화 8,032 2026.10.23"
+      },
+      {
+        "rank": 73,
+        "novel_id": "613508",
+        "title": "73 43 (112) 현대판타지 , 일반소설 UP 300년 만에 돌아온 천재화가 경우勁雨 총 10 화 1,938 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613508",
+        "hours_after_upload": null,
+        "score": 112,
+        "views_24h_verified": 112,
+        "raw": "73 43 (112) 현대판타지 , 일반소설 UP 300년 만에 돌아온 천재화가 경우勁雨 총 10 화 1,938 2026.10.23"
+      },
+      {
+        "rank": 74,
+        "novel_id": "612197",
+        "title": "74 4 (112) 판타지 , 현대판타지 UP 해고당한 짐꾼의 S급 던전 생존기 유리뼈 총 13 화 3,549 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612197",
+        "hours_after_upload": null,
+        "score": 112,
+        "views_24h_verified": 112,
+        "raw": "74 4 (112) 판타지 , 현대판타지 UP 해고당한 짐꾼의 S급 던전 생존기 유리뼈 총 13 화 3,549 2026.10.23"
+      },
+      {
+        "rank": 75,
+        "novel_id": "612206",
+        "title": "75 47 (111) 현대판타지 UP 1800억이 생긴 김에 인생 좀 즐기겠습니다. BlackSwan. 총 11 화 3,051 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612206",
+        "hours_after_upload": null,
+        "score": 111,
+        "views_24h_verified": 111,
+        "raw": "75 47 (111) 현대판타지 UP 1800억이 생긴 김에 인생 좀 즐기겠습니다. BlackSwan. 총 11 화 3,051 2026.10.23"
+      },
+      {
+        "rank": 76,
+        "novel_id": "613891",
+        "title": "76 11 (110) 현대판타지 , 전쟁·밀리터리 UP 미국에 버림받은 생체AI 블랙요원 홈스탠바이 총 7 화 2,334 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613891",
+        "hours_after_upload": null,
+        "score": 110,
+        "views_24h_verified": 110,
+        "raw": "76 11 (110) 현대판타지 , 전쟁·밀리터리 UP 미국에 버림받은 생체AI 블랙요원 홈스탠바이 총 7 화 2,334 2026.10.23"
+      },
+      {
+        "rank": 77,
+        "novel_id": "612898",
+        "title": "77 3 (110) 현대판타지 UP 건물 맥 짚는 품질팀장을 해고했더니 건물이 박살남 선안 총 11 화 2,425 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612898",
+        "hours_after_upload": null,
+        "score": 110,
+        "views_24h_verified": 110,
+        "raw": "77 3 (110) 현대판타지 UP 건물 맥 짚는 품질팀장을 해고했더니 건물이 박살남 선안 총 11 화 2,425 2026.10.23"
+      },
+      {
+        "rank": 78,
+        "novel_id": "612123",
+        "title": "78 18 (109) 현대판타지 , 퓨전 UP 생활용 부적인데 성능이 미쳤다 하우트 총 12 화 3,325 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612123",
+        "hours_after_upload": null,
+        "score": 109,
+        "views_24h_verified": 109,
+        "raw": "78 18 (109) 현대판타지 , 퓨전 UP 생활용 부적인데 성능이 미쳤다 하우트 총 12 화 3,325 2026.10.23"
+      },
+      {
+        "rank": 79,
+        "novel_id": "611371",
+        "title": "79 5 (108) 판타지 , 현대판타지 UP F급 짐꾼이 잘렸는데 길드가 망함 세우강 총 20 화 5.1만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/611371",
+        "hours_after_upload": null,
+        "score": 108,
+        "views_24h_verified": 108,
+        "raw": "79 5 (108) 판타지 , 현대판타지 UP F급 짐꾼이 잘렸는데 길드가 망함 세우강 총 20 화 5.1만 2026.10.24"
+      },
+      {
+        "rank": 80,
+        "novel_id": "613175",
+        "title": "80 29 (108) 현대판타지 UP 재벌집 무당 사위 전장범 총 11 화 5,341 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613175",
+        "hours_after_upload": null,
+        "score": 108,
+        "views_24h_verified": 108,
+        "raw": "80 29 (108) 현대판타지 UP 재벌집 무당 사위 전장범 총 11 화 5,341 2026.10.24"
+      },
+      {
+        "rank": 81,
+        "novel_id": "613512",
+        "title": "81 3 (107) 현대판타지 , 판타지 UP 해고 후 헌터들이 나만 찾음 투이니F 총 11 화 2,953 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613512",
+        "hours_after_upload": null,
+        "score": 107,
+        "views_24h_verified": 107,
+        "raw": "81 3 (107) 현대판타지 , 판타지 UP 해고 후 헌터들이 나만 찾음 투이니F 총 11 화 2,953 2026.10.23"
+      },
+      {
+        "rank": 82,
+        "novel_id": "611831",
+        "title": "82 6 (106) 현대판타지 , 퓨전 UP 로또1등 당첨돼 자연인으로 사는데 돈이 미친 듯 불어남 루지뇨로 총 13 화 5,418 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611831",
+        "hours_after_upload": null,
+        "score": 106,
+        "views_24h_verified": 106,
+        "raw": "82 6 (106) 현대판타지 , 퓨전 UP 로또1등 당첨돼 자연인으로 사는데 돈이 미친 듯 불어남 루지뇨로 총 13 화 5,418 2026.10.23"
+      },
+      {
+        "rank": 83,
+        "novel_id": "613353",
+        "title": "83 20 (106) 현대판타지 , 판타지 UP 건물 상속 받고 힐링함 울산깍쟁이 총 11 화 2,481 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613353",
+        "hours_after_upload": null,
+        "score": 106,
+        "views_24h_verified": 106,
+        "raw": "83 20 (106) 현대판타지 , 판타지 UP 건물 상속 받고 힐링함 울산깍쟁이 총 11 화 2,481 2026.10.23"
+      },
+      {
+        "rank": 84,
+        "novel_id": "612653",
+        "title": "84 6 (101) 대체역사 , 현대판타지 UP 대영제국에서 사람 찔렀더니 귀족들이 환장함 글거북. 총 12 화 2,253 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612653",
+        "hours_after_upload": null,
+        "score": 101,
+        "views_24h_verified": 101,
+        "raw": "84 6 (101) 대체역사 , 현대판타지 UP 대영제국에서 사람 찔렀더니 귀족들이 환장함 글거북. 총 12 화 2,253 2026.10.23"
+      },
+      {
+        "rank": 85,
+        "novel_id": "611314",
+        "title": "85 41 (99) 현대판타지 , 드라마 UP 전 세계 1위 코인 고래가 사는 법 신선임 총 11 화 3,110 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611314",
+        "hours_after_upload": null,
+        "score": 99,
+        "views_24h_verified": 99,
+        "raw": "85 41 (99) 현대판타지 , 드라마 UP 전 세계 1위 코인 고래가 사는 법 신선임 총 11 화 3,110 2026.10.23"
+      },
+      {
+        "rank": 86,
+        "novel_id": "610523",
+        "title": "86 7 (97) 현대판타지 , 퓨전 UP 시골똥개랑 힐링하려다가 재벌 됨 순금사과 총 20 화 1.5만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/610523",
+        "hours_after_upload": null,
+        "score": 97,
+        "views_24h_verified": 97,
+        "raw": "86 7 (97) 현대판타지 , 퓨전 UP 시골똥개랑 힐링하려다가 재벌 됨 순금사과 총 20 화 1.5만 2026.10.24"
+      },
+      {
+        "rank": 87,
+        "novel_id": "612097",
+        "title": "87 36 (97) 현대판타지 , 드라마 UP 퇴사 후 요트 타고 힐링합니다 그레이c 총 13 화 5,393 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612097",
+        "hours_after_upload": null,
+        "score": 97,
+        "views_24h_verified": 97,
+        "raw": "87 36 (97) 현대판타지 , 드라마 UP 퇴사 후 요트 타고 힐링합니다 그레이c 총 13 화 5,393 2026.10.24"
+      },
+      {
+        "rank": 88,
+        "novel_id": "612110",
+        "title": "88 4 (97) 스포츠 , 현대판타지 UP 방출된 타자가 재능을 수집함 주창범 총 15 화 4,466 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612110",
+        "hours_after_upload": null,
+        "score": 97,
+        "views_24h_verified": 97,
+        "raw": "88 4 (97) 스포츠 , 현대판타지 UP 방출된 타자가 재능을 수집함 주창범 총 15 화 4,466 2026.10.23"
+      },
+      {
+        "rank": 89,
+        "novel_id": "612381",
+        "title": "89 4 (95) 현대판타지 UP 해고, 파혼 당한 후 재벌가 손자가 되었다 yespro 총 13 화 2.5만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612381",
+        "hours_after_upload": null,
+        "score": 95,
+        "views_24h_verified": 95,
+        "raw": "89 4 (95) 현대판타지 UP 해고, 파혼 당한 후 재벌가 손자가 되었다 yespro 총 13 화 2.5만 2026.10.24"
+      },
+      {
+        "rank": 90,
+        "novel_id": "612033",
+        "title": "90 42 (91) 현대판타지 , 판타지 UP 버림받은 S급 헌터는 회귀했다 준시최 총 13 화 5,344 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612033",
+        "hours_after_upload": null,
+        "score": 91,
+        "views_24h_verified": 91,
+        "raw": "90 42 (91) 현대판타지 , 판타지 UP 버림받은 S급 헌터는 회귀했다 준시최 총 13 화 5,344 2026.10.24"
+      },
+      {
+        "rank": 91,
+        "novel_id": "603599",
+        "title": "91 9 (91) 현대판타지 , 퓨전 UP 예쁜 아내와 농사 지으며 힐링하는데 탑 등반도 잘함 개벽S 총 5 화 941 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/603599",
+        "hours_after_upload": null,
+        "score": 91,
+        "views_24h_verified": 91,
+        "raw": "91 9 (91) 현대판타지 , 퓨전 UP 예쁜 아내와 농사 지으며 힐링하는데 탑 등반도 잘함 개벽S 총 5 화 941 2026.10.23"
+      },
+      {
+        "rank": 92,
+        "novel_id": "611324",
+        "title": "92 10 (91) 현대판타지 , 퓨전 UP 나 혼자 EX급 웨펀마스터인데 해고당함 한생한사 총 14 화 5,577 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611324",
+        "hours_after_upload": null,
+        "score": 91,
+        "views_24h_verified": 91,
+        "raw": "92 10 (91) 현대판타지 , 퓨전 UP 나 혼자 EX급 웨펀마스터인데 해고당함 한생한사 총 14 화 5,577 2026.10.23"
+      },
+      {
+        "rank": 93,
+        "novel_id": "612232",
+        "title": "93 10 (91) 현대판타지 , 대체역사 UP 천재 유물 감정사인 줄 모르고 한국에서 제명당함 기린기린기 총 13 화 3,564 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612232",
+        "hours_after_upload": null,
+        "score": 91,
+        "views_24h_verified": 91,
+        "raw": "93 10 (91) 현대판타지 , 대체역사 UP 천재 유물 감정사인 줄 모르고 한국에서 제명당함 기린기린기 총 13 화 3,564 2026.10.23"
+      },
+      {
+        "rank": 94,
+        "novel_id": "611813",
+        "title": "94 30 (89) 현대판타지 , 퓨전 UP 만년 과장을 해고했더니, 헌터 업계가 뒤집혔다. 석곰이 총 13 화 3,427 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611813",
+        "hours_after_upload": null,
+        "score": 89,
+        "views_24h_verified": 89,
+        "raw": "94 30 (89) 현대판타지 , 퓨전 UP 만년 과장을 해고했더니, 헌터 업계가 뒤집혔다. 석곰이 총 13 화 3,427 2026.10.23"
+      },
+      {
+        "rank": 95,
+        "novel_id": "611132",
+        "title": "95 4 (88) 대체역사 , 현대판타지 UP 나, 트럼프가 되었다! 배천 총 13 화 1,700 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611132",
+        "hours_after_upload": null,
+        "score": 88,
+        "views_24h_verified": 88,
+        "raw": "95 4 (88) 대체역사 , 현대판타지 UP 나, 트럼프가 되었다! 배천 총 13 화 1,700 2026.10.23"
+      },
+      {
+        "rank": 96,
+        "novel_id": "610917",
+        "title": "96 30 (86) 현대판타지 , 판타지 UP 연기 천재인줄 모르고 해고당함 러데 총 16 화 6,314 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610917",
+        "hours_after_upload": null,
+        "score": 86,
+        "views_24h_verified": 86,
+        "raw": "96 30 (86) 현대판타지 , 판타지 UP 연기 천재인줄 모르고 해고당함 러데 총 16 화 6,314 2026.10.23"
+      },
+      {
+        "rank": 97,
+        "novel_id": "612091",
+        "title": "97 10 (85) 현대판타지 , 퓨전 UP 국정원에 천마가 들어왔다 proveme 총 14 화 3,931 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612091",
+        "hours_after_upload": null,
+        "score": 85,
+        "views_24h_verified": 85,
+        "raw": "97 10 (85) 현대판타지 , 퓨전 UP 국정원에 천마가 들어왔다 proveme 총 14 화 3,931 2026.10.23"
+      },
+      {
+        "rank": 98,
+        "novel_id": "613124",
+        "title": "98 40 (83) 현대판타지 , 드라마 UP 해고당한 김선임 파워볼 1조로 갑질상사부터 자른다 야바위꾼 총 11 화 2,275 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613124",
+        "hours_after_upload": null,
+        "score": 83,
+        "views_24h_verified": 83,
+        "raw": "98 40 (83) 현대판타지 , 드라마 UP 해고당한 김선임 파워볼 1조로 갑질상사부터 자른다 야바위꾼 총 11 화 2,275 2026.10.23"
+      },
+      {
+        "rank": 99,
+        "novel_id": "612884",
+        "title": "99 NEW (83) 판타지 UP 전역한 기사가 너무 유능함 자리zary 총 11 화 2,395 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612884",
+        "hours_after_upload": null,
+        "score": 83,
+        "views_24h_verified": 83,
+        "raw": "99 NEW (83) 판타지 UP 전역한 기사가 너무 유능함 자리zary 총 11 화 2,395 2026.10.23"
+      },
+      {
+        "rank": 100,
+        "novel_id": "609703",
+        "title": "100 1 (82) 현대판타지 , 퓨전 UP 검은머리 미국 소방관은 불 속에서 강해짐 피엠피1 총 20 화 7,216 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609703",
+        "hours_after_upload": null,
+        "score": 82,
+        "views_24h_verified": 82,
+        "raw": "100 1 (82) 현대판타지 , 퓨전 UP 검은머리 미국 소방관은 불 속에서 강해짐 피엠피1 총 20 화 7,216 2026.10.23"
+      },
+      {
+        "rank": 101,
+        "novel_id": "611349",
+        "title": "101 13 (81) 현대판타지 UP 내 리뷰 하나에 모든 업계가 매달림 오천자 총 13 화 2,934 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611349",
+        "hours_after_upload": null,
+        "score": 81,
+        "views_24h_verified": 81,
+        "raw": "101 13 (81) 현대판타지 UP 내 리뷰 하나에 모든 업계가 매달림 오천자 총 13 화 2,934 2026.10.23"
+      },
+      {
+        "rank": 102,
+        "novel_id": "612733",
+        "title": "102 14 (81) 현대판타지 , 드라마 UP 희망퇴직하고 고향 왔는데 독일 바이어가 집착함 뒷자리 총 12 화 3,117 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612733",
+        "hours_after_upload": null,
+        "score": 81,
+        "views_24h_verified": 81,
+        "raw": "102 14 (81) 현대판타지 , 드라마 UP 희망퇴직하고 고향 왔는데 독일 바이어가 집착함 뒷자리 총 12 화 3,117 2026.10.23"
+      },
+      {
+        "rank": 103,
+        "novel_id": "610664",
+        "title": "103 17 (78) 판타지 UP 눈 떠보니 백작이 되어 있었다 용은 총 20 화 7,585 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610664",
+        "hours_after_upload": null,
+        "score": 78,
+        "views_24h_verified": 78,
+        "raw": "103 17 (78) 판타지 UP 눈 떠보니 백작이 되어 있었다 용은 총 20 화 7,585 2026.10.23"
+      },
+      {
+        "rank": 104,
+        "novel_id": "612469",
+        "title": "104 10 (77) 현대판타지 UP 해고당한 천재 연구원은 마력이 보임 노랑커피 총 12 화 3,345 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612469",
+        "hours_after_upload": null,
+        "score": 77,
+        "views_24h_verified": 77,
+        "raw": "104 10 (77) 현대판타지 UP 해고당한 천재 연구원은 마력이 보임 노랑커피 총 12 화 3,345 2026.10.23"
+      },
+      {
+        "rank": 105,
+        "novel_id": "612536",
+        "title": "105 12 (77) 현대판타지 , 드라마 UP 해고 후 연금복권 1등으로 쌍둥이와 힐링하는 관장님 이하담담 총 12 화 2,494 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612536",
+        "hours_after_upload": null,
+        "score": 77,
+        "views_24h_verified": 77,
+        "raw": "105 12 (77) 현대판타지 , 드라마 UP 해고 후 연금복권 1등으로 쌍둥이와 힐링하는 관장님 이하담담 총 12 화 2,494 2026.10.24"
+      },
+      {
+        "rank": 106,
+        "novel_id": "612273",
+        "title": "106 29 (76) 현대판타지 , 퓨전 UP 10년간 준비한 아포칼립스 느린생각 총 12 화 3,167 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612273",
+        "hours_after_upload": null,
+        "score": 76,
+        "views_24h_verified": 76,
+        "raw": "106 29 (76) 현대판타지 , 퓨전 UP 10년간 준비한 아포칼립스 느린생각 총 12 화 3,167 2026.10.23"
+      },
+      {
+        "rank": 107,
+        "novel_id": "612947",
+        "title": "107 26 (76) 현대판타지 , 판타지 UP 가맹점 해지 당하고 미슐랭 3스타가 되었다 원일더 총 11 화 1,654 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612947",
+        "hours_after_upload": null,
+        "score": 76,
+        "views_24h_verified": 76,
+        "raw": "107 26 (76) 현대판타지 , 판타지 UP 가맹점 해지 당하고 미슐랭 3스타가 되었다 원일더 총 11 화 1,654 2026.10.23"
+      },
+      {
+        "rank": 108,
+        "novel_id": "612889",
+        "title": "108 (74) 현대판타지 UP 해고당한 작곡가가 업계 깡패임 백시헌 총 12 화 2,876 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612889",
+        "hours_after_upload": null,
+        "score": 74,
+        "views_24h_verified": 74,
+        "raw": "108 (74) 현대판타지 UP 해고당한 작곡가가 업계 깡패임 백시헌 총 12 화 2,876 2026.10.23"
+      },
+      {
+        "rank": 109,
+        "novel_id": "614913",
+        "title": "109 4 (74) 현대판타지 , 퓨전 UP 좌천당한 김팀장이 업계 최고였다 배추나무 총 5 화 819 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614913",
+        "hours_after_upload": null,
+        "score": 74,
+        "views_24h_verified": 74,
+        "raw": "109 4 (74) 현대판타지 , 퓨전 UP 좌천당한 김팀장이 업계 최고였다 배추나무 총 5 화 819 2026.10.23"
+      },
+      {
+        "rank": 110,
+        "novel_id": "613480",
+        "title": "110 54 (72) 현대판타지 UP 해고당했더니 미래 코드가 보인다 해물조림 총 11 화 4,551 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613480",
+        "hours_after_upload": null,
+        "score": 72,
+        "views_24h_verified": 72,
+        "raw": "110 54 (72) 현대판타지 UP 해고당했더니 미래 코드가 보인다 해물조림 총 11 화 4,551 2026.10.24"
+      },
+      {
+        "rank": 111,
+        "novel_id": "606567",
+        "title": "111 7 (72) 현대판타지 UP 꼭두각시 협회장이 너무 유능하다 NOZY 총 19 화 4,279 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/606567",
+        "hours_after_upload": null,
+        "score": 72,
+        "views_24h_verified": 72,
+        "raw": "111 7 (72) 현대판타지 UP 꼭두각시 협회장이 너무 유능하다 NOZY 총 19 화 4,279 2026.10.24"
+      },
+      {
+        "rank": 112,
+        "novel_id": "613486",
+        "title": "112 13 (72) 현대판타지 , 퓨전 UP 레이드 공략 다 써줬더니 해고당했다. 갓뎀로취 총 10 화 2,313 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613486",
+        "hours_after_upload": null,
+        "score": 72,
+        "views_24h_verified": 72,
+        "raw": "112 13 (72) 현대판타지 , 퓨전 UP 레이드 공략 다 써줬더니 해고당했다. 갓뎀로취 총 10 화 2,313 2026.10.23"
+      },
+      {
+        "rank": 113,
+        "novel_id": "612501",
+        "title": "113 17 (70) 현대판타지 , 퓨전 UP 해고당한 마법사가 너무 유능함 한접시 총 12 화 2,543 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612501",
+        "hours_after_upload": null,
+        "score": 70,
+        "views_24h_verified": 70,
+        "raw": "113 17 (70) 현대판타지 , 퓨전 UP 해고당한 마법사가 너무 유능함 한접시 총 12 화 2,543 2026.10.23"
+      },
+      {
+        "rank": 114,
+        "novel_id": "614018",
+        "title": "114 NEW (70) 현대판타지 UP 코인 떡상한 줄 모르고 해고당함 롱파르파 총 8 화 1,270 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614018",
+        "hours_after_upload": null,
+        "score": 70,
+        "views_24h_verified": 70,
+        "raw": "114 NEW (70) 현대판타지 UP 코인 떡상한 줄 모르고 해고당함 롱파르파 총 8 화 1,270 2026.10.23"
+      },
+      {
+        "rank": 115,
+        "novel_id": "612115",
+        "title": "115 37 (69) 현대판타지 UP 미국에서 의료보험 만들었더니 집착당함 까막커 총 12 화 2,710 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612115",
+        "hours_after_upload": null,
+        "score": 69,
+        "views_24h_verified": 69,
+        "raw": "115 37 (69) 현대판타지 UP 미국에서 의료보험 만들었더니 집착당함 까막커 총 12 화 2,710 2026.10.23"
+      },
+      {
+        "rank": 116,
+        "novel_id": "614684",
+        "title": "116 28 (69) 현대판타지 , 판타지 UP 해고당한 서포터가 EX급 루팅 합성을 각성함 착한소 총 5 화 682 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614684",
+        "hours_after_upload": null,
+        "score": 69,
+        "views_24h_verified": 69,
+        "raw": "116 28 (69) 현대판타지 , 판타지 UP 해고당한 서포터가 EX급 루팅 합성을 각성함 착한소 총 5 화 682 2026.10.23"
+      },
+      {
+        "rank": 117,
+        "novel_id": "603659",
+        "title": "117 15 (68) 현대판타지 UP 악인들이 벼락을 맞고 죽기 시작했다 287000 총 14 화 5,412 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/603659",
+        "hours_after_upload": null,
+        "score": 68,
+        "views_24h_verified": 68,
+        "raw": "117 15 (68) 현대판타지 UP 악인들이 벼락을 맞고 죽기 시작했다 287000 총 14 화 5,412 2026.10.23"
+      },
+      {
+        "rank": 118,
+        "novel_id": "611394",
+        "title": "118 2 (67) 현대판타지 , 판타지 UP 국가기관에 집착당해서 마법사 하는 중 편몽 총 17 화 3,956 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611394",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "118 2 (67) 현대판타지 , 판타지 UP 국가기관에 집착당해서 마법사 하는 중 편몽 총 17 화 3,956 2026.10.23"
+      },
+      {
+        "rank": 119,
+        "novel_id": "612701",
+        "title": "119 9 (67) 현대판타지 , 퓨전 UP 해고당한 분석관은 신좌급 헌터였다 유명한작가 총 18 화 7,799 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612701",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "119 9 (67) 현대판타지 , 퓨전 UP 해고당한 분석관은 신좌급 헌터였다 유명한작가 총 18 화 7,799 2026.10.24"
+      },
+      {
+        "rank": 120,
+        "novel_id": "603084",
+        "title": "120 1 (67) 현대판타지 UP 방구석 재벌총수 페르세르크 총 7 화 1,069 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/603084",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "120 1 (67) 현대판타지 UP 방구석 재벌총수 페르세르크 총 7 화 1,069 2026.10.23"
+      },
+      {
+        "rank": 121,
+        "novel_id": "613528",
+        "title": "121 46 (67) 현대판타지 , 판타지 UP 세상이 망했는데 우리 가족이 너무 강함 검은작약 총 19 화 2,700 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613528",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "121 46 (67) 현대판타지 , 판타지 UP 세상이 망했는데 우리 가족이 너무 강함 검은작약 총 19 화 2,700 2026.10.24"
+      },
+      {
+        "rank": 122,
+        "novel_id": "612455",
+        "title": "122 31 (67) 현대판타지 , 퓨전 UP 퇴사 후 역대급 미국 목장의 주인이 되었다 고옹 총 12 화 2,322 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612455",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "122 31 (67) 현대판타지 , 퓨전 UP 퇴사 후 역대급 미국 목장의 주인이 되었다 고옹 총 12 화 2,322 2026.10.23"
+      },
+      {
+        "rank": 123,
+        "novel_id": "613584",
+        "title": "123 20 (67) 현대판타지 UP 해고당하고 무한히 성장하는 1조 셸터를 얻었다 복숭아커피 총 8 화 1,483 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613584",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "123 20 (67) 현대판타지 UP 해고당하고 무한히 성장하는 1조 셸터를 얻었다 복숭아커피 총 8 화 1,483 2026.10.23"
+      },
+      {
+        "rank": 124,
+        "novel_id": "611978",
+        "title": "124 4 (67) 현대판타지 UP 프랑스에서 해고당했더니 시위대가 몰려옴 부팅 총 12 화 2,096 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611978",
+        "hours_after_upload": null,
+        "score": 67,
+        "views_24h_verified": 67,
+        "raw": "124 4 (67) 현대판타지 UP 프랑스에서 해고당했더니 시위대가 몰려옴 부팅 총 12 화 2,096 2026.10.23"
+      },
+      {
+        "rank": 125,
+        "novel_id": "613537",
+        "title": "125 6 (66) 현대판타지 , 판타지 UP K방산업 먹여살려 놨더니 해고당했다. ZZ1존 총 13 화 9,973 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613537",
+        "hours_after_upload": null,
+        "score": 66,
+        "views_24h_verified": 66,
+        "raw": "125 6 (66) 현대판타지 , 판타지 UP K방산업 먹여살려 놨더니 해고당했다. ZZ1존 총 13 화 9,973 2026.10.24"
+      },
+      {
+        "rank": 126,
+        "novel_id": "614584",
+        "title": "126 14 (66) 현대판타지 , 판타지 UP 해상 아포칼립스에서 유일한 건물주가 되었다 스틸훈 총 7 화 1,223 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614584",
+        "hours_after_upload": null,
+        "score": 66,
+        "views_24h_verified": 66,
+        "raw": "126 14 (66) 현대판타지 , 판타지 UP 해상 아포칼립스에서 유일한 건물주가 되었다 스틸훈 총 7 화 1,223 2026.10.23"
+      },
+      {
+        "rank": 127,
+        "novel_id": "610814",
+        "title": "127 10 (66) 대체역사 , 전쟁·밀리터리 UP 이성계의 2회차는 임진왜란 너기누기 총 12 화 1,737 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610814",
+        "hours_after_upload": null,
+        "score": 66,
+        "views_24h_verified": 66,
+        "raw": "127 10 (66) 대체역사 , 전쟁·밀리터리 UP 이성계의 2회차는 임진왜란 너기누기 총 12 화 1,737 2026.10.23"
+      },
+      {
+        "rank": 128,
+        "novel_id": "612102",
+        "title": "128 27 (65) 현대판타지 UP 길드에서 퇴출당했더니 EX급 대장장이로 각성함 김산본 총 13 화 4,334 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612102",
+        "hours_after_upload": null,
+        "score": 65,
+        "views_24h_verified": 65,
+        "raw": "128 27 (65) 현대판타지 UP 길드에서 퇴출당했더니 EX급 대장장이로 각성함 김산본 총 13 화 4,334 2026.10.23"
+      },
+      {
+        "rank": 129,
+        "novel_id": "613476",
+        "title": "129 22 (64) 현대판타지 UP 혼외자가 1000조를 벌었다 소수림 총 11 화 3,222 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613476",
+        "hours_after_upload": null,
+        "score": 64,
+        "views_24h_verified": 64,
+        "raw": "129 22 (64) 현대판타지 UP 혼외자가 1000조를 벌었다 소수림 총 11 화 3,222 2026.10.23"
+      },
+      {
+        "rank": 130,
+        "novel_id": "611522",
+        "title": "130 40 (64) 현대판타지 , 판타지 UP 퇴사 후 미국에서 세탁소 차렸더니 FBI가 집착함 세디바 총 6 화 668 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611522",
+        "hours_after_upload": null,
+        "score": 64,
+        "views_24h_verified": 64,
+        "raw": "130 40 (64) 현대판타지 , 판타지 UP 퇴사 후 미국에서 세탁소 차렸더니 FBI가 집착함 세디바 총 6 화 668 2026.10.23"
+      },
+      {
+        "rank": 131,
+        "novel_id": "612524",
+        "title": "131 26 (62) 판타지 UP 제국이 버린 검성이 너무 강함 곰대리 총 10 화 2,486 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612524",
+        "hours_after_upload": null,
+        "score": 62,
+        "views_24h_verified": 62,
+        "raw": "131 26 (62) 판타지 UP 제국이 버린 검성이 너무 강함 곰대리 총 10 화 2,486 2026.10.23"
+      },
+      {
+        "rank": 132,
+        "novel_id": "613628",
+        "title": "132 27 (61) 현대판타지 UP 나 혼자 각성자인데 유튜브를 탑 등반 마인부유 총 11 화 1,478 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613628",
+        "hours_after_upload": null,
+        "score": 61,
+        "views_24h_verified": 61,
+        "raw": "132 27 (61) 현대판타지 UP 나 혼자 각성자인데 유튜브를 탑 등반 마인부유 총 11 화 1,478 2026.10.23"
+      },
+      {
+        "rank": 133,
+        "novel_id": "615456",
+        "title": "133 22 (61) 현대판타지 UP 이혼 후 해고까지 당했는데 나보고 재벌 상속자랍니다! 오렌지깡 총 5 화 626 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/615456",
+        "hours_after_upload": null,
+        "score": 61,
+        "views_24h_verified": 61,
+        "raw": "133 22 (61) 현대판타지 UP 이혼 후 해고까지 당했는데 나보고 재벌 상속자랍니다! 오렌지깡 총 5 화 626 2026.10.23"
+      },
+      {
+        "rank": 134,
+        "novel_id": "613424",
+        "title": "134 7 (60) 현대판타지 , SF UP 전 세계가 쫓는 천재 해커가 나라는 걸 아무도 모른다. 연백230 총 14 화 3,783 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613424",
+        "hours_after_upload": null,
+        "score": 60,
+        "views_24h_verified": 60,
+        "raw": "134 7 (60) 현대판타지 , SF UP 전 세계가 쫓는 천재 해커가 나라는 걸 아무도 모른다. 연백230 총 14 화 3,783 2026.10.23"
+      },
+      {
+        "rank": 135,
+        "novel_id": "613307",
+        "title": "135 NEW (60) 판타지 UP 리콜 터진 대기업이 내 시골 텃밭에 무릎 꿇음 무자본집필 총 8 화 1,620 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613307",
+        "hours_after_upload": null,
+        "score": 60,
+        "views_24h_verified": 60,
+        "raw": "135 NEW (60) 판타지 UP 리콜 터진 대기업이 내 시골 텃밭에 무릎 꿇음 무자본집필 총 8 화 1,620 2026.10.23"
+      },
+      {
+        "rank": 136,
+        "novel_id": "612443",
+        "title": "136 (60) 현대판타지 , 퓨전 UP 퇴출당한 헌터가 미국에서 승승장구함 hsn22 총 5 화 628 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612443",
+        "hours_after_upload": null,
+        "score": 60,
+        "views_24h_verified": 60,
+        "raw": "136 (60) 현대판타지 , 퓨전 UP 퇴출당한 헌터가 미국에서 승승장구함 hsn22 총 5 화 628 2026.10.23"
+      },
+      {
+        "rank": 137,
+        "novel_id": "612392",
+        "title": "137 23 (60) 현대판타지 , 퓨전 UP 내일 주식이 보여서 퇴사 후 회사를 인수함 말랑제이 총 11 화 1,644 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612392",
+        "hours_after_upload": null,
+        "score": 60,
+        "views_24h_verified": 60,
+        "raw": "137 23 (60) 현대판타지 , 퓨전 UP 내일 주식이 보여서 퇴사 후 회사를 인수함 말랑제이 총 11 화 1,644 2026.10.23"
+      },
+      {
+        "rank": 138,
+        "novel_id": "612490",
+        "title": "138 4 (59) 현대판타지 , 판타지 UP 좌천된 팀장이 버려진 탑 1층에서 힐링함 량주 총 12 화 2,710 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612490",
+        "hours_after_upload": null,
+        "score": 59,
+        "views_24h_verified": 59,
+        "raw": "138 4 (59) 현대판타지 , 판타지 UP 좌천된 팀장이 버려진 탑 1층에서 힐링함 량주 총 12 화 2,710 2026.10.23"
+      },
+      {
+        "rank": 139,
+        "novel_id": "608570",
+        "title": "139 2 (59) 현대판타지 , 퓨전 UP 내 타로 카드에 외신이 들어왔다 윤수하 총 20 화 4,933 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/608570",
+        "hours_after_upload": null,
+        "score": 59,
+        "views_24h_verified": 59,
+        "raw": "139 2 (59) 현대판타지 , 퓨전 UP 내 타로 카드에 외신이 들어왔다 윤수하 총 20 화 4,933 2026.10.23"
+      },
+      {
+        "rank": 140,
+        "novel_id": "611525",
+        "title": "140 NEW (59) 현대판타지 , 판타지 UP 유능한 직원인 줄 모르고 해고한 뒤 전화하며 집착함 신유(愼惟) 총 7 화 2,436 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611525",
+        "hours_after_upload": null,
+        "score": 59,
+        "views_24h_verified": 59,
+        "raw": "140 NEW (59) 현대판타지 , 판타지 UP 유능한 직원인 줄 모르고 해고한 뒤 전화하며 집착함 신유(愼惟) 총 7 화 2,436 2026.10.23"
+      },
+      {
+        "rank": 141,
+        "novel_id": "612754",
+        "title": "141 7 (59) 현대판타지 UP 신입 경찰은 수사가 너무 쉬움 진강™ 총 11 화 1,588 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612754",
+        "hours_after_upload": null,
+        "score": 59,
+        "views_24h_verified": 59,
+        "raw": "141 7 (59) 현대판타지 UP 신입 경찰은 수사가 너무 쉬움 진강™ 총 11 화 1,588 2026.10.23"
+      },
+      {
+        "rank": 142,
+        "novel_id": "608631",
+        "title": "142 3 (58) 판타지 UP 시간을 멈추는 마법사 편곤 총 18 화 5,119 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/608631",
+        "hours_after_upload": null,
+        "score": 58,
+        "views_24h_verified": 58,
+        "raw": "142 3 (58) 판타지 UP 시간을 멈추는 마법사 편곤 총 18 화 5,119 2026.10.23"
+      },
+      {
+        "rank": 143,
+        "novel_id": "610402",
+        "title": "143 45 (58) 현대판타지 , 퓨전 UP 재벌가 장남은 고룡이었다 환세아 총 18 화 1.2만 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/610402",
+        "hours_after_upload": null,
+        "score": 58,
+        "views_24h_verified": 58,
+        "raw": "143 45 (58) 현대판타지 , 퓨전 UP 재벌가 장남은 고룡이었다 환세아 총 18 화 1.2만 2026.10.24"
+      },
+      {
+        "rank": 144,
+        "novel_id": "614818",
+        "title": "144 6 (58) 현대판타지 , 퓨전 UP 해고당한 엔지니어를 전세계 항공사가 찾음 금태영 총 5 화 550 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614818",
+        "hours_after_upload": null,
+        "score": 58,
+        "views_24h_verified": 58,
+        "raw": "144 6 (58) 현대판타지 , 퓨전 UP 해고당한 엔지니어를 전세계 항공사가 찾음 금태영 총 5 화 550 2026.10.23"
+      },
+      {
+        "rank": 145,
+        "novel_id": "614065",
+        "title": "145 20 (57) 현대판타지 , 판타지 UP 해고당한 회사원이 S급 네크로맨서였다 유노이아 총 7 화 849 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614065",
+        "hours_after_upload": null,
+        "score": 57,
+        "views_24h_verified": 57,
+        "raw": "145 20 (57) 현대판타지 , 판타지 UP 해고당한 회사원이 S급 네크로맨서였다 유노이아 총 7 화 849 2026.10.23"
+      },
+      {
+        "rank": 146,
+        "novel_id": "613253",
+        "title": "146 20 (57) 현대판타지 , 게임 UP 경험치 나눠 먹기 싫어서 파티를 나왔습니다 대상필 총 11 화 1,923 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613253",
+        "hours_after_upload": null,
+        "score": 57,
+        "views_24h_verified": 57,
+        "raw": "146 20 (57) 현대판타지 , 게임 UP 경험치 나눠 먹기 싫어서 파티를 나왔습니다 대상필 총 11 화 1,923 2026.10.23"
+      },
+      {
+        "rank": 147,
+        "novel_id": "613070",
+        "title": "147 42 (56) 판타지 , 현대판타지 UP 게이트 속 거래처가 내 인맥인 줄 모르고 해고당함 뜨끈아이스 총 11 화 2,164 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613070",
+        "hours_after_upload": null,
+        "score": 56,
+        "views_24h_verified": 56,
+        "raw": "147 42 (56) 판타지 , 현대판타지 UP 게이트 속 거래처가 내 인맥인 줄 모르고 해고당함 뜨끈아이스 총 11 화 2,164 2026.10.24"
+      },
+      {
+        "rank": 148,
+        "novel_id": "613605",
+        "title": "148 17 (56) 현대판타지 , 퓨전 UP 재앙급 미궁 때려치우고 재벌이 되었다 제갈근철 총 9 화 1,876 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613605",
+        "hours_after_upload": null,
+        "score": 56,
+        "views_24h_verified": 56,
+        "raw": "148 17 (56) 현대판타지 , 퓨전 UP 재앙급 미궁 때려치우고 재벌이 되었다 제갈근철 총 9 화 1,876 2026.10.23"
+      },
+      {
+        "rank": 149,
+        "novel_id": "612973",
+        "title": "149 7 (54) 현대판타지 , 판타지 UP 해고당한 변호사가 너무 유능하다 봉공(鳳公) 총 15 화 3,976 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612973",
+        "hours_after_upload": null,
+        "score": 54,
+        "views_24h_verified": 54,
+        "raw": "149 7 (54) 현대판타지 , 판타지 UP 해고당한 변호사가 너무 유능하다 봉공(鳳公) 총 15 화 3,976 2026.10.24"
+      },
+      {
+        "rank": 150,
+        "novel_id": "613467",
+        "title": "150 4 (54) 현대판타지 , 판타지 UP 해고당한 연금술사가 미궁에서 돈을 쓸어 담음 홍사과 총 15 화 2,404 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/613467",
+        "hours_after_upload": null,
+        "score": 54,
+        "views_24h_verified": 54,
+        "raw": "150 4 (54) 현대판타지 , 판타지 UP 해고당한 연금술사가 미궁에서 돈을 쓸어 담음 홍사과 총 15 화 2,404 2026.10.24"
+      },
+      {
+        "rank": 151,
+        "novel_id": "612029",
+        "title": "151 26 (54) 현대판타지 UP 거짓말하면 죽는 국회의원이 여의도를 지배한다 글향 총 15 화 3,339 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612029",
+        "hours_after_upload": null,
+        "score": 54,
+        "views_24h_verified": 54,
+        "raw": "151 26 (54) 현대판타지 UP 거짓말하면 죽는 국회의원이 여의도를 지배한다 글향 총 15 화 3,339 2026.10.24"
+      },
+      {
+        "rank": 152,
+        "novel_id": "614188",
+        "title": "152 21 (54) 현대판타지 , 판타지 UP 퇴사 첫 날 무인도에 비행기가 추락했다 초씽 총 6 화 651 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614188",
+        "hours_after_upload": null,
+        "score": 54,
+        "views_24h_verified": 54,
+        "raw": "152 21 (54) 현대판타지 , 판타지 UP 퇴사 첫 날 무인도에 비행기가 추락했다 초씽 총 6 화 651 2026.10.23"
+      },
+      {
+        "rank": 153,
+        "novel_id": "614032",
+        "title": "153 35 (54) 현대판타지 UP 파워볼 당첨 후 쉘터 지었는데 아포칼립스 터짐 배출구 총 7 화 938 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614032",
+        "hours_after_upload": null,
+        "score": 54,
+        "views_24h_verified": 54,
+        "raw": "153 35 (54) 현대판타지 UP 파워볼 당첨 후 쉘터 지었는데 아포칼립스 터짐 배출구 총 7 화 938 2026.10.23"
+      },
+      {
+        "rank": 154,
+        "novel_id": "613251",
+        "title": "154 7 (54) 현대판타지 , 판타지 UP 강씨네 아들이 EX급으로 귀환함 강무한 총 10 화 1,607 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613251",
+        "hours_after_upload": null,
+        "score": 54,
+        "views_24h_verified": 54,
+        "raw": "154 7 (54) 현대판타지 , 판타지 UP 강씨네 아들이 EX급으로 귀환함 강무한 총 10 화 1,607 2026.10.23"
+      },
+      {
+        "rank": 155,
+        "novel_id": "614704",
+        "title": "155 26 (53) 현대판타지 , SF UP 짤린 노동자가 쓰레기만 주웠는데 대기업이 줄을 선다 강그린 총 10 화 931 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/614704",
+        "hours_after_upload": null,
+        "score": 53,
+        "views_24h_verified": 53,
+        "raw": "155 26 (53) 현대판타지 , SF UP 짤린 노동자가 쓰레기만 주웠는데 대기업이 줄을 선다 강그린 총 10 화 931 2026.10.24"
+      },
+      {
+        "rank": 156,
+        "novel_id": "611026",
+        "title": "156 6 (52) 대체역사 , 퓨전 UP 삼국지 회귀한 무신 마초 골든라이언 총 18 화 4,940 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/611026",
+        "hours_after_upload": null,
+        "score": 52,
+        "views_24h_verified": 52,
+        "raw": "156 6 (52) 대체역사 , 퓨전 UP 삼국지 회귀한 무신 마초 골든라이언 총 18 화 4,940 2026.10.24"
+      },
+      {
+        "rank": 157,
+        "novel_id": "612852",
+        "title": "157 37 (52) 판타지 , 현대판타지 UP 평양 증발시킨 외계함선의 주인이 되었다! LunStellar 총 11 화 1,435 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612852",
+        "hours_after_upload": null,
+        "score": 52,
+        "views_24h_verified": 52,
+        "raw": "157 37 (52) 판타지 , 현대판타지 UP 평양 증발시킨 외계함선의 주인이 되었다! LunStellar 총 11 화 1,435 2026.10.23"
+      },
+      {
+        "rank": 158,
+        "novel_id": "613678",
+        "title": "158 43 (52) 현대판타지 UP 퇴사당했는데 미국 파워볼 당첨되고 투자천재로 착각당했다 늬파랑 총 9 화 1,913 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613678",
+        "hours_after_upload": null,
+        "score": 52,
+        "views_24h_verified": 52,
+        "raw": "158 43 (52) 현대판타지 UP 퇴사당했는데 미국 파워볼 당첨되고 투자천재로 착각당했다 늬파랑 총 9 화 1,913 2026.10.23"
+      },
+      {
+        "rank": 159,
+        "novel_id": "609684",
+        "title": "159 29 (51) 현대판타지 , 스포츠 UP 방출 후 파워볼 당첨돼서 구단을 역인수 함 자유수달 총 13 화 2,498 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/609684",
+        "hours_after_upload": null,
+        "score": 51,
+        "views_24h_verified": 51,
+        "raw": "159 29 (51) 현대판타지 , 스포츠 UP 방출 후 파워볼 당첨돼서 구단을 역인수 함 자유수달 총 13 화 2,498 2026.10.23"
+      },
+      {
+        "rank": 160,
+        "novel_id": "610937",
+        "title": "160 31 (51) 현대판타지 , 드라마 UP 해고당한 은행원이 IMF 반년 전으로 돌아왔다 TQX 총 18 화 3,089 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610937",
+        "hours_after_upload": null,
+        "score": 51,
+        "views_24h_verified": 51,
+        "raw": "160 31 (51) 현대판타지 , 드라마 UP 해고당한 은행원이 IMF 반년 전으로 돌아왔다 TQX 총 18 화 3,089 2026.10.23"
+      },
+      {
+        "rank": 161,
+        "novel_id": "615299",
+        "title": "161 35 (51) 판타지 , 퓨전 UP 대체불가능한 SSS급 마수 조련사가 해고당함 마지막검사 총 4 화 461 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/615299",
+        "hours_after_upload": null,
+        "score": 51,
+        "views_24h_verified": 51,
+        "raw": "161 35 (51) 판타지 , 퓨전 UP 대체불가능한 SSS급 마수 조련사가 해고당함 마지막검사 총 4 화 461 2026.10.24"
+      },
+      {
+        "rank": 162,
+        "novel_id": "613967",
+        "title": "162 16 (51) 대체역사 , 판타지 UP 삼국지, 상태창이 있으니 천재는 내가 다 데려가겠습니다 휴일 총 6 화 650 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613967",
+        "hours_after_upload": null,
+        "score": 51,
+        "views_24h_verified": 51,
+        "raw": "162 16 (51) 대체역사 , 판타지 UP 삼국지, 상태창이 있으니 천재는 내가 다 데려가겠습니다 휴일 총 6 화 650 2026.10.23"
+      },
+      {
+        "rank": 163,
+        "novel_id": "612125",
+        "title": "163 19 (50) 현대판타지 UP 무한의 상상력을 가진 소년은 게임 만드는 게 너무 쉽다 나일함 총 11 화 1,596 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612125",
+        "hours_after_upload": null,
+        "score": 50,
+        "views_24h_verified": 50,
+        "raw": "163 19 (50) 현대판타지 UP 무한의 상상력을 가진 소년은 게임 만드는 게 너무 쉽다 나일함 총 11 화 1,596 2026.10.23"
+      },
+      {
+        "rank": 164,
+        "novel_id": "611815",
+        "title": "164 9 (49) 현대판타지 , 무협 UP 각성 대신 수선 합니다 심흔 총 16 화 4,796 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/611815",
+        "hours_after_upload": null,
+        "score": 49,
+        "views_24h_verified": 49,
+        "raw": "164 9 (49) 현대판타지 , 무협 UP 각성 대신 수선 합니다 심흔 총 16 화 4,796 2026.10.24"
+      },
+      {
+        "rank": 165,
+        "novel_id": "614249",
+        "title": "165 2 (49) 현대판타지 , 퓨전 UP 해고당한 마법사가 드래곤하트를 각성함 섬월(纖月) 총 7 화 1,645 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/614249",
+        "hours_after_upload": null,
+        "score": 49,
+        "views_24h_verified": 49,
+        "raw": "165 2 (49) 현대판타지 , 퓨전 UP 해고당한 마법사가 드래곤하트를 각성함 섬월(纖月) 총 7 화 1,645 2026.10.24"
+      },
+      {
+        "rank": 166,
+        "novel_id": "613075",
+        "title": "166 3 (49) 현대판타지 , 드라마 UP 재벌 총알받이, 국가를 먹여살림 레드초콜릿 총 8 화 1,591 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613075",
+        "hours_after_upload": null,
+        "score": 49,
+        "views_24h_verified": 49,
+        "raw": "166 3 (49) 현대판타지 , 드라마 UP 재벌 총알받이, 국가를 먹여살림 레드초콜릿 총 8 화 1,591 2026.10.23"
+      },
+      {
+        "rank": 167,
+        "novel_id": "612111",
+        "title": "167 20 (49) 대체역사 , 퓨전 UP 요리만 했는데 자꾸 합스부르크가 떡상한다 가배치 총 14 화 1,794 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612111",
+        "hours_after_upload": null,
+        "score": 49,
+        "views_24h_verified": 49,
+        "raw": "167 20 (49) 대체역사 , 퓨전 UP 요리만 했는데 자꾸 합스부르크가 떡상한다 가배치 총 14 화 1,794 2026.10.23"
+      },
+      {
+        "rank": 168,
+        "novel_id": "603383",
+        "title": "168 NEW (48) 현대판타지 , 퓨전 UP 금의위로 각성했더니 국가가 버림받기 싫어함 착한소 총 20 화 1.9만 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/603383",
+        "hours_after_upload": null,
+        "score": 48,
+        "views_24h_verified": 48,
+        "raw": "168 NEW (48) 현대판타지 , 퓨전 UP 금의위로 각성했더니 국가가 버림받기 싫어함 착한소 총 20 화 1.9만 2026.10.23"
+      },
+      {
+        "rank": 169,
+        "novel_id": "615636",
+        "title": "169 NEW (47) 현대판타지 , 드라마 UP 해고당하고 취미로 일하는데 자꾸 대박남 신기한작가 총 6 화 373 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/615636",
+        "hours_after_upload": null,
+        "score": 47,
+        "views_24h_verified": 47,
+        "raw": "169 NEW (47) 현대판타지 , 드라마 UP 해고당하고 취미로 일하는데 자꾸 대박남 신기한작가 총 6 화 373 2026.10.24"
+      },
+      {
+        "rank": 170,
+        "novel_id": "614734",
+        "title": "170 NEW (47) 현대판타지 , 판타지 UP 업계 최고인데, 월급 도둑이라며 해고 당함 신유(愼惟) 총 2 화 97 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614734",
+        "hours_after_upload": null,
+        "score": 47,
+        "views_24h_verified": 47,
+        "raw": "170 NEW (47) 현대판타지 , 판타지 UP 업계 최고인데, 월급 도둑이라며 해고 당함 신유(愼惟) 총 2 화 97 2026.10.23"
+      },
+      {
+        "rank": 171,
+        "novel_id": "610911",
+        "title": "171 26 (45) 대체역사 , 현대판타지 UP 16세기 말, 대영제국에 웹소설을 풀었다 류도율 총 12 화 1,883 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610911",
+        "hours_after_upload": null,
+        "score": 45,
+        "views_24h_verified": 45,
+        "raw": "171 26 (45) 대체역사 , 현대판타지 UP 16세기 말, 대영제국에 웹소설을 풀었다 류도율 총 12 화 1,883 2026.10.23"
+      },
+      {
+        "rank": 172,
+        "novel_id": "611029",
+        "title": "172 NEW (45) 판타지 UP 몰락한 북부의 소드마스터가 환생했다 검은소드 총 14 화 3,189 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611029",
+        "hours_after_upload": null,
+        "score": 45,
+        "views_24h_verified": 45,
+        "raw": "172 NEW (45) 판타지 UP 몰락한 북부의 소드마스터가 환생했다 검은소드 총 14 화 3,189 2026.10.23"
+      },
+      {
+        "rank": 173,
+        "novel_id": "610871",
+        "title": "173 5 (45) 현대판타지 UP 다섯 살 천재는 바이올린이 너무 쉬움 과로사 총 13 화 1,682 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610871",
+        "hours_after_upload": null,
+        "score": 45,
+        "views_24h_verified": 45,
+        "raw": "173 5 (45) 현대판타지 UP 다섯 살 천재는 바이올린이 너무 쉬움 과로사 총 13 화 1,682 2026.10.23"
+      },
+      {
+        "rank": 174,
+        "novel_id": "614665",
+        "title": "174 61 (45) 현대판타지 , 판타지 UP 무한 과금 네크로맨서는 해골 병사가 너무 강하다 시르베르 총 6 화 829 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/614665",
+        "hours_after_upload": null,
+        "score": 45,
+        "views_24h_verified": 45,
+        "raw": "174 61 (45) 현대판타지 , 판타지 UP 무한 과금 네크로맨서는 해골 병사가 너무 강하다 시르베르 총 6 화 829 2026.10.24"
+      },
+      {
+        "rank": 175,
+        "novel_id": "615207",
+        "title": "175 NEW (45) 판타지 , 현대판타지 UP 한국으로 돌아왔더니 국가권력급 헌터가 됨 아난티 총 4 화 348 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/615207",
+        "hours_after_upload": null,
+        "score": 45,
+        "views_24h_verified": 45,
+        "raw": "175 NEW (45) 판타지 , 현대판타지 UP 한국으로 돌아왔더니 국가권력급 헌터가 됨 아난티 총 4 화 348 2026.10.23"
+      },
+      {
+        "rank": 176,
+        "novel_id": "613517",
+        "title": "176 4 (44) 현대판타지 , 퓨전 UP 정비사 하나 잘랐더니 S급들이 줄퇴사함 엘루아. 총 7 화 1,128 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613517",
+        "hours_after_upload": null,
+        "score": 44,
+        "views_24h_verified": 44,
+        "raw": "176 4 (44) 현대판타지 , 퓨전 UP 정비사 하나 잘랐더니 S급들이 줄퇴사함 엘루아. 총 7 화 1,128 2026.10.23"
+      },
+      {
+        "rank": 177,
+        "novel_id": "613485",
+        "title": "177 23 (44) 현대판타지 , SF UP 해고 대신 좌천된 김과장, 우주선 주운 후 계속 출근함 퇴근후우주 총 9 화 751 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613485",
+        "hours_after_upload": null,
+        "score": 44,
+        "views_24h_verified": 44,
+        "raw": "177 23 (44) 현대판타지 , SF UP 해고 대신 좌천된 김과장, 우주선 주운 후 계속 출근함 퇴근후우주 총 9 화 751 2026.10.23"
+      },
+      {
+        "rank": 178,
+        "novel_id": "614422",
+        "title": "178 NEW (44) 무협 , 판타지 UP 무림맹 지하감옥의 폐공수(廢功手) 강다로 총 11 화 981 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614422",
+        "hours_after_upload": null,
+        "score": 44,
+        "views_24h_verified": 44,
+        "raw": "178 NEW (44) 무협 , 판타지 UP 무림맹 지하감옥의 폐공수(廢功手) 강다로 총 11 화 981 2026.10.23"
+      },
+      {
+        "rank": 179,
+        "novel_id": "613881",
+        "title": "179 (43) 현대판타지 UP 대충 쓴 습작인데 저작권료가 쏟아짐 곽탁타 총 7 화 697 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613881",
+        "hours_after_upload": null,
+        "score": 43,
+        "views_24h_verified": 43,
+        "raw": "179 (43) 현대판타지 UP 대충 쓴 습작인데 저작권료가 쏟아짐 곽탁타 총 7 화 697 2026.10.23"
+      },
+      {
+        "rank": 180,
+        "novel_id": "615504",
+        "title": "180 NEW (42) 현대판타지 UP 해고후 폐가를 물려받았는데 잭팟이 터짐 지나83 총 4 화 236 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/615504",
+        "hours_after_upload": null,
+        "score": 42,
+        "views_24h_verified": 42,
+        "raw": "180 NEW (42) 현대판타지 UP 해고후 폐가를 물려받았는데 잭팟이 터짐 지나83 총 4 화 236 2026.10.23"
+      },
+      {
+        "rank": 181,
+        "novel_id": "611446",
+        "title": "181 23 (41) 현대판타지 UP 해고당한 뒤처리 직원, 재벌가를 뜯어먹음 과묵한구리 총 15 화 4,267 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611446",
+        "hours_after_upload": null,
+        "score": 41,
+        "views_24h_verified": 41,
+        "raw": "181 23 (41) 현대판타지 UP 해고당한 뒤처리 직원, 재벌가를 뜯어먹음 과묵한구리 총 15 화 4,267 2026.10.23"
+      },
+      {
+        "rank": 182,
+        "novel_id": "613624",
+        "title": "182 17 (41) 현대판타지 UP 회사에 배신당하고 금감원 에이스로 회귀함 꼬노네 총 8 화 774 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613624",
+        "hours_after_upload": null,
+        "score": 41,
+        "views_24h_verified": 41,
+        "raw": "182 17 (41) 현대판타지 UP 회사에 배신당하고 금감원 에이스로 회귀함 꼬노네 총 8 화 774 2026.10.23"
+      },
+      {
+        "rank": 183,
+        "novel_id": "614670",
+        "title": "183 7 (41) 현대판타지 UP 좌천당했는데 회장 아들이었다 적백赤白 총 5 화 388 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614670",
+        "hours_after_upload": null,
+        "score": 41,
+        "views_24h_verified": 41,
+        "raw": "183 7 (41) 현대판타지 UP 좌천당했는데 회장 아들이었다 적백赤白 총 5 화 388 2026.10.23"
+      },
+      {
+        "rank": 184,
+        "novel_id": "613472",
+        "title": "184 35 (40) 현대판타지 UP 이혼에 해고까지 당한 데릴사위에게 회장님이 무릎 꿇음 만전 총 9 화 1,082 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613472",
+        "hours_after_upload": null,
+        "score": 40,
+        "views_24h_verified": 40,
+        "raw": "184 35 (40) 현대판타지 UP 이혼에 해고까지 당한 데릴사위에게 회장님이 무릎 꿇음 만전 총 9 화 1,082 2026.10.23"
+      },
+      {
+        "rank": 185,
+        "novel_id": "612399",
+        "title": "185 12 (39) 현대판타지 , 드라마 UP 유배지로 쫓겨난 공무원이 너무 유능하다 몬도리아 총 13 화 2,483 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/612399",
+        "hours_after_upload": null,
+        "score": 39,
+        "views_24h_verified": 39,
+        "raw": "185 12 (39) 현대판타지 , 드라마 UP 유배지로 쫓겨난 공무원이 너무 유능하다 몬도리아 총 13 화 2,483 2026.10.24"
+      },
+      {
+        "rank": 186,
+        "novel_id": "611103",
+        "title": "186 10 (39) 현대판타지 UP 퇴사당한 매니저가 타로점으로, 연예계를 씹어 먹음 풀leaf 총 13 화 1,762 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611103",
+        "hours_after_upload": null,
+        "score": 39,
+        "views_24h_verified": 39,
+        "raw": "186 10 (39) 현대판타지 UP 퇴사당한 매니저가 타로점으로, 연예계를 씹어 먹음 풀leaf 총 13 화 1,762 2026.10.23"
+      },
+      {
+        "rank": 187,
+        "novel_id": "610196",
+        "title": "187 3 (39) 무협 , 퓨전 UP 천마의 안방에서 금서를 훔쳤다 청염(靑焰) 총 19 화 3,796 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/610196",
+        "hours_after_upload": null,
+        "score": 39,
+        "views_24h_verified": 39,
+        "raw": "187 3 (39) 무협 , 퓨전 UP 천마의 안방에서 금서를 훔쳤다 청염(靑焰) 총 19 화 3,796 2026.10.23"
+      },
+      {
+        "rank": 188,
+        "novel_id": "614135",
+        "title": "188 2 (39) 현대판타지 , 판타지 UP 퇴사하고 아공간으로 방앗간 대박났습니다 용풍호 총 6 화 519 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614135",
+        "hours_after_upload": null,
+        "score": 39,
+        "views_24h_verified": 39,
+        "raw": "188 2 (39) 현대판타지 , 판타지 UP 퇴사하고 아공간으로 방앗간 대박났습니다 용풍호 총 6 화 519 2026.10.23"
+      },
+      {
+        "rank": 189,
+        "novel_id": "615468",
+        "title": "189 2 (39) 현대판타지 , 판타지 UP 해고 당했는데, 나만 저주를 풀 수 있음. 크림파이 총 9 화 525 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/615468",
+        "hours_after_upload": null,
+        "score": 39,
+        "views_24h_verified": 39,
+        "raw": "189 2 (39) 현대판타지 , 판타지 UP 해고 당했는데, 나만 저주를 풀 수 있음. 크림파이 총 9 화 525 2026.10.24"
+      },
+      {
+        "rank": 190,
+        "novel_id": "613468",
+        "title": "190 19 (38) 현대판타지 , 퓨전 UP 종결 파티 짐꾼이 회귀했는데, 인벤토리가 그대로임 주차장차장 총 9 화 1,828 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613468",
+        "hours_after_upload": null,
+        "score": 38,
+        "views_24h_verified": 38,
+        "raw": "190 19 (38) 현대판타지 , 퓨전 UP 종결 파티 짐꾼이 회귀했는데, 인벤토리가 그대로임 주차장차장 총 9 화 1,828 2026.10.23"
+      },
+      {
+        "rank": 191,
+        "novel_id": "614781",
+        "title": "191 NEW (38) 현대판타지 , 판타지 UP 퇴사했더니 전 직장이 망하기 시작했다 신들의정원 총 10 화 882 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614781",
+        "hours_after_upload": null,
+        "score": 38,
+        "views_24h_verified": 38,
+        "raw": "191 NEW (38) 현대판타지 , 판타지 UP 퇴사했더니 전 직장이 망하기 시작했다 신들의정원 총 10 화 882 2026.10.23"
+      },
+      {
+        "rank": 192,
+        "novel_id": "615486",
+        "title": "192 NEW (37) 대체역사 UP 삼국지에서 18제후 포신으로 살아남기 다작김절필 총 3 화 188 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/615486",
+        "hours_after_upload": null,
+        "score": 37,
+        "views_24h_verified": 37,
+        "raw": "192 NEW (37) 대체역사 UP 삼국지에서 18제후 포신으로 살아남기 다작김절필 총 3 화 188 2026.10.24"
+      },
+      {
+        "rank": 193,
+        "novel_id": "612808",
+        "title": "193 NEW (36) 판타지 , 현대판타지 UP 타투천재가 범죄자 교화를 잘함 가프 총 12 화 1,251 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/612808",
+        "hours_after_upload": null,
+        "score": 36,
+        "views_24h_verified": 36,
+        "raw": "193 NEW (36) 판타지 , 현대판타지 UP 타투천재가 범죄자 교화를 잘함 가프 총 12 화 1,251 2026.10.23"
+      },
+      {
+        "rank": 194,
+        "novel_id": "615435",
+        "title": "194 NEW (36) 현대판타지 , 판타지 UP 해고당한 검술 교관한테 헌터명가들이 집착함 계란탁 총 3 화 153 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/615435",
+        "hours_after_upload": null,
+        "score": 36,
+        "views_24h_verified": 36,
+        "raw": "194 NEW (36) 현대판타지 , 판타지 UP 해고당한 검술 교관한테 헌터명가들이 집착함 계란탁 총 3 화 153 2026.10.23"
+      },
+      {
+        "rank": 195,
+        "novel_id": "611947",
+        "title": "195 21 (35) 판타지 UP 마왕을 죽인 건 나였는데? 몽중人 총 13 화 1,096 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/611947",
+        "hours_after_upload": null,
+        "score": 35,
+        "views_24h_verified": 35,
+        "raw": "195 21 (35) 판타지 UP 마왕을 죽인 건 나였는데? 몽중人 총 13 화 1,096 2026.10.23"
+      },
+      {
+        "rank": 196,
+        "novel_id": "615151",
+        "title": "196 11 (35) 무협 , 퓨전 UP 종말의 좀비 선협에서 천공섬으로 꿀빱니다. 30센치작가 총 7 화 495 2026.10.24",
+        "url": "https://m.munpia.com/novel/detail/615151",
+        "hours_after_upload": null,
+        "score": 35,
+        "views_24h_verified": 35,
+        "raw": "196 11 (35) 무협 , 퓨전 UP 종말의 좀비 선협에서 천공섬으로 꿀빱니다. 30센치작가 총 7 화 495 2026.10.24"
+      },
+      {
+        "rank": 197,
+        "novel_id": "614402",
+        "title": "197 NEW (34) 현대판타지 , 퓨전 UP 해고된 퇴물이 세계에 갑질을 잘함 홍삼더덕 총 6 화 463 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614402",
+        "hours_after_upload": null,
+        "score": 34,
+        "views_24h_verified": 34,
+        "raw": "197 NEW (34) 현대판타지 , 퓨전 UP 해고된 퇴물이 세계에 갑질을 잘함 홍삼더덕 총 6 화 463 2026.10.23"
+      },
+      {
+        "rank": 198,
+        "novel_id": "614739",
+        "title": "198 NEW (34) 대체역사 , 퓨전 UP 각하의 정치가 대국적임 빅타이거 총 7 화 569 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614739",
+        "hours_after_upload": null,
+        "score": 34,
+        "views_24h_verified": 34,
+        "raw": "198 NEW (34) 대체역사 , 퓨전 UP 각하의 정치가 대국적임 빅타이거 총 7 화 569 2026.10.23"
+      },
+      {
+        "rank": 199,
+        "novel_id": "613129",
+        "title": "199 NEW (33) 현대판타지 , 퓨전 UP 해고당한 감독이 케데헌급 애니를 만듦 RUT 총 6 화 341 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/613129",
+        "hours_after_upload": null,
+        "score": 33,
+        "views_24h_verified": 33,
+        "raw": "199 NEW (33) 현대판타지 , 퓨전 UP 해고당한 감독이 케데헌급 애니를 만듦 RUT 총 6 화 341 2026.10.23"
+      },
+      {
+        "rank": 200,
+        "novel_id": "614755",
+        "title": "200 NEW (32) 현대판타지 UP 보조작가 대본에 탑스타가 매달림 피자소주 총 4 화 270 2026.10.23",
+        "url": "https://m.munpia.com/novel/detail/614755",
+        "hours_after_upload": null,
+        "score": 32,
+        "views_24h_verified": 32,
+        "raw": "200 NEW (32) 현대판타지 UP 보조작가 대본에 탑스타가 매달림 피자소주 총 4 화 270 2026.10.23"
+      }
+    ]
   }
 ]

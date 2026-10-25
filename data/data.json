@@ -2076081,5 +2076081,1963 @@
         "raw": "200 해고당한 만렙 귀환자는 돈 많은 백수를 희망함 곰슈 현대판타지 , 퓨전 2 154 NEW"
       }
     ]
+  },
+  {
+    "captured_at_kst": "2026-10-25 20:16:00",
+    "slot_at_kst": "2026-10-25 20:15:00",
+    "count": 195,
+    "metric": "free_today_verified_views_24h",
+    "items": [
+      {
+        "rank": 1,
+        "novel_id": "608530",
+        "title": "1 1 위 현대판타지 해고당한 의사가 병원 최고였다 오두리리 시간 20 조회 13,089",
+        "url": "https://www.munpia.com/novel/detail/608530",
+        "hours_after_upload": 20,
+        "score": 13089,
+        "views_24h_verified": 13089,
+        "raw": "1 1 위 현대판타지 해고당한 의사가 병원 최고였다 오두리리 시간 20 조회 13,089"
+      },
+      {
+        "rank": 2,
+        "novel_id": "607392",
+        "title": "2 2 위 현대판타지 , 판타지 핵심 특허가 내 건 줄 모르고 해고당함 탄산수영장 시간 22 조회 9,191",
+        "url": "https://www.munpia.com/novel/detail/607392",
+        "hours_after_upload": 22,
+        "score": 9191,
+        "views_24h_verified": 9191,
+        "raw": "2 2 위 현대판타지 , 판타지 핵심 특허가 내 건 줄 모르고 해고당함 탄산수영장 시간 22 조회 9,191"
+      },
+      {
+        "rank": 3,
+        "novel_id": "605509",
+        "title": "3 3 위 무협 , 현대판타지 운기조식하는 침술명의 마늘생강 시간 24 조회 8,370",
+        "url": "https://www.munpia.com/novel/detail/605509",
+        "hours_after_upload": 24,
+        "score": 8370,
+        "views_24h_verified": 8370,
+        "raw": "3 3 위 무협 , 현대판타지 운기조식하는 침술명의 마늘생강 시간 24 조회 8,370"
+      },
+      {
+        "rank": 4,
+        "novel_id": "606767",
+        "title": "4 4 위 현대판타지 , SF 공모전 히트곡 다 써줬더니 해고당했다 더페이서 시간 7 조회 7,541",
+        "url": "https://www.munpia.com/novel/detail/606767",
+        "hours_after_upload": 7,
+        "score": 7541,
+        "views_24h_verified": 7541,
+        "raw": "4 4 위 현대판타지 , SF 공모전 히트곡 다 써줬더니 해고당했다 더페이서 시간 7 조회 7,541"
+      },
+      {
+        "rank": 5,
+        "novel_id": "608006",
+        "title": "5 5 위 스포츠 , 현대판타지 해고당한 단장에게 러브콜이 쏟아짐 밀렵 1 시간 7 조회 7,334",
+        "url": "https://www.munpia.com/novel/detail/608006",
+        "hours_after_upload": 7,
+        "score": 7334,
+        "views_24h_verified": 7334,
+        "raw": "5 5 위 스포츠 , 현대판타지 해고당한 단장에게 러브콜이 쏟아짐 밀렵 1 시간 7 조회 7,334"
+      },
+      {
+        "rank": 6,
+        "novel_id": "606203",
+        "title": "6 좌천당한 김 과장이 너무 유능하다 후추발바닥 현대판타지 , 판타지 24 7,076 1",
+        "url": "https://www.munpia.com/novel/detail/606203",
+        "hours_after_upload": 24,
+        "score": 7076,
+        "views_24h_verified": 7076,
+        "raw": "6 좌천당한 김 과장이 너무 유능하다 후추발바닥 현대판타지 , 판타지 24 7,076 1"
+      },
+      {
+        "rank": 7,
+        "novel_id": "600930",
+        "title": "7 신내림 받은 조연은 소소하게 산다 어로달 현대판타지 21 5,963",
+        "url": "https://www.munpia.com/novel/detail/600930",
+        "hours_after_upload": 21,
+        "score": 5963,
+        "views_24h_verified": 5963,
+        "raw": "7 신내림 받은 조연은 소소하게 산다 어로달 현대판타지 21 5,963"
+      },
+      {
+        "rank": 8,
+        "novel_id": "604497",
+        "title": "8 결혼식날 새인생 차림 초전도 판타지 , 현대판타지 10 5,246",
+        "url": "https://www.munpia.com/novel/detail/604497",
+        "hours_after_upload": 10,
+        "score": 5246,
+        "views_24h_verified": 5246,
+        "raw": "8 결혼식날 새인생 차림 초전도 판타지 , 현대판타지 10 5,246"
+      },
+      {
+        "rank": 9,
+        "novel_id": "598028",
+        "title": "9 텔레포트 하나로 현실에서도 쌀먹합니다 양면거울 현대판타지 , 게임 9 4,738 1",
+        "url": "https://www.munpia.com/novel/detail/598028",
+        "hours_after_upload": 9,
+        "score": 4738,
+        "views_24h_verified": 4738,
+        "raw": "9 텔레포트 하나로 현실에서도 쌀먹합니다 양면거울 현대판타지 , 게임 9 4,738 1"
+      },
+      {
+        "rank": 10,
+        "novel_id": "610774",
+        "title": "10 5초 먼저보는 펀드매니저를 해고했더니 펀드가 박살남 킹스롬 현대판타지 , 퓨전 22 4,439 1",
+        "url": "https://www.munpia.com/novel/detail/610774",
+        "hours_after_upload": 22,
+        "score": 4439,
+        "views_24h_verified": 4439,
+        "raw": "10 5초 먼저보는 펀드매니저를 해고했더니 펀드가 박살남 킹스롬 현대판타지 , 퓨전 22 4,439 1"
+      },
+      {
+        "rank": 11,
+        "novel_id": "607997",
+        "title": "11 해고당한 짐꾼은 S급 버퍼였다 소래담 현대판타지 , 판타지 22 4,205",
+        "url": "https://www.munpia.com/novel/detail/607997",
+        "hours_after_upload": 22,
+        "score": 4205,
+        "views_24h_verified": 4205,
+        "raw": "11 해고당한 짐꾼은 S급 버퍼였다 소래담 현대판타지 , 판타지 22 4,205"
+      },
+      {
+        "rank": 12,
+        "novel_id": "604962",
+        "title": "12 공모전 아포칼립스에서 우주전함을 주웠다 한소™ SF , 현대판타지 24 4,185 1",
+        "url": "https://www.munpia.com/novel/detail/604962",
+        "hours_after_upload": 24,
+        "score": 4185,
+        "views_24h_verified": 4185,
+        "raw": "12 공모전 아포칼립스에서 우주전함을 주웠다 한소™ SF , 현대판타지 24 4,185 1"
+      },
+      {
+        "rank": 13,
+        "novel_id": "603782",
+        "title": "13 법이 안 통해서 마공으로 때려죽임 단팥빵소년 현대판타지 , 무협 9 4,148 1",
+        "url": "https://www.munpia.com/novel/detail/603782",
+        "hours_after_upload": 9,
+        "score": 4148,
+        "views_24h_verified": 4148,
+        "raw": "13 법이 안 통해서 마공으로 때려죽임 단팥빵소년 현대판타지 , 무협 9 4,148 1"
+      },
+      {
+        "rank": 14,
+        "novel_id": "609891",
+        "title": "14 퇴사후 잭팟터져서 힐링하는데 경영천재로 착각당했다 도마뱀작가 현대판타지 9 3,893 3",
+        "url": "https://www.munpia.com/novel/detail/609891",
+        "hours_after_upload": 9,
+        "score": 3893,
+        "views_24h_verified": 3893,
+        "raw": "14 퇴사후 잭팟터져서 힐링하는데 경영천재로 착각당했다 도마뱀작가 현대판타지 9 3,893 3"
+      },
+      {
+        "rank": 15,
+        "novel_id": "607282",
+        "title": "15 사표내고 나간 차장이 너무 유능함 되새김질 현대판타지 , 드라마 21 3,836 1",
+        "url": "https://www.munpia.com/novel/detail/607282",
+        "hours_after_upload": 21,
+        "score": 3836,
+        "views_24h_verified": 3836,
+        "raw": "15 사표내고 나간 차장이 너무 유능함 되새김질 현대판타지 , 드라마 21 3,836 1"
+      },
+      {
+        "rank": 16,
+        "novel_id": "607389",
+        "title": "16 해고당한 협회 직원이 각성 후 국가에 헌신을 안함 우르스. 현대판타지 , 판타지 24 3,827",
+        "url": "https://www.munpia.com/novel/detail/607389",
+        "hours_after_upload": 24,
+        "score": 3827,
+        "views_24h_verified": 3827,
+        "raw": "16 해고당한 협회 직원이 각성 후 국가에 헌신을 안함 우르스. 현대판타지 , 판타지 24 3,827"
+      },
+      {
+        "rank": 17,
+        "novel_id": "608907",
+        "title": "17 권고사직 명단에 올랐는데 최고 에이스임 연함™ 현대판타지 11 3,485 1",
+        "url": "https://www.munpia.com/novel/detail/608907",
+        "hours_after_upload": 11,
+        "score": 3485,
+        "views_24h_verified": 3485,
+        "raw": "17 권고사직 명단에 올랐는데 최고 에이스임 연함™ 현대판타지 11 3,485 1"
+      },
+      {
+        "rank": 18,
+        "novel_id": "610327",
+        "title": "18 반도체 수율의 핵심을 나만 알고 있는데 해고당함 황금꼬미 현대판타지 24 3,480 1",
+        "url": "https://www.munpia.com/novel/detail/610327",
+        "hours_after_upload": 24,
+        "score": 3480,
+        "views_24h_verified": 3480,
+        "raw": "18 반도체 수율의 핵심을 나만 알고 있는데 해고당함 황금꼬미 현대판타지 24 3,480 1"
+      },
+      {
+        "rank": 19,
+        "novel_id": "607730",
+        "title": "19 퇴사하고 차린 함바집에 연예인들이 몰려옴 땃땃땃쥐 현대판타지 12 3,385 1",
+        "url": "https://www.munpia.com/novel/detail/607730",
+        "hours_after_upload": 12,
+        "score": 3385,
+        "views_24h_verified": 3385,
+        "raw": "19 퇴사하고 차린 함바집에 연예인들이 몰려옴 땃땃땃쥐 현대판타지 12 3,385 1"
+      },
+      {
+        "rank": 20,
+        "novel_id": "603062",
+        "title": "20 퇴사당한 매니저에게 미국 탑스타들이 집착함 프로필 현대판타지 21 3,082 3",
+        "url": "https://www.munpia.com/novel/detail/603062",
+        "hours_after_upload": 21,
+        "score": 3082,
+        "views_24h_verified": 3082,
+        "raw": "20 퇴사당한 매니저에게 미국 탑스타들이 집착함 프로필 현대판타지 21 3,082 3"
+      },
+      {
+        "rank": 21,
+        "novel_id": "608304",
+        "title": "21 해고 후 동네슈퍼로 1000조 플렉스 테드K 현대판타지 22 3,009 3",
+        "url": "https://www.munpia.com/novel/detail/608304",
+        "hours_after_upload": 22,
+        "score": 3009,
+        "views_24h_verified": 3009,
+        "raw": "21 해고 후 동네슈퍼로 1000조 플렉스 테드K 현대판타지 22 3,009 3"
+      },
+      {
+        "rank": 22,
+        "novel_id": "604368",
+        "title": "22 공모전 외계어를 나만 알아듣자 전 세계가 집착함 마리골드14 현대판타지 , SF 24 2,544 4",
+        "url": "https://www.munpia.com/novel/detail/604368",
+        "hours_after_upload": 24,
+        "score": 2544,
+        "views_24h_verified": 2544,
+        "raw": "22 공모전 외계어를 나만 알아듣자 전 세계가 집착함 마리골드14 현대판타지 , SF 24 2,544 4"
+      },
+      {
+        "rank": 23,
+        "novel_id": "608696",
+        "title": "23 해고당했더니 공장이 안 돌아감 진주냉면 현대판타지 , 드라마 24 2,532 2",
+        "url": "https://www.munpia.com/novel/detail/608696",
+        "hours_after_upload": 24,
+        "score": 2532,
+        "views_24h_verified": 2532,
+        "raw": "23 해고당했더니 공장이 안 돌아감 진주냉면 현대판타지 , 드라마 24 2,532 2"
+      },
+      {
+        "rank": 24,
+        "novel_id": "602690",
+        "title": "24 방구석 구세주가 기적을 잘 팖 필빛 판타지 , 현대판타지 8 2,525 2",
+        "url": "https://www.munpia.com/novel/detail/602690",
+        "hours_after_upload": 8,
+        "score": 2525,
+        "views_24h_verified": 2525,
+        "raw": "24 방구석 구세주가 기적을 잘 팖 필빛 판타지 , 현대판타지 8 2,525 2"
+      },
+      {
+        "rank": 25,
+        "novel_id": "610537",
+        "title": "25 LAPD 괴물 경찰한테 정보기관들이 집착함 선우(仙宇) 현대판타지 , 판타지 21 2,410 NEW",
+        "url": "https://www.munpia.com/novel/detail/610537",
+        "hours_after_upload": 21,
+        "score": 2410,
+        "views_24h_verified": 2410,
+        "raw": "25 LAPD 괴물 경찰한테 정보기관들이 집착함 선우(仙宇) 현대판타지 , 판타지 21 2,410 NEW"
+      },
+      {
+        "rank": 26,
+        "novel_id": "607817",
+        "title": "26 퇴사한 내과 의사는 모든 것이 쉽다 자몽라임 현대판타지 8 2,371 1",
+        "url": "https://www.munpia.com/novel/detail/607817",
+        "hours_after_upload": 8,
+        "score": 2371,
+        "views_24h_verified": 2371,
+        "raw": "26 퇴사한 내과 의사는 모든 것이 쉽다 자몽라임 현대판타지 8 2,371 1"
+      },
+      {
+        "rank": 27,
+        "novel_id": "603136",
+        "title": "27 아버지 밭 아래 초호화 쉘터가 있었다 나니모노 현대판타지 , 퓨전 4 2,233 3",
+        "url": "https://www.munpia.com/novel/detail/603136",
+        "hours_after_upload": 4,
+        "score": 2233,
+        "views_24h_verified": 2233,
+        "raw": "27 아버지 밭 아래 초호화 쉘터가 있었다 나니모노 현대판타지 , 퓨전 4 2,233 3"
+      },
+      {
+        "rank": 28,
+        "novel_id": "600130",
+        "title": "28 공모전 7억년 앞선 외계 기술로 탑 농락 땡시기 현대판타지 , SF 6 2,190 4",
+        "url": "https://www.munpia.com/novel/detail/600130",
+        "hours_after_upload": 6,
+        "score": 2190,
+        "views_24h_verified": 2190,
+        "raw": "28 공모전 7억년 앞선 외계 기술로 탑 농락 땡시기 현대판타지 , SF 6 2,190 4"
+      },
+      {
+        "rank": 29,
+        "novel_id": "602355",
+        "title": "29 공모전 외계 AI로 대한민국 초강대국 만들기 최자까s SF , 현대판타지 22 2,172 4",
+        "url": "https://www.munpia.com/novel/detail/602355",
+        "hours_after_upload": 22,
+        "score": 2172,
+        "views_24h_verified": 2172,
+        "raw": "29 공모전 외계 AI로 대한민국 초강대국 만들기 최자까s SF , 현대판타지 22 2,172 4"
+      },
+      {
+        "rank": 30,
+        "novel_id": "606661",
+        "title": "30 파워볼 당첨되고 미국 목장을 샀더니 자꾸 대박남 양작과 현대판타지 , 퓨전 9 2,163 5",
+        "url": "https://www.munpia.com/novel/detail/606661",
+        "hours_after_upload": 9,
+        "score": 2163,
+        "views_24h_verified": 2163,
+        "raw": "30 파워볼 당첨되고 미국 목장을 샀더니 자꾸 대박남 양작과 현대판타지 , 퓨전 9 2,163 5"
+      },
+      {
+        "rank": 31,
+        "novel_id": "603795",
+        "title": "31 나만 오르는 주식이 보임 백우랑 현대판타지 , 판타지 22 2,103",
+        "url": "https://www.munpia.com/novel/detail/603795",
+        "hours_after_upload": 22,
+        "score": 2103,
+        "views_24h_verified": 2103,
+        "raw": "31 나만 오르는 주식이 보임 백우랑 현대판타지 , 판타지 22 2,103"
+      },
+      {
+        "rank": 32,
+        "novel_id": "612837",
+        "title": "32 전쟁이 싫어서 국방력에 올인했더니 전 세계가 벌벌 떰 고락 현대판타지 , 전쟁·밀리터리 8 2,013 5",
+        "url": "https://www.munpia.com/novel/detail/612837",
+        "hours_after_upload": 8,
+        "score": 2013,
+        "views_24h_verified": 2013,
+        "raw": "32 전쟁이 싫어서 국방력에 올인했더니 전 세계가 벌벌 떰 고락 현대판타지 , 전쟁·밀리터리 8 2,013 5"
+      },
+      {
+        "rank": 33,
+        "novel_id": "597879",
+        "title": "33 잠수사가 폐광을 빙하기 벙커로 바꿈 과묵한구리 현대판타지 , 퓨전 6 2,002 1",
+        "url": "https://www.munpia.com/novel/detail/597879",
+        "hours_after_upload": 6,
+        "score": 2002,
+        "views_24h_verified": 2002,
+        "raw": "33 잠수사가 폐광을 빙하기 벙커로 바꿈 과묵한구리 현대판타지 , 퓨전 6 2,002 1"
+      },
+      {
+        "rank": 34,
+        "novel_id": "608039",
+        "title": "34 탑 공략해줬더니 해고당했다 광별 현대판타지 9 1,985 4",
+        "url": "https://www.munpia.com/novel/detail/608039",
+        "hours_after_upload": 9,
+        "score": 1985,
+        "views_24h_verified": 1985,
+        "raw": "34 탑 공략해줬더니 해고당했다 광별 현대판타지 9 1,985 4"
+      },
+      {
+        "rank": 35,
+        "novel_id": "604380",
+        "title": "35 국가에 버림받고 재앙급 마법사로 각성했다 적축 현대판타지 , 판타지 8 1,850 1",
+        "url": "https://www.munpia.com/novel/detail/604380",
+        "hours_after_upload": 8,
+        "score": 1850,
+        "views_24h_verified": 1850,
+        "raw": "35 국가에 버림받고 재앙급 마법사로 각성했다 적축 현대판타지 , 판타지 8 1,850 1"
+      },
+      {
+        "rank": 36,
+        "novel_id": "610555",
+        "title": "36 쫓겨난 방송작가가 자꾸 잘됨 김한가 현대판타지 8 1,700 9",
+        "url": "https://www.munpia.com/novel/detail/610555",
+        "hours_after_upload": 8,
+        "score": 1700,
+        "views_24h_verified": 1700,
+        "raw": "36 쫓겨난 방송작가가 자꾸 잘됨 김한가 현대판타지 8 1,700 9"
+      },
+      {
+        "rank": 37,
+        "novel_id": "607476",
+        "title": "37 징집된 우주 해병은 탑 등반이 쉽다 [동주] 현대판타지 , 퓨전 3 1,625 NEW",
+        "url": "https://www.munpia.com/novel/detail/607476",
+        "hours_after_upload": 3,
+        "score": 1625,
+        "views_24h_verified": 1625,
+        "raw": "37 징집된 우주 해병은 탑 등반이 쉽다 [동주] 현대판타지 , 퓨전 3 1,625 NEW"
+      },
+      {
+        "rank": 38,
+        "novel_id": "609474",
+        "title": "38 사이버 렉카가 너무 유능함 북골드 현대판타지 17 1,572 5",
+        "url": "https://www.munpia.com/novel/detail/609474",
+        "hours_after_upload": 17,
+        "score": 1572,
+        "views_24h_verified": 1572,
+        "raw": "38 사이버 렉카가 너무 유능함 북골드 현대판타지 17 1,572 5"
+      },
+      {
+        "rank": 39,
+        "novel_id": "604842",
+        "title": "39 장자상속 재벌가의 장자가 되었다! 초보글장인 현대판타지 , 대체역사 20 1,532",
+        "url": "https://www.munpia.com/novel/detail/604842",
+        "hours_after_upload": 20,
+        "score": 1532,
+        "views_24h_verified": 1532,
+        "raw": "39 장자상속 재벌가의 장자가 되었다! 초보글장인 현대판타지 , 대체역사 20 1,532"
+      },
+      {
+        "rank": 40,
+        "novel_id": "609766",
+        "title": "40 망한 한국에서 나혼자 탑등반함 쪼레벨 퓨전 , 현대판타지 5 1,530 4",
+        "url": "https://www.munpia.com/novel/detail/609766",
+        "hours_after_upload": 5,
+        "score": 1530,
+        "views_24h_verified": 1530,
+        "raw": "40 망한 한국에서 나혼자 탑등반함 쪼레벨 퓨전 , 현대판타지 5 1,530 4"
+      },
+      {
+        "rank": 41,
+        "novel_id": "607344",
+        "title": "41 이혼당한 데릴사위가 초국가적 재벌 후계자 라쿤캣 현대판타지 , 드라마 11 1,431 1",
+        "url": "https://www.munpia.com/novel/detail/607344",
+        "hours_after_upload": 11,
+        "score": 1431,
+        "views_24h_verified": 1431,
+        "raw": "41 이혼당한 데릴사위가 초국가적 재벌 후계자 라쿤캣 현대판타지 , 드라마 11 1,431 1"
+      },
+      {
+        "rank": 42,
+        "novel_id": "603420",
+        "title": "42 내 담보물에서 돈 되는 재능이 쏟아짐 아침호수 현대판타지 14 1,401 6",
+        "url": "https://www.munpia.com/novel/detail/603420",
+        "hours_after_upload": 14,
+        "score": 1401,
+        "views_24h_verified": 1401,
+        "raw": "42 내 담보물에서 돈 되는 재능이 쏟아짐 아침호수 현대판타지 14 1,401 6"
+      },
+      {
+        "rank": 43,
+        "novel_id": "605503",
+        "title": "43 르네상스 시대에 웹툰작가가 어떻게 살아남아 잔고탕진 대체역사 , 판타지 6 1,375 18",
+        "url": "https://www.munpia.com/novel/detail/605503",
+        "hours_after_upload": 6,
+        "score": 1375,
+        "views_24h_verified": 1375,
+        "raw": "43 르네상스 시대에 웹툰작가가 어떻게 살아남아 잔고탕진 대체역사 , 판타지 6 1,375 18"
+      },
+      {
+        "rank": 44,
+        "novel_id": "606826",
+        "title": "44 좌천 당한 실장이 너무 유능함 뇽뇽e 현대판타지 , 드라마 21 1,348 2",
+        "url": "https://www.munpia.com/novel/detail/606826",
+        "hours_after_upload": 21,
+        "score": 1348,
+        "views_24h_verified": 1348,
+        "raw": "44 좌천 당한 실장이 너무 유능함 뇽뇽e 현대판타지 , 드라마 21 1,348 2"
+      },
+      {
+        "rank": 45,
+        "novel_id": "600910",
+        "title": "45 선협에서 약을 너무 잘 씀 오구진 무협 , 퓨전 22 1,346 1",
+        "url": "https://www.munpia.com/novel/detail/600910",
+        "hours_after_upload": 22,
+        "score": 1346,
+        "views_24h_verified": 1346,
+        "raw": "45 선협에서 약을 너무 잘 씀 오구진 무협 , 퓨전 22 1,346 1"
+      },
+      {
+        "rank": 46,
+        "novel_id": "608614",
+        "title": "46 해고당한 펀드 매니저한테 재벌들이 집착함 참맛글 현대판타지 , 판타지 8 1,334 5",
+        "url": "https://www.munpia.com/novel/detail/608614",
+        "hours_after_upload": 8,
+        "score": 1334,
+        "views_24h_verified": 1334,
+        "raw": "46 해고당한 펀드 매니저한테 재벌들이 집착함 참맛글 현대판타지 , 판타지 8 1,334 5"
+      },
+      {
+        "rank": 47,
+        "novel_id": "598792",
+        "title": "47 공모전 퓨전펑크의 멍게가 되었다 우성(雨瑆) SF , 퓨전 11 1,328 9",
+        "url": "https://www.munpia.com/novel/detail/598792",
+        "hours_after_upload": 11,
+        "score": 1328,
+        "views_24h_verified": 1328,
+        "raw": "47 공모전 퓨전펑크의 멍게가 되었다 우성(雨瑆) SF , 퓨전 11 1,328 9"
+      },
+      {
+        "rank": 48,
+        "novel_id": "610450",
+        "title": "48 2조 4천억 복권 당첨되었지만 공무원 계속 합니다 나이막 현대판타지 , 퓨전 9 1,259 1",
+        "url": "https://www.munpia.com/novel/detail/610450",
+        "hours_after_upload": 9,
+        "score": 1259,
+        "views_24h_verified": 1259,
+        "raw": "48 2조 4천억 복권 당첨되었지만 공무원 계속 합니다 나이막 현대판타지 , 퓨전 9 1,259 1"
+      },
+      {
+        "rank": 49,
+        "novel_id": "603410",
+        "title": "49 F급 행운으로 음악인생 술술풀림 월만 판타지 , 현대판타지 12 1,219",
+        "url": "https://www.munpia.com/novel/detail/603410",
+        "hours_after_upload": 12,
+        "score": 1219,
+        "views_24h_verified": 1219,
+        "raw": "49 F급 행운으로 음악인생 술술풀림 월만 판타지 , 현대판타지 12 1,219"
+      },
+      {
+        "rank": 50,
+        "novel_id": "613941",
+        "title": "50 나를 해고하자 1조짜리 공장이 멈췄다 배출구 현대판타지 13 1,173 5",
+        "url": "https://www.munpia.com/novel/detail/613941",
+        "hours_after_upload": 13,
+        "score": 1173,
+        "views_24h_verified": 1173,
+        "raw": "50 나를 해고하자 1조짜리 공장이 멈췄다 배출구 현대판타지 13 1,173 5"
+      },
+      {
+        "rank": 51,
+        "novel_id": "608730",
+        "title": "51 버려진 특성을 주웠더니 SSS급 토벌대원으로 각성함 배불루 판타지 , 현대판타지 13 1,146",
+        "url": "https://www.munpia.com/novel/detail/608730",
+        "hours_after_upload": 13,
+        "score": 1146,
+        "views_24h_verified": 1146,
+        "raw": "51 버려진 특성을 주웠더니 SSS급 토벌대원으로 각성함 배불루 판타지 , 현대판타지 13 1,146"
+      },
+      {
+        "rank": 52,
+        "novel_id": "612364",
+        "title": "52 만년 대리 정서민은 로또 1등이라 퇴사합니다 유우리 현대판타지 24 1,129 1",
+        "url": "https://www.munpia.com/novel/detail/612364",
+        "hours_after_upload": 24,
+        "score": 1129,
+        "views_24h_verified": 1129,
+        "raw": "52 만년 대리 정서민은 로또 1등이라 퇴사합니다 유우리 현대판타지 24 1,129 1"
+      },
+      {
+        "rank": 53,
+        "novel_id": "612705",
+        "title": "53 700억 생기고 망한 휴게소가 대박남 야간커피 현대판타지 , 판타지 9 1,111 10",
+        "url": "https://www.munpia.com/novel/detail/612705",
+        "hours_after_upload": 9,
+        "score": 1111,
+        "views_24h_verified": 1111,
+        "raw": "53 700억 생기고 망한 휴게소가 대박남 야간커피 현대판타지 , 판타지 9 1,111 10"
+      },
+      {
+        "rank": 54,
+        "novel_id": "610935",
+        "title": "54 국정원 막내는 세계 최고 해커 광산김가 현대판타지 24 1,046",
+        "url": "https://www.munpia.com/novel/detail/610935",
+        "hours_after_upload": 24,
+        "score": 1046,
+        "views_24h_verified": 1046,
+        "raw": "54 국정원 막내는 세계 최고 해커 광산김가 현대판타지 24 1,046"
+      },
+      {
+        "rank": 55,
+        "novel_id": "596475",
+        "title": "55 삼국지. 이번 생엔 유비를 개처럼 부려먹겠다 運月 대체역사 , 판타지 22 1,041 3",
+        "url": "https://www.munpia.com/novel/detail/596475",
+        "hours_after_upload": 22,
+        "score": 1041,
+        "views_24h_verified": 1041,
+        "raw": "55 삼국지. 이번 생엔 유비를 개처럼 부려먹겠다 運月 대체역사 , 판타지 22 1,041 3"
+      },
+      {
+        "rank": 56,
+        "novel_id": "610846",
+        "title": "56 할아버지 일을 물려받았더니 거물들이 몰려옴 네딸아빠 현대판타지 5 1,026 6",
+        "url": "https://www.munpia.com/novel/detail/610846",
+        "hours_after_upload": 5,
+        "score": 1026,
+        "views_24h_verified": 1026,
+        "raw": "56 할아버지 일을 물려받았더니 거물들이 몰려옴 네딸아빠 현대판타지 5 1,026 6"
+      },
+      {
+        "rank": 57,
+        "novel_id": "614016",
+        "title": "57 미국에서 은퇴당한 헌터가 귀촌 후 개꿀빱니다 테르치 현대판타지 , 퓨전 23 1,022 23",
+        "url": "https://www.munpia.com/novel/detail/614016",
+        "hours_after_upload": 23,
+        "score": 1022,
+        "views_24h_verified": 1022,
+        "raw": "57 미국에서 은퇴당한 헌터가 귀촌 후 개꿀빱니다 테르치 현대판타지 , 퓨전 23 1,022 23"
+      },
+      {
+        "rank": 58,
+        "novel_id": "598455",
+        "title": "58 공모전 나 혼자만 우주 전함으로 행성 개척 천강™ SF 7 955",
+        "url": "https://www.munpia.com/novel/detail/598455",
+        "hours_after_upload": 7,
+        "score": 955,
+        "views_24h_verified": 955,
+        "raw": "58 공모전 나 혼자만 우주 전함으로 행성 개척 천강™ SF 7 955"
+      },
+      {
+        "rank": 59,
+        "novel_id": "610256",
+        "title": "59 해고당한 주방장이 너무 유능함 긍은긍은 현대판타지 8 950 1",
+        "url": "https://www.munpia.com/novel/detail/610256",
+        "hours_after_upload": 8,
+        "score": 950,
+        "views_24h_verified": 950,
+        "raw": "59 해고당한 주방장이 너무 유능함 긍은긍은 현대판타지 8 950 1"
+      },
+      {
+        "rank": 60,
+        "novel_id": "605629",
+        "title": "60 나 혼자 만능 서포터인데 퇴사당함 백수천 현대판타지 , 퓨전 2 927 45",
+        "url": "https://www.munpia.com/novel/detail/605629",
+        "hours_after_upload": 2,
+        "score": 927,
+        "views_24h_verified": 927,
+        "raw": "60 나 혼자 만능 서포터인데 퇴사당함 백수천 현대판타지 , 퓨전 2 927 45"
+      },
+      {
+        "rank": 61,
+        "novel_id": "592510",
+        "title": "61 삼국지: 십상시 아들이라서 튑니다. 박야옹 대체역사 , 판타지 20 924 4",
+        "url": "https://www.munpia.com/novel/detail/592510",
+        "hours_after_upload": 20,
+        "score": 924,
+        "views_24h_verified": 924,
+        "raw": "61 삼국지: 십상시 아들이라서 튑니다. 박야옹 대체역사 , 판타지 20 924 4"
+      },
+      {
+        "rank": 62,
+        "novel_id": "610602",
+        "title": "62 쫓겨난 경찰이 사법고시를 패스함 조선생님 현대판타지 , 판타지 11 868 4",
+        "url": "https://www.munpia.com/novel/detail/610602",
+        "hours_after_upload": 11,
+        "score": 868,
+        "views_24h_verified": 868,
+        "raw": "62 쫓겨난 경찰이 사법고시를 패스함 조선생님 현대판타지 , 판타지 11 868 4"
+      },
+      {
+        "rank": 63,
+        "novel_id": "608190",
+        "title": "63 나 혼자 헬 난이도에서 고유특성으로 꿀 빰 간딴 판타지 , 퓨전 8 863 4",
+        "url": "https://www.munpia.com/novel/detail/608190",
+        "hours_after_upload": 8,
+        "score": 863,
+        "views_24h_verified": 863,
+        "raw": "63 나 혼자 헬 난이도에서 고유특성으로 꿀 빰 간딴 판타지 , 퓨전 8 863 4"
+      },
+      {
+        "rank": 64,
+        "novel_id": "607203",
+        "title": "64 회귀한 구원 투수가 경기를 자꾸 이김 금문장 스포츠 , 현대판타지 2 845 10",
+        "url": "https://www.munpia.com/novel/detail/607203",
+        "hours_after_upload": 2,
+        "score": 845,
+        "views_24h_verified": 845,
+        "raw": "64 회귀한 구원 투수가 경기를 자꾸 이김 금문장 스포츠 , 현대판타지 2 845 10"
+      },
+      {
+        "rank": 65,
+        "novel_id": "602541",
+        "title": "65 이혼당하고 전기차에 새살림을 차렸다 민땡 현대판타지 5 825 1",
+        "url": "https://www.munpia.com/novel/detail/602541",
+        "hours_after_upload": 5,
+        "score": 825,
+        "views_24h_verified": 825,
+        "raw": "65 이혼당하고 전기차에 새살림을 차렸다 민땡 현대판타지 5 825 1"
+      },
+      {
+        "rank": 66,
+        "novel_id": "600175",
+        "title": "66 공모전 F급 용병이 고대 함선을 주웠다 돈비(豚飛) 현대판타지 , SF 23 810 1",
+        "url": "https://www.munpia.com/novel/detail/600175",
+        "hours_after_upload": 23,
+        "score": 810,
+        "views_24h_verified": 810,
+        "raw": "66 공모전 F급 용병이 고대 함선을 주웠다 돈비(豚飛) 현대판타지 , SF 23 810 1"
+      },
+      {
+        "rank": 67,
+        "novel_id": "610682",
+        "title": "67 해고당한 힐러가 차린 온천이 너무 잘됨 힐링화원 현대판타지 9 798 1",
+        "url": "https://www.munpia.com/novel/detail/610682",
+        "hours_after_upload": 9,
+        "score": 798,
+        "views_24h_verified": 798,
+        "raw": "67 해고당한 힐러가 차린 온천이 너무 잘됨 힐링화원 현대판타지 9 798 1"
+      },
+      {
+        "rank": 68,
+        "novel_id": "593035",
+        "title": "68 삼국지 공명짭인데 공명보다 잘한다 글못쓰는놈 대체역사 , 판타지 8 765 1",
+        "url": "https://www.munpia.com/novel/detail/593035",
+        "hours_after_upload": 8,
+        "score": 765,
+        "views_24h_verified": 765,
+        "raw": "68 삼국지 공명짭인데 공명보다 잘한다 글못쓰는놈 대체역사 , 판타지 8 765 1"
+      },
+      {
+        "rank": 69,
+        "novel_id": "606891",
+        "title": "69 공모전 미래 먼저보는 게임회사 팀장님이 너무 유능함 콜라아이스 현대판타지 , SF 8 763 2",
+        "url": "https://www.munpia.com/novel/detail/606891",
+        "hours_after_upload": 8,
+        "score": 763,
+        "views_24h_verified": 763,
+        "raw": "69 공모전 미래 먼저보는 게임회사 팀장님이 너무 유능함 콜라아이스 현대판타지 , SF 8 763 2"
+      },
+      {
+        "rank": 70,
+        "novel_id": "609116",
+        "title": "70 해고당한 만년 부장이 회귀함 복면작가 현대판타지 , 드라마 21 726",
+        "url": "https://www.munpia.com/novel/detail/609116",
+        "hours_after_upload": 21,
+        "score": 726,
+        "views_24h_verified": 726,
+        "raw": "70 해고당한 만년 부장이 회귀함 복면작가 현대판타지 , 드라마 21 726"
+      },
+      {
+        "rank": 71,
+        "novel_id": "613544",
+        "title": "71 S급 헌터들이 내 소환수인 걸 모르고 버림받음. 제로필터 현대판타지 , 퓨전 6 723 22",
+        "url": "https://www.munpia.com/novel/detail/613544",
+        "hours_after_upload": 6,
+        "score": 723,
+        "views_24h_verified": 723,
+        "raw": "71 S급 헌터들이 내 소환수인 걸 모르고 버림받음. 제로필터 현대판타지 , 퓨전 6 723 22"
+      },
+      {
+        "rank": 72,
+        "novel_id": "610835",
+        "title": "72 해고당한 탱커는 업계 최고 산타클라스 현대판타지 , 퓨전 24 713 5",
+        "url": "https://www.munpia.com/novel/detail/610835",
+        "hours_after_upload": 24,
+        "score": 713,
+        "views_24h_verified": 713,
+        "raw": "72 해고당한 탱커는 업계 최고 산타클라스 현대판타지 , 퓨전 24 713 5"
+      },
+      {
+        "rank": 73,
+        "novel_id": "610623",
+        "title": "73 해고당한 천재 코치가 너무 잘 가르침 정예 스포츠 , 현대판타지 2 705 11",
+        "url": "https://www.munpia.com/novel/detail/610623",
+        "hours_after_upload": 2,
+        "score": 705,
+        "views_24h_verified": 705,
+        "raw": "73 해고당한 천재 코치가 너무 잘 가르침 정예 스포츠 , 현대판타지 2 705 11"
+      },
+      {
+        "rank": 74,
+        "novel_id": "611487",
+        "title": "74 몬스터 해체 9년차는 한 칼에 끝냄 런타임 현대판타지 , 판타지 8 698 9",
+        "url": "https://www.munpia.com/novel/detail/611487",
+        "hours_after_upload": 8,
+        "score": 698,
+        "views_24h_verified": 698,
+        "raw": "74 몬스터 해체 9년차는 한 칼에 끝냄 런타임 현대판타지 , 판타지 8 698 9"
+      },
+      {
+        "rank": 75,
+        "novel_id": "603411",
+        "title": "75 퇴사당하자 거래처가 전부 따라옴 시래클 현대판타지 1 676 4",
+        "url": "https://www.munpia.com/novel/detail/603411",
+        "hours_after_upload": 1,
+        "score": 676,
+        "views_24h_verified": 676,
+        "raw": "75 퇴사당하자 거래처가 전부 따라옴 시래클 현대판타지 1 676 4"
+      },
+      {
+        "rank": 76,
+        "novel_id": "604548",
+        "title": "76 부도 위기 재벌그룹의 회장이 되었다 홈스탠바이 현대판타지 , 대체역사 1 668 3",
+        "url": "https://www.munpia.com/novel/detail/604548",
+        "hours_after_upload": 1,
+        "score": 668,
+        "views_24h_verified": 668,
+        "raw": "76 부도 위기 재벌그룹의 회장이 되었다 홈스탠바이 현대판타지 , 대체역사 1 668 3"
+      },
+      {
+        "rank": 77,
+        "novel_id": "602852",
+        "title": "77 공모전 재벌 때려치고 반도체 독점합니다 백수원 현대판타지 , SF 13 665 5",
+        "url": "https://www.munpia.com/novel/detail/602852",
+        "hours_after_upload": 13,
+        "score": 665,
+        "views_24h_verified": 665,
+        "raw": "77 공모전 재벌 때려치고 반도체 독점합니다 백수원 현대판타지 , SF 13 665 5"
+      },
+      {
+        "rank": 78,
+        "novel_id": "613000",
+        "title": "78 미국 노숙자인데 딸이 생김 용린龍鱗 현대판타지 9 647 29",
+        "url": "https://www.munpia.com/novel/detail/613000",
+        "hours_after_upload": 9,
+        "score": 647,
+        "views_24h_verified": 647,
+        "raw": "78 미국 노숙자인데 딸이 생김 용린龍鱗 현대판타지 9 647 29"
+      },
+      {
+        "rank": 79,
+        "novel_id": "613173",
+        "title": "79 통나무 들어준 줄도 모르고 협회에서 해고당함 붉은냥이 현대판타지 13 646 41",
+        "url": "https://www.munpia.com/novel/detail/613173",
+        "hours_after_upload": 13,
+        "score": 646,
+        "views_24h_verified": 646,
+        "raw": "79 통나무 들어준 줄도 모르고 협회에서 해고당함 붉은냥이 현대판타지 13 646 41"
+      },
+      {
+        "rank": 80,
+        "novel_id": "612206",
+        "title": "80 1800억이 생긴 김에 인생 좀 즐기겠습니다. BlackSwan. 현대판타지 12 624 72",
+        "url": "https://www.munpia.com/novel/detail/612206",
+        "hours_after_upload": 12,
+        "score": 624,
+        "views_24h_verified": 624,
+        "raw": "80 1800억이 생긴 김에 인생 좀 즐기겠습니다. BlackSwan. 현대판타지 12 624 72"
+      },
+      {
+        "rank": 81,
+        "novel_id": "595709",
+        "title": "81 EX급 헌터, 상태창과 함께 수선계에 떨어졌다 목말라 무협 , 퓨전 21 623 NEW",
+        "url": "https://www.munpia.com/novel/detail/595709",
+        "hours_after_upload": 21,
+        "score": 623,
+        "views_24h_verified": 623,
+        "raw": "81 EX급 헌터, 상태창과 함께 수선계에 떨어졌다 목말라 무협 , 퓨전 21 623 NEW"
+      },
+      {
+        "rank": 82,
+        "novel_id": "608178",
+        "title": "82 멸망 30일 전, 무한 아공간을 얻다 콜디 현대판타지 , 판타지 2 616 5",
+        "url": "https://www.munpia.com/novel/detail/608178",
+        "hours_after_upload": 2,
+        "score": 616,
+        "views_24h_verified": 616,
+        "raw": "82 멸망 30일 전, 무한 아공간을 얻다 콜디 현대판타지 , 판타지 2 616 5"
+      },
+      {
+        "rank": 83,
+        "novel_id": "608131",
+        "title": "83 예술고 천재가 빌보드 1위를 숨김 누리용 현대판타지 2 615 1",
+        "url": "https://www.munpia.com/novel/detail/608131",
+        "hours_after_upload": 2,
+        "score": 615,
+        "views_24h_verified": 615,
+        "raw": "83 예술고 천재가 빌보드 1위를 숨김 누리용 현대판타지 2 615 1"
+      },
+      {
+        "rank": 84,
+        "novel_id": "599567",
+        "title": "84 공모전 외계 행성에서 살아남기 체엔 SF 23 600 26",
+        "url": "https://www.munpia.com/novel/detail/599567",
+        "hours_after_upload": 23,
+        "score": 600,
+        "views_24h_verified": 600,
+        "raw": "84 공모전 외계 행성에서 살아남기 체엔 SF 23 600 26"
+      },
+      {
+        "rank": 85,
+        "novel_id": "608314",
+        "title": "85 KBO에서 방출된 타자는 MLB 홈런왕 신지님 스포츠 , 현대판타지 22 581 7",
+        "url": "https://www.munpia.com/novel/detail/608314",
+        "hours_after_upload": 22,
+        "score": 581,
+        "views_24h_verified": 581,
+        "raw": "85 KBO에서 방출된 타자는 MLB 홈런왕 신지님 스포츠 , 현대판타지 22 581 7"
+      },
+      {
+        "rank": 86,
+        "novel_id": "610284",
+        "title": "86 해고 후 퇴직금으로 SS급 능력을 받았다 기획자K 현대판타지 , 퓨전 23 569 10",
+        "url": "https://www.munpia.com/novel/detail/610284",
+        "hours_after_upload": 23,
+        "score": 569,
+        "views_24h_verified": 569,
+        "raw": "86 해고 후 퇴직금으로 SS급 능력을 받았다 기획자K 현대판타지 , 퓨전 23 569 10"
+      },
+      {
+        "rank": 87,
+        "novel_id": "604252",
+        "title": "87 신내림 받고 빙의했더니 1,000만 유튜버 김전기 현대판타지 , 판타지 1 567 11",
+        "url": "https://www.munpia.com/novel/detail/604252",
+        "hours_after_upload": 1,
+        "score": 567,
+        "views_24h_verified": 567,
+        "raw": "87 신내림 받고 빙의했더니 1,000만 유튜버 김전기 현대판타지 , 판타지 1 567 11"
+      },
+      {
+        "rank": 88,
+        "novel_id": "608651",
+        "title": "88 회장 아들인 줄 모르고 해고당함 이돌구 현대판타지 23 566 12",
+        "url": "https://www.munpia.com/novel/detail/608651",
+        "hours_after_upload": 23,
+        "score": 566,
+        "views_24h_verified": 566,
+        "raw": "88 회장 아들인 줄 모르고 해고당함 이돌구 현대판타지 23 566 12"
+      },
+      {
+        "rank": 89,
+        "novel_id": "606436",
+        "title": "89 파워볼 당첨 후, 기업을 통째로 사버림 86호 현대판타지 , 드라마 24 556 4",
+        "url": "https://www.munpia.com/novel/detail/606436",
+        "hours_after_upload": 24,
+        "score": 556,
+        "views_24h_verified": 556,
+        "raw": "89 파워볼 당첨 후, 기업을 통째로 사버림 86호 현대판타지 , 드라마 24 556 4"
+      },
+      {
+        "rank": 90,
+        "novel_id": "608898",
+        "title": "90 선협에서 특성 수집으로 수선함 귤별 무협 , 퓨전 21 545 2",
+        "url": "https://www.munpia.com/novel/detail/608898",
+        "hours_after_upload": 21,
+        "score": 545,
+        "views_24h_verified": 545,
+        "raw": "90 선협에서 특성 수집으로 수선함 귤별 무협 , 퓨전 21 545 2"
+      },
+      {
+        "rank": 91,
+        "novel_id": "610470",
+        "title": "91 멸망 1년 전, 나 혼자 예언서로 독식함 싱글레어 현대판타지 , 판타지 18 540 10",
+        "url": "https://www.munpia.com/novel/detail/610470",
+        "hours_after_upload": 18,
+        "score": 540,
+        "views_24h_verified": 540,
+        "raw": "91 멸망 1년 전, 나 혼자 예언서로 독식함 싱글레어 현대판타지 , 판타지 18 540 10"
+      },
+      {
+        "rank": 92,
+        "novel_id": "612381",
+        "title": "92 해고, 파혼 당한 후 재벌가 손자가 되었다 yespro 현대판타지 10 537 10",
+        "url": "https://www.munpia.com/novel/detail/612381",
+        "hours_after_upload": 10,
+        "score": 537,
+        "views_24h_verified": 537,
+        "raw": "92 해고, 파혼 당한 후 재벌가 손자가 되었다 yespro 현대판타지 10 537 10"
+      },
+      {
+        "rank": 93,
+        "novel_id": "607481",
+        "title": "93 메이저리그행 티켓이 하필 꼴찌팀에 있다 Zorba 스포츠 , 현대판타지 21 534 7",
+        "url": "https://www.munpia.com/novel/detail/607481",
+        "hours_after_upload": 21,
+        "score": 534,
+        "views_24h_verified": 534,
+        "raw": "93 메이저리그행 티켓이 하필 꼴찌팀에 있다 Zorba 스포츠 , 현대판타지 21 534 7"
+      },
+      {
+        "rank": 94,
+        "novel_id": "606751",
+        "title": "94 탑에도 농어촌전형이 있나요? 시온유 현대판타지 5 530 3",
+        "url": "https://www.munpia.com/novel/detail/606751",
+        "hours_after_upload": 5,
+        "score": 530,
+        "views_24h_verified": 530,
+        "raw": "94 탑에도 농어촌전형이 있나요? 시온유 현대판타지 5 530 3"
+      },
+      {
+        "rank": 95,
+        "novel_id": "607948",
+        "title": "95 해고 후 신점 대박 엠버그리스 현대판타지 7 525 2",
+        "url": "https://www.munpia.com/novel/detail/607948",
+        "hours_after_upload": 7,
+        "score": 525,
+        "views_24h_verified": 525,
+        "raw": "95 해고 후 신점 대박 엠버그리스 현대판타지 7 525 2"
+      },
+      {
+        "rank": 96,
+        "novel_id": "607137",
+        "title": "96 해고당하고 미국 동물원을 샀는데 사자가 말을 걸었다 운향림 현대판타지 23 520 7",
+        "url": "https://www.munpia.com/novel/detail/607137",
+        "hours_after_upload": 23,
+        "score": 520,
+        "views_24h_verified": 520,
+        "raw": "96 해고당하고 미국 동물원을 샀는데 사자가 말을 걸었다 운향림 현대판타지 23 520 7"
+      },
+      {
+        "rank": 97,
+        "novel_id": "613776",
+        "title": "97 협회야 배신 고맙다. 탑에서 잘먹고 잘 살게. 우노. 현대판타지 , 판타지 24 493 11",
+        "url": "https://www.munpia.com/novel/detail/613776",
+        "hours_after_upload": 24,
+        "score": 493,
+        "views_24h_verified": 493,
+        "raw": "97 협회야 배신 고맙다. 탑에서 잘먹고 잘 살게. 우노. 현대판타지 , 판타지 24 493 11"
+      },
+      {
+        "rank": 98,
+        "novel_id": "603078",
+        "title": "98 귀환한 삼촌은 EX급이었다. 선비의붓 판타지 , 퓨전 9 483 3",
+        "url": "https://www.munpia.com/novel/detail/603078",
+        "hours_after_upload": 9,
+        "score": 483,
+        "views_24h_verified": 483,
+        "raw": "98 귀환한 삼촌은 EX급이었다. 선비의붓 판타지 , 퓨전 9 483 3"
+      },
+      {
+        "rank": 99,
+        "novel_id": "612139",
+        "title": "99 20살에 은퇴한 금메달리스트가 메이저리그를 씹어먹음 페디아 스포츠 , 현대판타지 24 463 14",
+        "url": "https://www.munpia.com/novel/detail/612139",
+        "hours_after_upload": 24,
+        "score": 463,
+        "views_24h_verified": 463,
+        "raw": "99 20살에 은퇴한 금메달리스트가 메이저리그를 씹어먹음 페디아 스포츠 , 현대판타지 24 463 14"
+      },
+      {
+        "rank": 100,
+        "novel_id": "611893",
+        "title": "100 귀환한 삼촌의 드래곤이 귀엽다 바바루 현대판타지 , 퓨전 8 459 14",
+        "url": "https://www.munpia.com/novel/detail/611893",
+        "hours_after_upload": 8,
+        "score": 459,
+        "views_24h_verified": 459,
+        "raw": "100 귀환한 삼촌의 드래곤이 귀엽다 바바루 현대판타지 , 퓨전 8 459 14"
+      },
+      {
+        "rank": 101,
+        "novel_id": "606644",
+        "title": "101 해고당했는데 재벌가 데릴사위 남호원 현대판타지 , 퓨전 12 451 1",
+        "url": "https://www.munpia.com/novel/detail/606644",
+        "hours_after_upload": 12,
+        "score": 451,
+        "views_24h_verified": 451,
+        "raw": "101 해고당했는데 재벌가 데릴사위 남호원 현대판타지 , 퓨전 12 451 1"
+      },
+      {
+        "rank": 102,
+        "novel_id": "607634",
+        "title": "102 해고당하고 점집 차렸더니 정보기관들이 집착함 녹수(淥水) 현대판타지 , 판타지 12 450 3",
+        "url": "https://www.munpia.com/novel/detail/607634",
+        "hours_after_upload": 12,
+        "score": 450,
+        "views_24h_verified": 450,
+        "raw": "102 해고당하고 점집 차렸더니 정보기관들이 집착함 녹수(淥水) 현대판타지 , 판타지 12 450 3"
+      },
+      {
+        "rank": 103,
+        "novel_id": "608741",
+        "title": "103 망한 재벌이 국가권력급 신기술을 독점함 유수流水 현대판타지 , 판타지 6 449 26",
+        "url": "https://www.munpia.com/novel/detail/608741",
+        "hours_after_upload": 6,
+        "score": 449,
+        "views_24h_verified": 449,
+        "raw": "103 망한 재벌이 국가권력급 신기술을 독점함 유수流水 현대판타지 , 판타지 6 449 26"
+      },
+      {
+        "rank": 104,
+        "novel_id": "610660",
+        "title": "104 해고당한 유물 감정사에게 회장님들이 줄섬 원일더 현대판타지 , 판타지 23 448 NEW",
+        "url": "https://www.munpia.com/novel/detail/610660",
+        "hours_after_upload": 23,
+        "score": 448,
+        "views_24h_verified": 448,
+        "raw": "104 해고당한 유물 감정사에게 회장님들이 줄섬 원일더 현대판타지 , 판타지 23 448 NEW"
+      },
+      {
+        "rank": 105,
+        "novel_id": "611330",
+        "title": "105 해고당하고 귀농했더니 내 밭이 역세권이 됐다 농어촌작가 현대판타지 24 441 4",
+        "url": "https://www.munpia.com/novel/detail/611330",
+        "hours_after_upload": 24,
+        "score": 441,
+        "views_24h_verified": 441,
+        "raw": "105 해고당하고 귀농했더니 내 밭이 역세권이 됐다 농어촌작가 현대판타지 24 441 4"
+      },
+      {
+        "rank": 106,
+        "novel_id": "612354",
+        "title": "106 (귀)신들린 연기자 burn8 현대판타지 13 432 9",
+        "url": "https://www.munpia.com/novel/detail/612354",
+        "hours_after_upload": 13,
+        "score": 432,
+        "views_24h_verified": 432,
+        "raw": "106 (귀)신들린 연기자 burn8 현대판타지 13 432 9"
+      },
+      {
+        "rank": 107,
+        "novel_id": "611753",
+        "title": "107 5조 들고 귀향했더니 마을이 떡상함 비엔나작가 현대판타지 22 431 31",
+        "url": "https://www.munpia.com/novel/detail/611753",
+        "hours_after_upload": 22,
+        "score": 431,
+        "views_24h_verified": 431,
+        "raw": "107 5조 들고 귀향했더니 마을이 떡상함 비엔나작가 현대판타지 22 431 31"
+      },
+      {
+        "rank": 108,
+        "novel_id": "610796",
+        "title": "108 아포쉘터 쫓겨나고 주상복합 각성함 순살키친 현대판타지 , 판타지 9 423 19",
+        "url": "https://www.munpia.com/novel/detail/610796",
+        "hours_after_upload": 9,
+        "score": 423,
+        "views_24h_verified": 423,
+        "raw": "108 아포쉘터 쫓겨나고 주상복합 각성함 순살키친 현대판타지 , 판타지 9 423 19"
+      },
+      {
+        "rank": 109,
+        "novel_id": "592625",
+        "title": "109 차원개척으로 4번째 외계종족이 되었다. 허바 현대판타지 21 417 13",
+        "url": "https://www.munpia.com/novel/detail/592625",
+        "hours_after_upload": 21,
+        "score": 417,
+        "views_24h_verified": 417,
+        "raw": "109 차원개척으로 4번째 외계종족이 되었다. 허바 현대판타지 21 417 13"
+      },
+      {
+        "rank": 110,
+        "novel_id": "608858",
+        "title": "110 변리사를 해고하자 5천억 특허가 날아감 간딴 현대판타지 13 409 9",
+        "url": "https://www.munpia.com/novel/detail/608858",
+        "hours_after_upload": 13,
+        "score": 409,
+        "views_24h_verified": 409,
+        "raw": "110 변리사를 해고하자 5천억 특허가 날아감 간딴 현대판타지 13 409 9"
+      },
+      {
+        "rank": 111,
+        "novel_id": "607594",
+        "title": "111 나 혼자 제작 스킬로 탑 밖에서 꿀빤다 끌떡 현대판타지 , 퓨전 8 407 8",
+        "url": "https://www.munpia.com/novel/detail/607594",
+        "hours_after_upload": 8,
+        "score": 407,
+        "views_24h_verified": 407,
+        "raw": "111 나 혼자 제작 스킬로 탑 밖에서 꿀빤다 끌떡 현대판타지 , 퓨전 8 407 8"
+      },
+      {
+        "rank": 112,
+        "novel_id": "614226",
+        "title": "112 7천억 물려받은 줄 모르고 퇴사당함 무한와규 현대판타지 , 드라마 6 405 49",
+        "url": "https://www.munpia.com/novel/detail/614226",
+        "hours_after_upload": 6,
+        "score": 405,
+        "views_24h_verified": 405,
+        "raw": "112 7천억 물려받은 줄 모르고 퇴사당함 무한와규 현대판타지 , 드라마 6 405 49"
+      },
+      {
+        "rank": 113,
+        "novel_id": "607765",
+        "title": "113 퇴사 후 아티팩트로 사우디 바다에서 금을 캠. 낭만제조사 현대판타지 , 판타지 11 398 3",
+        "url": "https://www.munpia.com/novel/detail/607765",
+        "hours_after_upload": 11,
+        "score": 398,
+        "views_24h_verified": 398,
+        "raw": "113 퇴사 후 아티팩트로 사우디 바다에서 금을 캠. 낭만제조사 현대판타지 , 판타지 11 398 3"
+      },
+      {
+        "rank": 114,
+        "novel_id": "608560",
+        "title": "114 측정불가 지능으로 회귀했다 팟장 현대판타지 , 대체역사 24 397 9",
+        "url": "https://www.munpia.com/novel/detail/608560",
+        "hours_after_upload": 24,
+        "score": 397,
+        "views_24h_verified": 397,
+        "raw": "114 측정불가 지능으로 회귀했다 팟장 현대판타지 , 대체역사 24 397 9"
+      },
+      {
+        "rank": 115,
+        "novel_id": "605247",
+        "title": "115 해고당한 천하제일인은 조용히 살고 싶다 자까떼껄룩 무협 , 판타지 9 396 3",
+        "url": "https://www.munpia.com/novel/detail/605247",
+        "hours_after_upload": 9,
+        "score": 396,
+        "views_24h_verified": 396,
+        "raw": "115 해고당한 천하제일인은 조용히 살고 싶다 자까떼껄룩 무협 , 판타지 9 396 3"
+      },
+      {
+        "rank": 116,
+        "novel_id": "612061",
+        "title": "116 해고당한 날부터 돈이 쏟아진다 신수목 현대판타지 12 389 1",
+        "url": "https://www.munpia.com/novel/detail/612061",
+        "hours_after_upload": 12,
+        "score": 389,
+        "views_24h_verified": 389,
+        "raw": "116 해고당한 날부터 돈이 쏟아진다 신수목 현대판타지 12 389 1"
+      },
+      {
+        "rank": 117,
+        "novel_id": "610440",
+        "title": "117 퇴사한 김 과장에 전세계 화학업계가 집착함 MaUna 현대판타지 12 383 9",
+        "url": "https://www.munpia.com/novel/detail/610440",
+        "hours_after_upload": 12,
+        "score": 383,
+        "views_24h_verified": 383,
+        "raw": "117 퇴사한 김 과장에 전세계 화학업계가 집착함 MaUna 현대판타지 12 383 9"
+      },
+      {
+        "rank": 118,
+        "novel_id": "604224",
+        "title": "118 파워볼 당첨후 미국에서 농사짓는데 기업들이 몰려옴 잭슨뽈락 현대판타지 , 드라마 2 378 3",
+        "url": "https://www.munpia.com/novel/detail/604224",
+        "hours_after_upload": 2,
+        "score": 378,
+        "views_24h_verified": 378,
+        "raw": "118 파워볼 당첨후 미국에서 농사짓는데 기업들이 몰려옴 잭슨뽈락 현대판타지 , 드라마 2 378 3"
+      },
+      {
+        "rank": 119,
+        "novel_id": "606662",
+        "title": "119 퇴사 후 파워볼 당첨되고 철도 재벌이 됨 미친재능 현대판타지 , 드라마 7 375 22",
+        "url": "https://www.munpia.com/novel/detail/606662",
+        "hours_after_upload": 7,
+        "score": 375,
+        "views_24h_verified": 375,
+        "raw": "119 퇴사 후 파워볼 당첨되고 철도 재벌이 됨 미친재능 현대판타지 , 드라마 7 375 22"
+      },
+      {
+        "rank": 120,
+        "novel_id": "612096",
+        "title": "120 280만 유튜버 만들어줬더니 해고당함 새벽감자 현대판타지 1 371 27",
+        "url": "https://www.munpia.com/novel/detail/612096",
+        "hours_after_upload": 1,
+        "score": 371,
+        "views_24h_verified": 371,
+        "raw": "120 280만 유튜버 만들어줬더니 해고당함 새벽감자 현대판타지 1 371 27"
+      },
+      {
+        "rank": 121,
+        "novel_id": "598858",
+        "title": "121 공모전 우주로 가려면 대전에서 환승하세요. 닥터KIMDH SF , 현대판타지 11 368 10",
+        "url": "https://www.munpia.com/novel/detail/598858",
+        "hours_after_upload": 11,
+        "score": 368,
+        "views_24h_verified": 368,
+        "raw": "121 공모전 우주로 가려면 대전에서 환승하세요. 닥터KIMDH SF , 현대판타지 11 368 10"
+      },
+      {
+        "rank": 122,
+        "novel_id": "613175",
+        "title": "122 재벌집 무당 사위 전장범 현대판타지 12 368 15",
+        "url": "https://www.munpia.com/novel/detail/613175",
+        "hours_after_upload": 12,
+        "score": 368,
+        "views_24h_verified": 368,
+        "raw": "122 재벌집 무당 사위 전장범 현대판타지 12 368 15"
+      },
+      {
+        "rank": 123,
+        "novel_id": "608012",
+        "title": "123 해고당한 강화사 아빠가 탑에선 칼퇴합니다 루체른 현대판타지 24 365 2",
+        "url": "https://www.munpia.com/novel/detail/608012",
+        "hours_after_upload": 24,
+        "score": 365,
+        "views_24h_verified": 365,
+        "raw": "123 해고당한 강화사 아빠가 탑에선 칼퇴합니다 루체른 현대판타지 24 365 2"
+      },
+      {
+        "rank": 124,
+        "novel_id": "613353",
+        "title": "124 건물 상속 받고 힐링함 울산깍쟁이 현대판타지 , 판타지 21 364 NEW",
+        "url": "https://www.munpia.com/novel/detail/613353",
+        "hours_after_upload": 21,
+        "score": 364,
+        "views_24h_verified": 364,
+        "raw": "124 건물 상속 받고 힐링함 울산깍쟁이 현대판타지 , 판타지 21 364 NEW"
+      },
+      {
+        "rank": 125,
+        "novel_id": "594270",
+        "title": "125 독립군 말단 병사가 패권국을 만든다 주절주절 대체역사 , 전쟁·밀리터리 5 362 3",
+        "url": "https://www.munpia.com/novel/detail/594270",
+        "hours_after_upload": 5,
+        "score": 362,
+        "views_24h_verified": 362,
+        "raw": "125 독립군 말단 병사가 패권국을 만든다 주절주절 대체역사 , 전쟁·밀리터리 5 362 3"
+      },
+      {
+        "rank": 126,
+        "novel_id": "608769",
+        "title": "126 1997, 미래시로 사업했더니 1조 달러 재벌이 되었다 빈명 현대판타지 , 퓨전 12 357 3",
+        "url": "https://www.munpia.com/novel/detail/608769",
+        "hours_after_upload": 12,
+        "score": 357,
+        "views_24h_verified": 357,
+        "raw": "126 1997, 미래시로 사업했더니 1조 달러 재벌이 되었다 빈명 현대판타지 , 퓨전 12 357 3"
+      },
+      {
+        "rank": 127,
+        "novel_id": "606470",
+        "title": "127 캐나다 이민 후 광산 재벌 테리빈스 현대판타지 22 345 6",
+        "url": "https://www.munpia.com/novel/detail/606470",
+        "hours_after_upload": 22,
+        "score": 345,
+        "views_24h_verified": 345,
+        "raw": "127 캐나다 이민 후 광산 재벌 테리빈스 현대판타지 22 345 6"
+      },
+      {
+        "rank": 128,
+        "novel_id": "607496",
+        "title": "128 전 프로가 유망주인 척 함 엠보돌 현대판타지 , 스포츠 11 343 7",
+        "url": "https://www.munpia.com/novel/detail/607496",
+        "hours_after_upload": 11,
+        "score": 343,
+        "views_24h_verified": 343,
+        "raw": "128 전 프로가 유망주인 척 함 엠보돌 현대판타지 , 스포츠 11 343 7"
+      },
+      {
+        "rank": 129,
+        "novel_id": "609841",
+        "title": "129 놀고싶은데 정조가 자꾸 집착함 고스름도치 대체역사 , 퓨전 2 338 46",
+        "url": "https://www.munpia.com/novel/detail/609841",
+        "hours_after_upload": 2,
+        "score": 338,
+        "views_24h_verified": 338,
+        "raw": "129 놀고싶은데 정조가 자꾸 집착함 고스름도치 대체역사 , 퓨전 2 338 46"
+      },
+      {
+        "rank": 130,
+        "novel_id": "608274",
+        "title": "130 방구석 정보상인데 전 세계가 집착함 차재현 현대판타지 , 퓨전 4 333",
+        "url": "https://www.munpia.com/novel/detail/608274",
+        "hours_after_upload": 4,
+        "score": 333,
+        "views_24h_verified": 333,
+        "raw": "130 방구석 정보상인데 전 세계가 집착함 차재현 현대판타지 , 퓨전 4 333"
+      },
+      {
+        "rank": 131,
+        "novel_id": "609431",
+        "title": "131 SSS급 아이템으로 인생역전 limkun 현대판타지 , 퓨전 21 330 15",
+        "url": "https://www.munpia.com/novel/detail/609431",
+        "hours_after_upload": 21,
+        "score": 330,
+        "views_24h_verified": 330,
+        "raw": "131 SSS급 아이템으로 인생역전 limkun 현대판타지 , 퓨전 21 330 15"
+      },
+      {
+        "rank": 132,
+        "novel_id": "609190",
+        "title": "132 핵심 특허가 내 것인데 그런 나를 해고함! 오렌지깡 현대판타지 10 323 1",
+        "url": "https://www.munpia.com/novel/detail/609190",
+        "hours_after_upload": 10,
+        "score": 323,
+        "views_24h_verified": 323,
+        "raw": "132 핵심 특허가 내 것인데 그런 나를 해고함! 오렌지깡 현대판타지 10 323 1"
+      },
+      {
+        "rank": 133,
+        "novel_id": "611366",
+        "title": "133 김 대리가 퇴사하자 거래처가 뒤집어졌다 맛있는글s 현대판타지 , 판타지 8 312 3",
+        "url": "https://www.munpia.com/novel/detail/611366",
+        "hours_after_upload": 8,
+        "score": 312,
+        "views_24h_verified": 312,
+        "raw": "133 김 대리가 퇴사하자 거래처가 뒤집어졌다 맛있는글s 현대판타지 , 판타지 8 312 3"
+      },
+      {
+        "rank": 134,
+        "novel_id": "608992",
+        "title": "134 해고당한 날, 재벌가 데릴사위가 되었다 칠팔 현대판타지 , 판타지 23 311 10",
+        "url": "https://www.munpia.com/novel/detail/608992",
+        "hours_after_upload": 23,
+        "score": 311,
+        "views_24h_verified": 311,
+        "raw": "134 해고당한 날, 재벌가 데릴사위가 되었다 칠팔 현대판타지 , 판타지 23 311 10"
+      },
+      {
+        "rank": 135,
+        "novel_id": "597872",
+        "title": "135 전역 후, 유럽에서 축구 선수가 되었다 현진현우 현대판타지 , 스포츠 3 303 20",
+        "url": "https://www.munpia.com/novel/detail/597872",
+        "hours_after_upload": 3,
+        "score": 303,
+        "views_24h_verified": 303,
+        "raw": "135 전역 후, 유럽에서 축구 선수가 되었다 현진현우 현대판타지 , 스포츠 3 303 20"
+      },
+      {
+        "rank": 136,
+        "novel_id": "605438",
+        "title": "136 좀비 세상에서 차원배낭을 얻었다 목표설정 현대판타지 , 판타지 19 303 NEW",
+        "url": "https://www.munpia.com/novel/detail/605438",
+        "hours_after_upload": 19,
+        "score": 303,
+        "views_24h_verified": 303,
+        "raw": "136 좀비 세상에서 차원배낭을 얻었다 목표설정 현대판타지 , 판타지 19 303 NEW"
+      },
+      {
+        "rank": 137,
+        "novel_id": "608902",
+        "title": "137 이혼당한 데릴사위는 운세가 너무 좋다 풍기킹 현대판타지 , 퓨전 3 302 5",
+        "url": "https://www.munpia.com/novel/detail/608902",
+        "hours_after_upload": 3,
+        "score": 302,
+        "views_24h_verified": 302,
+        "raw": "137 이혼당한 데릴사위는 운세가 너무 좋다 풍기킹 현대판타지 , 퓨전 3 302 5"
+      },
+      {
+        "rank": 138,
+        "novel_id": "613217",
+        "title": "138 해고당한 서버관리자가 업계를 씹어먹음 게로데 현대판타지 8 299 34",
+        "url": "https://www.munpia.com/novel/detail/613217",
+        "hours_after_upload": 8,
+        "score": 299,
+        "views_24h_verified": 299,
+        "raw": "138 해고당한 서버관리자가 업계를 씹어먹음 게로데 현대판타지 8 299 34"
+      },
+      {
+        "rank": 139,
+        "novel_id": "607514",
+        "title": "139 물려받은 미국 땅에서 온천으로 대박 났습니다 풍기킹 현대판타지 , 판타지 3 296 14",
+        "url": "https://www.munpia.com/novel/detail/607514",
+        "hours_after_upload": 3,
+        "score": 296,
+        "views_24h_verified": 296,
+        "raw": "139 물려받은 미국 땅에서 온천으로 대박 났습니다 풍기킹 현대판타지 , 판타지 3 296 14"
+      },
+      {
+        "rank": 140,
+        "novel_id": "612660",
+        "title": "140 좌천당했는데 주식 차트의 목소리가 들려 만슬라 현대판타지 , 대체역사 18 296 17",
+        "url": "https://www.munpia.com/novel/detail/612660",
+        "hours_after_upload": 18,
+        "score": 296,
+        "views_24h_verified": 296,
+        "raw": "140 좌천당했는데 주식 차트의 목소리가 들려 만슬라 현대판타지 , 대체역사 18 296 17"
+      },
+      {
+        "rank": 141,
+        "novel_id": "601240",
+        "title": "141 육사출신 전술천재, 만주패왕이 되다 백십칠 대체역사 , 전쟁·밀리터리 12 294 2",
+        "url": "https://www.munpia.com/novel/detail/601240",
+        "hours_after_upload": 12,
+        "score": 294,
+        "views_24h_verified": 294,
+        "raw": "141 육사출신 전술천재, 만주패왕이 되다 백십칠 대체역사 , 전쟁·밀리터리 12 294 2"
+      },
+      {
+        "rank": 142,
+        "novel_id": "600029",
+        "title": "142 공모전 50조의 사나이 김동휘 현대판타지 , SF 23 293 2",
+        "url": "https://www.munpia.com/novel/detail/600029",
+        "hours_after_upload": 23,
+        "score": 293,
+        "views_24h_verified": 293,
+        "raw": "142 공모전 50조의 사나이 김동휘 현대판타지 , SF 23 293 2"
+      },
+      {
+        "rank": 143,
+        "novel_id": "612029",
+        "title": "143 거짓말하면 죽는 국회의원이 여의도를 지배한다 글향 현대판타지 13 290 NEW",
+        "url": "https://www.munpia.com/novel/detail/612029",
+        "hours_after_upload": 13,
+        "score": 290,
+        "views_24h_verified": 290,
+        "raw": "143 거짓말하면 죽는 국회의원이 여의도를 지배한다 글향 현대판타지 13 290 NEW"
+      },
+      {
+        "rank": 144,
+        "novel_id": "343688",
+        "title": "144 야구천재가 되었다 불릿타임 스포츠 , 현대판타지 23 289 5",
+        "url": "https://www.munpia.com/novel/detail/343688",
+        "hours_after_upload": 23,
+        "score": 289,
+        "views_24h_verified": 289,
+        "raw": "144 야구천재가 되었다 불릿타임 스포츠 , 현대판타지 23 289 5"
+      },
+      {
+        "rank": 145,
+        "novel_id": "612973",
+        "title": "145 해고당한 변호사가 너무 유능하다 봉공(鳳公) 현대판타지 , 판타지 21 283 NEW",
+        "url": "https://www.munpia.com/novel/detail/612973",
+        "hours_after_upload": 21,
+        "score": 283,
+        "views_24h_verified": 283,
+        "raw": "145 해고당한 변호사가 너무 유능하다 봉공(鳳公) 현대판타지 , 판타지 21 283 NEW"
+      },
+      {
+        "rank": 146,
+        "novel_id": "598946",
+        "title": "146 공모전 게이트에서 주운 열쇠로 우주 전함의 함장이 되었다 헬뮤티 SF , 현대판타지 13 280 3",
+        "url": "https://www.munpia.com/novel/detail/598946",
+        "hours_after_upload": 13,
+        "score": 280,
+        "views_24h_verified": 280,
+        "raw": "146 공모전 게이트에서 주운 열쇠로 우주 전함의 함장이 되었다 헬뮤티 SF , 현대판타지 13 280 3"
+      },
+      {
+        "rank": 147,
+        "novel_id": "609612",
+        "title": "147 양산형 장비 시장에서 나 혼자 맞춤 제작함 샤이텔하우 현대판타지 22 279 24",
+        "url": "https://www.munpia.com/novel/detail/609612",
+        "hours_after_upload": 22,
+        "score": 279,
+        "views_24h_verified": 279,
+        "raw": "147 양산형 장비 시장에서 나 혼자 맞춤 제작함 샤이텔하우 현대판타지 22 279 24"
+      },
+      {
+        "rank": 148,
+        "novel_id": "612097",
+        "title": "148 퇴사 후 요트 타고 힐링합니다 그레이c 현대판타지 , 드라마 12 278 19",
+        "url": "https://www.munpia.com/novel/detail/612097",
+        "hours_after_upload": 12,
+        "score": 278,
+        "views_24h_verified": 278,
+        "raw": "148 퇴사 후 요트 타고 힐링합니다 그레이c 현대판타지 , 드라마 12 278 19"
+      },
+      {
+        "rank": 149,
+        "novel_id": "608430",
+        "title": "149 색을 보는 야구천재 상상(想像) 스포츠 , 현대판타지 22 273 1",
+        "url": "https://www.munpia.com/novel/detail/608430",
+        "hours_after_upload": 22,
+        "score": 273,
+        "views_24h_verified": 273,
+        "raw": "149 색을 보는 야구천재 상상(想像) 스포츠 , 현대판타지 22 273 1"
+      },
+      {
+        "rank": 150,
+        "novel_id": "611371",
+        "title": "150 F급 짐꾼이 잘렸는데 길드가 망함 세우강 판타지 , 현대판타지 24 272",
+        "url": "https://www.munpia.com/novel/detail/611371",
+        "hours_after_upload": 24,
+        "score": 272,
+        "views_24h_verified": 272,
+        "raw": "150 F급 짐꾼이 잘렸는데 길드가 망함 세우강 판타지 , 현대판타지 24 272"
+      },
+      {
+        "rank": 151,
+        "novel_id": "609889",
+        "title": "151 선협에서 괴이를 사냥함 길마 무협 , 퓨전 8 271 3",
+        "url": "https://www.munpia.com/novel/detail/609889",
+        "hours_after_upload": 8,
+        "score": 271,
+        "views_24h_verified": 271,
+        "raw": "151 선협에서 괴이를 사냥함 길마 무협 , 퓨전 8 271 3"
+      },
+      {
+        "rank": 152,
+        "novel_id": "614249",
+        "title": "152 해고당한 마법사가 드래곤하트를 각성함 섬월(纖月) 현대판타지 , 퓨전 13 270 NEW",
+        "url": "https://www.munpia.com/novel/detail/614249",
+        "hours_after_upload": 13,
+        "score": 270,
+        "views_24h_verified": 270,
+        "raw": "152 해고당한 마법사가 드래곤하트를 각성함 섬월(纖月) 현대판타지 , 퓨전 13 270 NEW"
+      },
+      {
+        "rank": 153,
+        "novel_id": "604507",
+        "title": "153 해고당한 EX급 헌터가 세계최강 루나티카 현대판타지 , 판타지 9 266 6",
+        "url": "https://www.munpia.com/novel/detail/604507",
+        "hours_after_upload": 9,
+        "score": 266,
+        "views_24h_verified": 266,
+        "raw": "153 해고당한 EX급 헌터가 세계최강 루나티카 현대판타지 , 판타지 9 266 6"
+      },
+      {
+        "rank": 154,
+        "novel_id": "610208",
+        "title": "154 퇴사 대란 IMF 전에 한국을 공매도 쳤다. 일환(溢環) 현대판타지 , 드라마 12 266 3",
+        "url": "https://www.munpia.com/novel/detail/610208",
+        "hours_after_upload": 12,
+        "score": 266,
+        "views_24h_verified": 266,
+        "raw": "154 퇴사 대란 IMF 전에 한국을 공매도 쳤다. 일환(溢環) 현대판타지 , 드라마 12 266 3"
+      },
+      {
+        "rank": 155,
+        "novel_id": "612110",
+        "title": "155 방출된 타자가 재능을 수집함 주창범 스포츠 , 현대판타지 24 256 45",
+        "url": "https://www.munpia.com/novel/detail/612110",
+        "hours_after_upload": 24,
+        "score": 256,
+        "views_24h_verified": 256,
+        "raw": "155 방출된 타자가 재능을 수집함 주창범 스포츠 , 현대판타지 24 256 45"
+      },
+      {
+        "rank": 156,
+        "novel_id": "605172",
+        "title": "156 선협에서 운명이 다 보임 이찬솔 무협 , 퓨전 6 251 9",
+        "url": "https://www.munpia.com/novel/detail/605172",
+        "hours_after_upload": 6,
+        "score": 251,
+        "views_24h_verified": 251,
+        "raw": "156 선협에서 운명이 다 보임 이찬솔 무협 , 퓨전 6 251 9"
+      },
+      {
+        "rank": 157,
+        "novel_id": "609792",
+        "title": "157 해고된 돈미새의 탑 공략법 싸리또리 현대판타지 , 퓨전 12 251 12",
+        "url": "https://www.munpia.com/novel/detail/609792",
+        "hours_after_upload": 12,
+        "score": 251,
+        "views_24h_verified": 251,
+        "raw": "157 해고된 돈미새의 탑 공략법 싸리또리 현대판타지 , 퓨전 12 251 12"
+      },
+      {
+        "rank": 158,
+        "novel_id": "612883",
+        "title": "158 국가한테 해고 당하고 EX급 농사꾼으로 각성함 나는뉴비 현대판타지 , 판타지 4 249 16",
+        "url": "https://www.munpia.com/novel/detail/612883",
+        "hours_after_upload": 4,
+        "score": 249,
+        "views_24h_verified": 249,
+        "raw": "158 국가한테 해고 당하고 EX급 농사꾼으로 각성함 나는뉴비 현대판타지 , 판타지 4 249 16"
+      },
+      {
+        "rank": 159,
+        "novel_id": "614031",
+        "title": "159 좌천당한 김대리가 재앙급 귀환자 펜리힐드 현대판타지 , 퓨전 10 248 NEW",
+        "url": "https://www.munpia.com/novel/detail/614031",
+        "hours_after_upload": 10,
+        "score": 248,
+        "views_24h_verified": 248,
+        "raw": "159 좌천당한 김대리가 재앙급 귀환자 펜리힐드 현대판타지 , 퓨전 10 248 NEW"
+      },
+      {
+        "rank": 160,
+        "novel_id": "610629",
+        "title": "160 귀환한 검신이 요리로 힐링함 치즈케이끼 현대판타지 3 246 4",
+        "url": "https://www.munpia.com/novel/detail/610629",
+        "hours_after_upload": 3,
+        "score": 246,
+        "views_24h_verified": 246,
+        "raw": "160 귀환한 검신이 요리로 힐링함 치즈케이끼 현대판타지 3 246 4"
+      },
+      {
+        "rank": 161,
+        "novel_id": "611945",
+        "title": "161 풍수지리 봐줬더니 돈이 쏟아짐 글밥 현대판타지 , 퓨전 9 246 17",
+        "url": "https://www.munpia.com/novel/detail/611945",
+        "hours_after_upload": 9,
+        "score": 246,
+        "views_24h_verified": 246,
+        "raw": "161 풍수지리 봐줬더니 돈이 쏟아짐 글밥 현대판타지 , 퓨전 9 246 17"
+      },
+      {
+        "rank": 162,
+        "novel_id": "604482",
+        "title": "162 수선 천재가 기연을 독식하는 법 글청 무협 , 퓨전 8 245 8",
+        "url": "https://www.munpia.com/novel/detail/604482",
+        "hours_after_upload": 8,
+        "score": 245,
+        "views_24h_verified": 245,
+        "raw": "162 수선 천재가 기연을 독식하는 법 글청 무협 , 퓨전 8 245 8"
+      },
+      {
+        "rank": 164,
+        "novel_id": "607234",
+        "title": "164 정보상님, 제발 의뢰를 받아주세요 태대비 판타지 7 242 NEW",
+        "url": "https://www.munpia.com/novel/detail/607234",
+        "hours_after_upload": 7,
+        "score": 242,
+        "views_24h_verified": 242,
+        "raw": "164 정보상님, 제발 의뢰를 받아주세요 태대비 판타지 7 242 NEW"
+      },
+      {
+        "rank": 166,
+        "novel_id": "604677",
+        "title": "166 재벌가 서자가 상태창을 받았습니다 세상s 현대판타지 11 239 10",
+        "url": "https://www.munpia.com/novel/detail/604677",
+        "hours_after_upload": 11,
+        "score": 239,
+        "views_24h_verified": 239,
+        "raw": "166 재벌가 서자가 상태창을 받았습니다 세상s 현대판타지 11 239 10"
+      },
+      {
+        "rank": 167,
+        "novel_id": "612033",
+        "title": "167 버림받은 S급 헌터는 회귀했다 준시최 현대판타지 , 판타지 19 235 27",
+        "url": "https://www.munpia.com/novel/detail/612033",
+        "hours_after_upload": 19,
+        "score": 235,
+        "views_24h_verified": 235,
+        "raw": "167 버림받은 S급 헌터는 회귀했다 준시최 현대판타지 , 판타지 19 235 27"
+      },
+      {
+        "rank": 168,
+        "novel_id": "606906",
+        "title": "168 아포칼립스에 무한동력 원양어선을 숨김 웨스트월드 판타지 , 현대판타지 22 234 8",
+        "url": "https://www.munpia.com/novel/detail/606906",
+        "hours_after_upload": 22,
+        "score": 234,
+        "views_24h_verified": 234,
+        "raw": "168 아포칼립스에 무한동력 원양어선을 숨김 웨스트월드 판타지 , 현대판타지 22 234 8"
+      },
+      {
+        "rank": 169,
+        "novel_id": "595530",
+        "title": "169 삼국지 무신 여포가 되었다 정성우 대체역사 , 판타지 4 222 4",
+        "url": "https://www.munpia.com/novel/detail/595530",
+        "hours_after_upload": 4,
+        "score": 222,
+        "views_24h_verified": 222,
+        "raw": "169 삼국지 무신 여포가 되었다 정성우 대체역사 , 판타지 4 222 4"
+      },
+      {
+        "rank": 170,
+        "novel_id": "603762",
+        "title": "170 공모전 퓨전펑크 천재 해커는 외신을 해킹한다 범미르 SF , 퓨전 8 219 19",
+        "url": "https://www.munpia.com/novel/detail/603762",
+        "hours_after_upload": 8,
+        "score": 219,
+        "views_24h_verified": 219,
+        "raw": "170 공모전 퓨전펑크 천재 해커는 외신을 해킹한다 범미르 SF , 퓨전 8 219 19"
+      },
+      {
+        "rank": 171,
+        "novel_id": "613994",
+        "title": "171 헌터협회가 배신했다. 이제 한국은 탑에 못들어와 데포르메 현대판타지 , 판타지 4 212 NEW",
+        "url": "https://www.munpia.com/novel/detail/613994",
+        "hours_after_upload": 4,
+        "score": 212,
+        "views_24h_verified": 212,
+        "raw": "171 헌터협회가 배신했다. 이제 한국은 탑에 못들어와 데포르메 현대판타지 , 판타지 4 212 NEW"
+      },
+      {
+        "rank": 172,
+        "novel_id": "610672",
+        "title": "172 낙하산 윤대리는 회장님이 숨겼던 전용 풍수사였다 글로또 현대판타지 , 판타지 23 210 6",
+        "url": "https://www.munpia.com/novel/detail/610672",
+        "hours_after_upload": 23,
+        "score": 210,
+        "views_24h_verified": 210,
+        "raw": "172 낙하산 윤대리는 회장님이 숨겼던 전용 풍수사였다 글로또 현대판타지 , 판타지 23 210 6"
+      },
+      {
+        "rank": 173,
+        "novel_id": "613512",
+        "title": "173 해고 후 헌터들이 나만 찾음 투이니F 현대판타지 , 판타지 6 210 NEW",
+        "url": "https://www.munpia.com/novel/detail/613512",
+        "hours_after_upload": 6,
+        "score": 210,
+        "views_24h_verified": 210,
+        "raw": "173 해고 후 헌터들이 나만 찾음 투이니F 현대판타지 , 판타지 6 210 NEW"
+      },
+      {
+        "rank": 174,
+        "novel_id": "613480",
+        "title": "174 해고당했더니 미래 코드가 보인다 해물조림 현대판타지 11 209 13",
+        "url": "https://www.munpia.com/novel/detail/613480",
+        "hours_after_upload": 11,
+        "score": 209,
+        "views_24h_verified": 209,
+        "raw": "174 해고당했더니 미래 코드가 보인다 해물조림 현대판타지 11 209 13"
+      },
+      {
+        "rank": 175,
+        "novel_id": "598840",
+        "title": "175 공모전 운석충돌을 막는 수선자가 되었다 맛소금타로 무협 , SF 4 208 2",
+        "url": "https://www.munpia.com/novel/detail/598840",
+        "hours_after_upload": 4,
+        "score": 208,
+        "views_24h_verified": 208,
+        "raw": "175 공모전 운석충돌을 막는 수선자가 되었다 맛소금타로 무협 , SF 4 208 2"
+      },
+      {
+        "rank": 176,
+        "novel_id": "611507",
+        "title": "176 구멍 파기가 사기 스킬인 줄 나도 몰랐음 BBing 현대판타지 , 퓨전 2 202 6",
+        "url": "https://www.munpia.com/novel/detail/611507",
+        "hours_after_upload": 2,
+        "score": 202,
+        "views_24h_verified": 202,
+        "raw": "176 구멍 파기가 사기 스킬인 줄 나도 몰랐음 BBing 현대판타지 , 퓨전 2 202 6"
+      },
+      {
+        "rank": 177,
+        "novel_id": "609344",
+        "title": "177 해고당한 만렙 귀환자는 돈 많은 백수를 희망함 곰슈 현대판타지 , 퓨전 3 202 4",
+        "url": "https://www.munpia.com/novel/detail/609344",
+        "hours_after_upload": 3,
+        "score": 202,
+        "views_24h_verified": 202,
+        "raw": "177 해고당한 만렙 귀환자는 돈 많은 백수를 희망함 곰슈 현대판타지 , 퓨전 3 202 4"
+      },
+      {
+        "rank": 178,
+        "novel_id": "591598",
+        "title": "178 한국인 초짜 감독이 폐급 구단을 살림 필로스 스포츠 , 현대판타지 21 202 20",
+        "url": "https://www.munpia.com/novel/detail/591598",
+        "hours_after_upload": 21,
+        "score": 202,
+        "views_24h_verified": 202,
+        "raw": "178 한국인 초짜 감독이 폐급 구단을 살림 필로스 스포츠 , 현대판타지 21 202 20"
+      },
+      {
+        "rank": 179,
+        "novel_id": "608475",
+        "title": "179 해고당하고 힐링하려는데 신빨이 미친듯이 터짐 박자까 현대판타지 , 판타지 1 201 6",
+        "url": "https://www.munpia.com/novel/detail/608475",
+        "hours_after_upload": 1,
+        "score": 201,
+        "views_24h_verified": 201,
+        "raw": "179 해고당하고 힐링하려는데 신빨이 미친듯이 터짐 박자까 현대판타지 , 판타지 1 201 6"
+      },
+      {
+        "rank": 180,
+        "novel_id": "608010",
+        "title": "180 경신대기근인데 고구마가 너무 잘 자람 브루마블 대체역사 24 200 NEW",
+        "url": "https://www.munpia.com/novel/detail/608010",
+        "hours_after_upload": 24,
+        "score": 200,
+        "views_24h_verified": 200,
+        "raw": "180 경신대기근인데 고구마가 너무 잘 자람 브루마블 대체역사 24 200 NEW"
+      },
+      {
+        "rank": 181,
+        "novel_id": "601625",
+        "title": "181 공모전 메카닉에 미친 북부 대공 막내아들 아레직 판타지 , 퓨전 2 194 18",
+        "url": "https://www.munpia.com/novel/detail/601625",
+        "hours_after_upload": 2,
+        "score": 194,
+        "views_24h_verified": 194,
+        "raw": "181 공모전 메카닉에 미친 북부 대공 막내아들 아레직 판타지 , 퓨전 2 194 18"
+      },
+      {
+        "rank": 182,
+        "novel_id": "590214",
+        "title": "182 2회차 애니메이터가 너무 잘함 차돌박E 현대판타지 5 192 NEW",
+        "url": "https://www.munpia.com/novel/detail/590214",
+        "hours_after_upload": 5,
+        "score": 192,
+        "views_24h_verified": 192,
+        "raw": "182 2회차 애니메이터가 너무 잘함 차돌박E 현대판타지 5 192 NEW"
+      },
+      {
+        "rank": 184,
+        "novel_id": "610402",
+        "title": "184 재벌가 장남은 고룡이었다 환세아 현대판타지 , 퓨전 8 190 2",
+        "url": "https://www.munpia.com/novel/detail/610402",
+        "hours_after_upload": 8,
+        "score": 190,
+        "views_24h_verified": 190,
+        "raw": "184 재벌가 장남은 고룡이었다 환세아 현대판타지 , 퓨전 8 190 2"
+      },
+      {
+        "rank": 185,
+        "novel_id": "606357",
+        "title": "185 삼국지: 망해버린 가문의 가주가 되었다 지돌띠 대체역사 , 전쟁·밀리터리 6 189 5",
+        "url": "https://www.munpia.com/novel/detail/606357",
+        "hours_after_upload": 6,
+        "score": 189,
+        "views_24h_verified": 189,
+        "raw": "185 삼국지: 망해버린 가문의 가주가 되었다 지돌띠 대체역사 , 전쟁·밀리터리 6 189 5"
+      },
+      {
+        "rank": 186,
+        "novel_id": "613537",
+        "title": "186 K방산업 먹여살려 놨더니 해고당했다. ZZ1존 현대판타지 , 판타지 11 187 7",
+        "url": "https://www.munpia.com/novel/detail/613537",
+        "hours_after_upload": 11,
+        "score": 187,
+        "views_24h_verified": 187,
+        "raw": "186 K방산업 먹여살려 놨더니 해고당했다. ZZ1존 현대판타지 , 판타지 11 187 7"
+      },
+      {
+        "rank": 187,
+        "novel_id": "603811",
+        "title": "187 철종, 제국의 시대 박명의하늘 대체역사 , 전쟁·밀리터리 3 186 4",
+        "url": "https://www.munpia.com/novel/detail/603811",
+        "hours_after_upload": 3,
+        "score": 186,
+        "views_24h_verified": 186,
+        "raw": "187 철종, 제국의 시대 박명의하늘 대체역사 , 전쟁·밀리터리 3 186 4"
+      },
+      {
+        "rank": 188,
+        "novel_id": "612199",
+        "title": "188 궁합 보는 프로듀서 글로운 현대판타지 , 판타지 7 184 3",
+        "url": "https://www.munpia.com/novel/detail/612199",
+        "hours_after_upload": 7,
+        "score": 184,
+        "views_24h_verified": 184,
+        "raw": "188 궁합 보는 프로듀서 글로운 현대판타지 , 판타지 7 184 3"
+      },
+      {
+        "rank": 189,
+        "novel_id": "612232",
+        "title": "189 천재 유물 감정사인 줄 모르고 한국에서 제명당함 기린기린기 현대판타지 , 대체역사 23 178 NEW",
+        "url": "https://www.munpia.com/novel/detail/612232",
+        "hours_after_upload": 23,
+        "score": 178,
+        "views_24h_verified": 178,
+        "raw": "189 천재 유물 감정사인 줄 모르고 한국에서 제명당함 기린기린기 현대판타지 , 대체역사 23 178 NEW"
+      },
+      {
+        "rank": 190,
+        "novel_id": "610523",
+        "title": "190 시골똥개랑 힐링하려다가 재벌 됨 순금사과 현대판타지 , 퓨전 12 174 21",
+        "url": "https://www.munpia.com/novel/detail/610523",
+        "hours_after_upload": 12,
+        "score": 174,
+        "views_24h_verified": 174,
+        "raw": "190 시골똥개랑 힐링하려다가 재벌 됨 순금사과 현대판타지 , 퓨전 12 174 21"
+      },
+      {
+        "rank": 191,
+        "novel_id": "606248",
+        "title": "191 삼국지: 퇴사한 술상무가 너무 유능하다 은수랑 대체역사 , 퓨전 6 168 4",
+        "url": "https://www.munpia.com/novel/detail/606248",
+        "hours_after_upload": 6,
+        "score": 168,
+        "views_24h_verified": 168,
+        "raw": "191 삼국지: 퇴사한 술상무가 너무 유능하다 은수랑 대체역사 , 퓨전 6 168 4"
+      },
+      {
+        "rank": 193,
+        "novel_id": "612941",
+        "title": "193 군필 여배우는 로코 여주가 싫다 필드스틱 현대판타지 , 드라마 2 158 3",
+        "url": "https://www.munpia.com/novel/detail/612941",
+        "hours_after_upload": 2,
+        "score": 158,
+        "views_24h_verified": 158,
+        "raw": "193 군필 여배우는 로코 여주가 싫다 필드스틱 현대판타지 , 드라마 2 158 3"
+      },
+      {
+        "rank": 194,
+        "novel_id": "612197",
+        "title": "194 해고당한 짐꾼의 S급 던전 생존기 유리뼈 판타지 , 현대판타지 9 158 NEW",
+        "url": "https://www.munpia.com/novel/detail/612197",
+        "hours_after_upload": 9,
+        "score": 158,
+        "views_24h_verified": 158,
+        "raw": "194 해고당한 짐꾼의 S급 던전 생존기 유리뼈 판타지 , 현대판타지 9 158 NEW"
+      },
+      {
+        "rank": 195,
+        "novel_id": "610501",
+        "title": "195 배신당할 줄 알고 특허를 숨김 골방개발자 현대판타지 , SF 3 157 NEW",
+        "url": "https://www.munpia.com/novel/detail/610501",
+        "hours_after_upload": 3,
+        "score": 157,
+        "views_24h_verified": 157,
+        "raw": "195 배신당할 줄 알고 특허를 숨김 골방개발자 현대판타지 , SF 3 157 NEW"
+      },
+      {
+        "rank": 196,
+        "novel_id": "611971",
+        "title": "196 내 프랑스에 폭동은 없다 브리스트 대체역사 , 판타지 2 157 1",
+        "url": "https://www.munpia.com/novel/detail/611971",
+        "hours_after_upload": 2,
+        "score": 157,
+        "views_24h_verified": 157,
+        "raw": "196 내 프랑스에 폭동은 없다 브리스트 대체역사 , 판타지 2 157 1"
+      },
+      {
+        "rank": 198,
+        "novel_id": "612898",
+        "title": "198 건물 맥 짚는 품질팀장을 해고했더니 건물이 박살남 선안 현대판타지 8 152 NEW",
+        "url": "https://www.munpia.com/novel/detail/612898",
+        "hours_after_upload": 8,
+        "score": 152,
+        "views_24h_verified": 152,
+        "raw": "198 건물 맥 짚는 품질팀장을 해고했더니 건물이 박살남 선안 현대판타지 8 152 NEW"
+      },
+      {
+        "rank": 199,
+        "novel_id": "612123",
+        "title": "199 생활용 부적인데 성능이 미쳤다 하우트 현대판타지 , 퓨전 3 149 NEW",
+        "url": "https://www.munpia.com/novel/detail/612123",
+        "hours_after_upload": 3,
+        "score": 149,
+        "views_24h_verified": 149,
+        "raw": "199 생활용 부적인데 성능이 미쳤다 하우트 현대판타지 , 퓨전 3 149 NEW"
+      },
+      {
+        "rank": 200,
+        "novel_id": "556559",
+        "title": "200 삼국지: 난세의간옹 Aka.Jin 대체역사 21 147 NEW",
+        "url": "https://www.munpia.com/novel/detail/556559",
+        "hours_after_upload": 21,
+        "score": 147,
+        "views_24h_verified": 147,
+        "raw": "200 삼국지: 난세의간옹 Aka.Jin 대체역사 21 147 NEW"
+      }
+    ]
   }
 ]

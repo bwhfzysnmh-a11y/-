@@ -157,23 +157,7 @@ if legacy_old:
             all_old.append(x)
             known.add(key)
 
-# 실패한 GitHub Action을 Re-run한 경우 최근 누락 시간대를 자동 복구.
-run_attempt = int(os.getenv("GITHUB_RUN_ATTEMPT", "1") or "1")
-if run_attempt > 1 and all_old:
-    existing_slots = set()
-    for old_snapshot in all_old:
-        raw = old_snapshot.get("slot_at_kst") or old_snapshot.get("captured_at_kst")
-        d = parse_kst(raw)
-        if d:
-            existing_slots.add(scheduled_slot(d).strftime("%Y-%m-%d %H:%M:%S"))
-
-    probe = current_slot - timedelta(hours=1)
-    for _ in range(48):
-        key = probe.strftime("%Y-%m-%d %H:%M:%S")
-        if key not in existing_slots:
-            slot = probe
-            break
-        probe -= timedelta(hours=1)
+# 재실행도 실제 수집 시각의 슬롯에만 저장한다. 과거 누락은 그대로 둔다.
 
 snapshot = {
     "captured_at_kst": stamp,
@@ -217,7 +201,7 @@ month_data.sort(
 )
 
 archive_file.write_text(
-    json.dumps(month_data, ensure_ascii=False, indent=2),
+    json.dumps(month_data, ensure_ascii=False, separators=(",", ":")),
     encoding="utf-8",
 )
 
@@ -235,11 +219,24 @@ combined.sort(
     )
 )
 
+# 월별 원본은 보존하고 화면용 파일은 최근 45일만 제공한다.
+cutoff = now_kst - timedelta(days=45)
+recent_snapshots = [s for s in combined
+    if (parse_kst(s.get("slot_at_kst") or s.get("captured_at_kst") or "") or datetime.min.replace(tzinfo=KST)) >= cutoff]
 LEGACY_OUT.parent.mkdir(parents=True, exist_ok=True)
-LEGACY_OUT.write_text(
-    json.dumps(combined, ensure_ascii=False, indent=2),
-    encoding="utf-8",
-)
+LEGACY_OUT.write_text(json.dumps(recent_snapshots, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+# 월별 화면은 보관 기간 전체의 주요 순위만 담은 경량 파일을 읽는다.
+monthly_ranks = {4,8,10,20,40,60,80,100,120,140,160,180,200}
+monthly_snapshots = [{
+    "slot_at_kst": s.get("slot_at_kst"),
+    "captured_at_kst": s.get("captured_at_kst"),
+    "items": [{"rank": x.get("rank"), "views_24h_verified": x.get("views_24h_verified", x.get("score"))}
+              for x in s.get("items", []) if x.get("rank") in monthly_ranks]
+} for s in combined]
+monthly_path = Path("data") / MODE / "monthly.json"
+monthly_path.parent.mkdir(parents=True, exist_ok=True)
+monthly_path.write_text(json.dumps(monthly_snapshots, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
 max_rank = max(items_by_rank) if items_by_rank else 0
 rank200 = items_by_rank.get(200)
@@ -516,3 +513,4 @@ def collect_registered_work_snapshots():
 
 
 collect_registered_work_snapshots()
+

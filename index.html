@@ -919,10 +919,23 @@ function renderTodayHourlyCut(){
 }
 
 
-function monthlyStats(year){
+const monthlyCache = {};
+async function monthlyHistory(mode){
+  if(!monthlyCache[mode]) monthlyCache[mode]=fetch(`./data/${mode}/monthly.json?ts=${Date.now()}`,{cache:'no-store'})
+    .then(r=>{if(!r.ok)throw new Error('월별 기록 불러오기 실패');return r.json()})
+    .catch(e=>{delete monthlyCache[mode];throw e});
+  return monthlyCache[mode];
+}
+function collectionDelayed(s){
+  const value=s?.captured_at_kst||s?.slot_at_kst;
+  const t=value?Date.parse(value.replace(' ','T')+'+09:00'):NaN;
+  return !Number.isFinite(t)||Date.now()-t>75*60*1000;
+}
+
+function monthlyStats(year, history=snaps){
   const map=new Map();
   for(let m=1;m<=12;m++)map.set(m,[]);
-  for(const s of snaps){
+  for(const s of history){
     const d=snapDate(s);
     const {y,m}=ym(d);
     if(y!==year)continue;
@@ -938,8 +951,10 @@ function monthlyStats(year){
   }));
 }
 
-function renderMonthly(){
+async function renderMonthly(){
   if(!snaps.length)return;
+  let history;
+  try{history=await monthlyHistory('today')}catch(e){$('monthTitle').textContent='월별 통계 확인 불가 · 불러오기 실패';return}
   const rankSel=$("monthRankSelect");
   if(!rankSel.options.length){
     rankSel.innerHTML=CUTS.map(r=>`<option value="${r}" ${r===monthlyRank?"selected":""}>${r}위</option>`).join("");
@@ -947,12 +962,12 @@ function renderMonthly(){
   monthlyRank=Number(rankSel.value||monthlyRank);
   $("monthTitle").textContent=`${monthlyRank}위 월별 평균 인증조회수 커트라인`;
 
-  const years=[...new Set(snaps.map(s=>ym(snapDate(s)).y))].sort((a,b)=>b-a);
+  const years=[...new Set(history.map(s=>ym(snapDate(s)).y))].sort((a,b)=>b-a);
   if(!$("yearSelect").options.length){
     $("yearSelect").innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join("");
   }
   const year=Number($("yearSelect").value||years[0]);
-  const rows=monthlyStats(year);
+  const rows=monthlyStats(year,history);
   const valid=rows.filter(r=>r.avg!=null);
   const svg=$("monthChart");
 
@@ -2060,6 +2075,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const todayRecords=records.filter(r=>stamp(r.s).slice(0,10)===todayKey);
     const todaySnapsOnly=snaps.filter(s=>stamp(s).slice(0,10)===todayKey);
     const latest=todaySnapsOnly.at(-1)||null;
+    const delayed=collectionDelayed(latest);
     const currentItem=latest?itemFor(latest,id):null;
     const currentRecord=currentItem?{s:latest,it:currentItem,rank:Number(currentItem.rank),views:Number(currentItem.views_24h_verified??currentItem.score)}:null;
 
@@ -2078,7 +2094,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const bestRank=todayRecords.length?Math.min(...todayRecords.map(r=>r.rank)):null;
 
     // 최신 스냅샷에 작품이 없으면 과거 마지막 순위를 "현재"로 보여주지 않는다.
-    $q("myCurrentRank").textContent=currentRecord?(currentRecord.rank+"위"):(isNew?"해당사항 없음":"미진입");
+    $q("myCurrentRank").textContent=delayed?"갱신 지연":currentRecord?(currentRecord.rank+"위"):(isNew?"해당사항 없음":"미진입");
     $q("myYesterdayRank").textContent=yRec?yRec.rank+"위":"-";
     if($q("myYesterdayTime")) $q("myYesterdayTime").textContent=yRec?("전일 "+stamp(yRec.s).slice(11,16)+" 기준"):("전일 "+currentHM+" 기록 없음");
     // 현재 조회수는 탭과 무관하게 투베 인증 → 모바일 신베 인증 → 최신화 전체조회수 순으로 확인.
@@ -2090,27 +2106,27 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
     const workLatest=workSs.at(-1)||null;
     const latestWhole=workLatest?episodeWholeViewsAt(workLatest,Number(workLatest.latest_episode_no)):null;
 
-    if(todayCurrentItem){
+    if(todayCurrentItem && !collectionDelayed(todayCurrentSnap)){
       $q("myViews").textContent=fmtN(todayCurrentItem.views_24h_verified??todayCurrentItem.score);
       $q("myViewsNote").textContent="투베 인증조회수";
-    }else if(newCurrentItem && Number.isFinite(Number(newCurrentItem.rank))){
+    }else if(newCurrentItem && !collectionDelayed(newCurrentSnap) && Number.isFinite(Number(newCurrentItem.rank))){
       $q("myViews").textContent=fmtN(newCurrentItem.views_24h_verified??newCurrentItem.score);
       $q("myViewsNote").textContent=`모바일 신베 인증조회수 · ${newCurrentItem.rank}위`;
     }else if(latestWhole!==null && Number.isFinite(Number(latestWhole))){
       $q("myViews").textContent=fmtN(latestWhole);
-      $q("myViewsNote").textContent="전체조회수 대체 · 투베/신베 미진입";
+      $q("myViewsNote").textContent=(collectionDelayed(todayCurrentSnap)||collectionDelayed(newCurrentSnap))?"전체조회수 대체 · 순위 갱신 지연":"전체조회수 대체 · 투베/신베 미진입";
     }else{
       $q("myViews").textContent="-";
       $q("myViewsNote").textContent="조회수 수집 대기";
     }
-    $q("myRankChange").textContent=currentRecord?(shortName+" 현재"):(isNew?"신베 해당사항 없음":"투베 미진입");
+    $q("myRankChange").textContent=delayed?(latest?"마지막 확인 "+stamp(latest).slice(5,16):"수집 기록 확인 불가"):currentRecord?(shortName+" 현재"):(isNew?"신베 해당사항 없음":"투베 미진입");
     $q("myBestToday").textContent=bestRank!=null?(bestRank+"위"):"-";
     $q("myFirstToday").textContent=todayRecords.length?("오늘 "+todayRecords.length+"회 기록"):("오늘 기록 없음");
 
     $q("myCutBasis").textContent=latest?("기준: "+stamp(latest).slice(5,16)):"오늘 기준 데이터 없음";
     const ranks=isNew?[4,8,10,20,40,60,80,100,120,140,160,180,200]:[4,8,10,20,40,60,80,100,120,140,160,180,200];
     $q("myCutNeedGrid").innerHTML=ranks.map(r=>{
-      if(!latest || !currentRecord)return `<div class="myCutCell"><span>${r}위</span><b class="blue">${isNew?'해당사항 없음':'-'}</b></div>`;
+      if(delayed || !latest || !currentRecord)return `<div class="myCutCell"><span>${r}위</span><b class="blue">${delayed?'확인 불가':isNew?'해당사항 없음':'-'}</b></div>`;
       const cv=Number(valAt(latest,r));
       if(!Number.isFinite(cv))return `<div class="myCutCell"><span>${r}위</span><b class="blue">-</b></div>`;
       const diff=Math.max(0,cv-Number(currentRecord.views));
@@ -2212,16 +2228,18 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
 
  function hourly(){const last=dkey(ns.at(-1)),st=addDay(last,-(hDays-1)),dh={};for(const s of ns){const d=dkey(s),h=hour(s);if(!d||h==null||d<st||d>last)continue;if(!dh[d])dh[d]={};if(!dh[d][h])dh[d][h]=Object.fromEntries(ranks.map(r=>[r,[]]));for(const r of ranks){const v=val(s,r);if(v!=null)dh[d][h][r].push(v)}}const buckets=Array.from({length:24},()=>Object.fromEntries(ranks.map(r=>[r,[]])));for(const d of Object.keys(dh))for(const [ht,row] of Object.entries(dh[d]))for(const r of ranks){const v=avg(row[r]);if(v!=null)buckets[+ht][r].push(v)}const values=buckets.map(row=>avg(row[newHourlyRank]));let lh=null,lv=null;values.forEach((v,h)=>{if(v!=null&&(lv==null||v<lv)){lv=v;lh=h}});const pl=hDays===30?'최근 1달':`최근 ${hDays}일`;el('newHourlyTitle').textContent=`${newHourlyRank}위 시간대별 평균 커트라인`;el('newHourlyLowSummary').innerHTML=lh==null?`<b>${newHourlyRank}위 최저 컷 시간대: 데이터 없음</b>`:`<b>${newHourlyRank}위 최저 컷 시간대 · ${String(lh).padStart(2,'0')}:05 · ${fmt(lv)}</b><div class="sub">${pl} 시간대 평균 기준</div>`;drawAverageHourChart('newHourlyChart',values,newHourlyRank,5);el('newHourlyAvgTable').innerHTML=`<thead><tr><th>시간대</th><th>${newHourlyRank}위 평균 인증조회수</th></tr></thead><tbody>`+values.map((v,h)=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>';document.querySelectorAll('.newHourlyBtn').forEach(b=>b.classList.toggle('active',+b.dataset.days===hDays))}
  function weekday(){const last=dkey(ns.at(-1)),st=addDay(last,-(wdDays-1)),b=Array.from({length:24},()=>Object.fromEntries(ranks.map(r=>[r,[]]))),end=addDay(last,-1),cst=addDay(end,-(wdDays-1)),daily={};for(const s of ns){const d=dkey(s),h=hour(s);if(!d||h==null)continue;const [y,m,dd]=d.split('-').map(Number),w=new Date(Date.UTC(y,m-1,dd)).getUTCDay();if(d>=st&&d<=last&&w===wd)for(const r of ranks){const v=val(s,r);if(v!=null)b[h][r].push(v)}if(d>=cst&&d<=end){if(!daily[d])daily[d]={w,values:Object.fromEntries(ranks.map(r=>[r,[]]))};for(const r of ranks){const v=val(s,r);if(v!=null)daily[d].values[r].push(v)}}}const values=b.map(row=>avg(row[newWeekdayRank]));let slh=null,slv=null;values.forEach((v,h)=>{if(v!=null&&(slv==null||v<slv)){slv=v;slh=h}});const wda=Array.from({length:7},()=>[]);Object.values(daily).forEach(o=>{const v=avg(o.values[newWeekdayRank]);if(v!=null)wda[o.w].push(v)});let lw=null,lwv=null;for(let w=0;w<7;w++){const v=avg(wda[w]);if(v!=null&&(lwv==null||v<lwv)){lwv=v;lw=w}}const names=['일','월','화','수','목','금','토'],pl=wdDays===30?'최근 1달':`최근 ${wdDays}일`;el('newWeekdayTitle').textContent=`${newWeekdayRank}위 요일별 시간대 평균 커트라인`;el('newWeekdayLowSummary').innerHTML=lw==null?`<b>${newWeekdayRank}위 · ${pl} · 최저 요일 데이터 없음</b>`:`<b>${newWeekdayRank}위 · ${pl} · 가장 낮은 요일: ${names[lw]}요일 · 하루 평균 ${fmt(lwv)}</b><div class="sub">완료된 날짜의 KST 00:00~23:59 하루 평균을 요일별로 다시 평균</div>${slh==null?'':`<div class="sub">${names[wd]}요일 시간대 최저: ${String(slh).padStart(2,'0')}:05 · ${fmt(slv)}</div>`}`;drawAverageHourChart('newWeekdayChart',values,newWeekdayRank,5);el('newWeekdayTable').innerHTML=`<thead><tr><th>시간대</th><th>${newWeekdayRank}위 평균 인증조회수</th></tr></thead><tbody>`+values.map((v,h)=>`<tr><td>${String(h).padStart(2,'0')}:05</td><td>${fmt(v)}</td></tr>`).join('')+'</tbody>';document.querySelectorAll('.newWeekdayBtn').forEach(x=>x.classList.toggle('active',+x.dataset.day===wd));document.querySelectorAll('.newWeekdayRangeBtn').forEach(x=>x.classList.toggle('active',+x.dataset.days===wdDays))}
- function monthly(){
+ async function monthly(){
+  let history;
+  try{history=await monthlyHistory('new')}catch(e){el('newMonthTitle').textContent='월별 통계 확인 불가 · 불러오기 실패';return}
   const rankSel=el('newMonthRankSelect');
   if(!rankSel.options.length) rankSel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newMonthlyRank?'selected':''}>${r}위</option>`).join('');
   newMonthlyRank=+(rankSel.value||newMonthlyRank);
   el('newMonthTitle').textContent=`${newMonthlyRank}위 월별 평균 인증조회수 커트라인`;
-  const years=[...new Set(ns.map(s=>+dkey(s).slice(0,4)))].filter(Boolean).sort((a,b)=>b-a),sel=el('newYearSelect');
+  const years=[...new Set(history.map(s=>+dkey(s).slice(0,4)))].filter(Boolean).sort((a,b)=>b-a),sel=el('newYearSelect');
   if(!sel.options.length)sel.innerHTML=years.map(y=>`<option value="${y}">${y}년</option>`).join('');
   const year=+(sel.value||years[0]),rows=[];
   for(let m=1;m<=12;m++){
-    const a=ns.filter(s=>+dkey(s).slice(0,4)===year&&+dkey(s).slice(5,7)===m).map(s=>val(s,newMonthlyRank)).filter(v=>v!=null);
+    const a=history.filter(s=>+dkey(s).slice(0,4)===year&&+dkey(s).slice(5,7)===m).map(s=>val(s,newMonthlyRank)).filter(v=>v!=null);
     rows.push({m,avg:avg(a),max:a.length?Math.max(...a):null,min:a.length?Math.min(...a):null,count:a.length});
   }
   const valid=rows.filter(r=>r.avg!=null),svg=el('newMonthChart');
@@ -2234,7 +2252,7 @@ $("monthRankSelect").addEventListener("change",()=>{monthlyRank=Number($("monthR
   }
   el('newMonthTable').innerHTML=`<thead><tr><th>월</th><th>${newMonthlyRank}위 평균 인증조회수</th><th>월 최고</th><th>월 최저</th><th>수집 기록 수</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${r.m}월</td><td>${fmt(r.avg)}</td><td>${fmt(r.max)}</td><td>${fmt(r.min)}</td><td>${r.count||'-'}</td></tr>`).join('')+'</tbody>';
  }
- function render(){newDayTabs();if(!ns.length){el('newCutGrid').innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';return}const last=ns.at(-1);el('newHeaderLatest').textContent=stamp(last).slice(5,16)+' KST';el('newHeaderRank').textContent=nr+'위 커트라인';cutGrid();chart();side();hourly();weekday();monthly()}
+ function render(){newDayTabs();if(!ns.length){el('newCutGrid').innerHTML='<div class="mutedText">첫 신규베스트 수집을 기다리는 중이에요.</div>';return}const last=ns.at(-1);el('newHeaderLatest').textContent=stamp(last).slice(5,16)+' KST'+(collectionDelayed(last)?' · 갱신 지연':'');el('newHeaderRank').textContent=nr+'위 커트라인';cutGrid();chart();side();hourly();weekday();monthly()}
  window.renderNewBest=async function(){if(!ns.length){try{const r=await fetch('./data/new/latest.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const d=await r.json();{const src=(Array.isArray(d)?d:(Array.isArray(d?.snapshots)?d.snapshots:[])).filter(s=>Array.isArray(s.items));const bySlot=new Map();for(const s of src){const k=stamp(s),prev=bySlot.get(k);if(!prev||String(s?.captured_at_kst||'')>String(prev?.captured_at_kst||''))bySlot.set(k,s)}ns=[...bySlot.values()].sort((a,b)=>stamp(a).localeCompare(stamp(b)))}}}catch(e){console.error(e)}}refreshNewRanks();const sel=el('newRankSelect');if(!sel.options.length){sel.innerHTML=ranks.map(r=>`<option value="${r}" ${r===nr?'selected':''}>${r}위</option>`).join('');sel.onchange=()=>{nr=+sel.value;render()}}const hs=el('newHourlyRankSelect');if(!hs.options.length){hs.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newHourlyRank?'selected':''}>${r}위</option>`).join('');hs.onchange=()=>{newHourlyRank=+hs.value;hourly()}}const ws=el('newWeekdayRankSelect');if(!ws.options.length){ws.innerHTML=ranks.map(r=>`<option value="${r}" ${r===newWeekdayRank?'selected':''}>${r}위</option>`).join('');ws.onchange=()=>{newWeekdayRank=+ws.value;weekday()}}render()};
  document.querySelectorAll('.newHourlyBtn').forEach(b=>b.addEventListener('click',()=>{hDays=+b.dataset.days;hourly()}));
  document.querySelectorAll('.newWeekdayBtn').forEach(b=>b.addEventListener('click',()=>{wd=+b.dataset.day;weekday()}));
